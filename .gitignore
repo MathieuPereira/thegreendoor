@@ -64,6 +64,3 @@ typings/
 .idea/
 .vscode/
 .sw
-
-# Ignore git module
-node_modules
