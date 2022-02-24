@@ -5,6 +5,8 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var salesRouter = require('./routes/sales');
+
 var mongoose = require('./models/connection_db')
 
 var app = express();
@@ -18,5 +20,6 @@ app.use(express.static(path.join(__dirname, 'reactapp/build')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/sales', salesRouter);
 
 module.exports = app;

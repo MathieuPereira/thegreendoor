@@ -1,0 +1,26 @@
+var mongoose = require('mongoose');
+
+var addressSchema = mongoose.Schema({
+    country : String, 
+    city : String, 
+    zipCode : String, 
+    address : String
+});
+
+var orderSchema = mongoose.Schema({
+    price : Number, 
+    orderDate : Date, 
+    articles : [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}]
+});
+
+var userSchema = mongoose.Schema({
+    token : String, 
+    firstName : String,
+    lastName : String, 
+    email : String,
+    password : String, 
+    addresses : [addressSchema],
+    orders : [orderSchema]
+});
+
+module.exports = mongoose.model('users', userSchema)
