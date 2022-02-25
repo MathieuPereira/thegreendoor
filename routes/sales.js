@@ -40,8 +40,7 @@ router.post('/create-sale', async function (req, res, next) {
 });
 
 router.post('/add-articles', async function (req, res, next) {
-   let sale = await saleModel.findOne({_id: req.body.id});
-   console.log(sale);
+   let sale = await saleModel.findById(req.body.id);
 
    if (!sale)
       res.json({result: false, comment: 'Sale not found'});
