@@ -5,8 +5,10 @@ import {useState} from "react";
 // Import Icon from Ant Design Icon
 import {CloseOutlined, EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
 
+// Import style
+import '../../public/stylesheets/signModal.css';
+
 export default function signModal() {
-   // * Sign Modal
 
    // Set Modal visible or not
    const [isSignModalVisible, setIsSignModalVisible] = useState('hidden');

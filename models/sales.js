@@ -7,7 +7,6 @@ var articleSchema = mongoose.Schema({
     reducedPrice : Number,
     fastDesc : String,
     detailedDesc : String, 
-    size : [String]
 });
 
 var saleSchema = mongoose.Schema({
