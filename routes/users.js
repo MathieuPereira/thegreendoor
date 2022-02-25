@@ -32,7 +32,7 @@ router.post('/sign-up', async function (req, res) {
                   let userSaved = await newUser.save();
 
                   if (userSaved._id) {
-                     res.json({result: true, user: userSaved});
+                     res.json({result: true, user: userSaved.token});
                   } else {
                      res.json({result: false, comment: "Une erreur s'est produite dans la base de données"});
                   }
@@ -62,7 +62,7 @@ router.post('/sign-in', async function (req, res, next) {
          let searchedUser = await userModel.findOne({email: email});
 
          if (bcrypt.compareSync(password, searchedUser.password)) {
-            res.json({result: true, user: searchedUser});
+            res.json({result: true, token: searchedUser.token});
          } else {
             res.json({ result: false, comment: "L'email ou le mot de passe est faux" });
          }

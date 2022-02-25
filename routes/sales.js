@@ -9,22 +9,36 @@ router.get('/', function (req, res, next) {
 });
 
 router.post('/create-sale', async function (req, res, next) {
+   // Variables request
+   let brandName = req.body.brandName;
+   let brandFastDesc = req.body.brandFastDesc;
+   let brandDesc = req.body.brandDesc;
+   let maxDiscount = req.body.maxDiscount;
+   let startingDate = req.body.startingDate;
+   let endingDate = req.body.endingDate;
+   let categories = req.body.categories;
+   let brandLabels = req.body.brandName;
+   console.log(brandName);
+
+   if (!brandName || brandName == null ||brandName == 'undefined' || brandName == undefined) {
+      res.json({result: false, comment: 'Missing infos'});
+   }
 
    // Date
-   let startingDate = req.body.startingDate.split('/');
-   let endingDate = req.body.endingDate.split('/');
+   startingDate = startingDate.split('/');
+   endingDate = endingDate.split('/');
    startingDate = new Date(startingDate[2], startingDate[1], startingDate[0]);
    endingDate = new Date(endingDate[2], endingDate[1], endingDate[0]);
 
    // Categories & Labels
-   let categories = req.body.categories.split(',');
-   let brandLabels = req.body.brandLabels.split(',');
+   categories = categories.split(',');
+   brandLabels = brandLabels.split(',');
 
    let saveSales = new saleModel({
-      brandName: req.body.brandName,
-      brandFastDesc: req.body.brandFastDesc,
-      brandDesc: req.body.brandDesc,
-      maxDiscount: req.body.maxDiscount,
+      brandName: brandName,
+      brandFastDesc: brandFastDesc,
+      brandDesc: brandDesc,
+      maxDiscount: maxDiscount,
       startingDate: startingDate,
       endingDate: endingDate,
       categories: categories,
@@ -34,7 +48,7 @@ router.post('/create-sale', async function (req, res, next) {
    let savedSales = await saveSales.save();
 
    if (savedSales._id)
-      res.json({result: true, comment: 'Article has been saved in DB', sales: savedSales});
+      res.json({result: true, comment: 'Article has been saved in DB'});
    else
       res.json({result: false, comment: 'There was an error during the transfer please repeat'});
 });
@@ -45,7 +59,7 @@ router.post('/add-articles', async function (req, res, next) {
    if (!sale)
       res.json({result: false, comment: 'Sale not found'});
 
-   sale.articles.push ({
+   sale.articles.push({
       name: req.body.name,
       img: req.body.img,
       normalPrice: req.body.normalPrice,
