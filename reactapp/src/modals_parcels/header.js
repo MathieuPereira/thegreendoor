@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Menu, Badge, Affix, Card, Col, Row } from 'antd';
+import { Menu, Badge, Affix, Card, Col, Row, Layout } from 'antd';
 
 // Menu = au passage de souris sur Mon Compte, sous-catégories qui apparaissent
 // Affix = permet de maintenir la labelBar à un endroit précis malgré le scroll
@@ -7,9 +7,9 @@ import { Menu, Badge, Affix, Card, Col, Row } from 'antd';
 export default function Header() {
 
     const [basketCount, setBasketCount] = useState(0)
-    var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
-    var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_150,w_1100/v1645712421/thegreendoor/background/hiking_bpqavn.jpg'
-    var backGround3 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg'
+    // var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
+    // var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_150,w_1100/v1645712421/thegreendoor/background/hiking_bpqavn.jpg'
+    var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg'
   return (
 
     <div>
@@ -34,8 +34,8 @@ export default function Header() {
         
     
         <div style={{marginTop : 0, position : 'relative'}}>
-            <img src={backGround3} alt="Outdoor background" style={{height: 200, width : '100%'}}/>
-            <p style={{ position: 'absolute', top: 5, left : 170, fontWeight: "bold", fontSize : 20}}>Ventes <span style={{color : '#207872'}}>Outdoor</span> responsables</p>
+            <img src={backGround} alt="Outdoor background" style={{height: 200, width : '100%'}}/>
+            <p style={{ position: 'absolute', top: 10, left : 170, fontWeight: "bold", fontSize : 20}}>Ventes <span style={{color : '#207872'}}>Outdoor</span> éco-responsables</p>
         </div>
 
 
