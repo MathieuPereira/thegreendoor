@@ -18,7 +18,7 @@ function App() {
 
    return (
       <Provider store={store}>
-         <div style={{backgroundColor: "#FCF5EE", height: '100vh', fontFamily: 'Montserrat'}}>
+         <div style={{backgroundColor: "#FCF5EE", height: '100%', fontFamily: 'Montserrat'}}>
 
         <Home />
         <Footer />
