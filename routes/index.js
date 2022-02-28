@@ -7,7 +7,7 @@ var request = require('sync-request');
 GET home page.
  Each if is used to add an property to the filter which will then search in the db
 */
-router.get('/home-page', async function (req, res, next) {
+router.get('/', async function (req, res, next) {
    let filter = {};
    let today = new Date;
    today = today.toISOString();
@@ -15,13 +15,12 @@ router.get('/home-page', async function (req, res, next) {
    if (req.query.categories != null)
       filter.categories = req.query.categories;
 
-   if (req.query.filter === 'already-started') {
+   if (req.query.filter === 'to-be-started') {
+      filter.startingDate = {$gt: (today)};
+   } else {
       filter.startingDate = {$lt: (today)};
       filter.endingDate = {$gt: (today)};
    }
-
-   if (req.query.filter === 'to-be-started')
-      filter.startingDate = {$gt: (today)};
 
    let sales = await saleModel.find(filter);
    res.status(200).json({response: true, sales: sales});

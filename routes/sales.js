@@ -17,11 +17,6 @@ router.post('/create-sale', async function (req, res, next) {
    let endingDate = req.body.endingDate;
    let categories = req.body.categories;
    let brandLabels = req.body.brandName;
-   console.log(brandName);
-
-   if (!brandName || brandName == null ||brandName == 'undefined' || brandName == undefined) {
-      res.json({result: false, comment: 'Missing brand name'});
-   }
 
    // Date
    startingDate = startingDate.split('/');
