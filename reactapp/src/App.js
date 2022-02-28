@@ -1,6 +1,4 @@
 import './App.css';
-import Header from './modals_parcels/header'
-import Label from './modals_parcels/labelBar'
 import Home from './components/homepage'
 import Footer from './components/footer';
 // import brandModal from './modals_parcels/brandModal'
@@ -22,8 +20,6 @@ function App() {
       <Provider store={store}>
          <div style={{backgroundColor: "#FCF5EE", height: '100vh', fontFamily: 'Montserrat'}}>
 
-        <Header />
-        <Label />
         <Home />
         <Footer />
 
