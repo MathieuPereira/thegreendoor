@@ -2,7 +2,7 @@ import './App.css';
 import Header from './modals_parcels/header'
 import Label from './modals_parcels/labelBar'
 import Home from './components/homepage'
-import Footer from './components/footer';
+import Footer from './modals_parcels/footer';
 // import brandModal from './modals_parcels/brandModal'
 import { Menu, Dropdown, Tooltip, Affix, Image, Button } from 'antd';
 import {Link} from 'react-router-dom'

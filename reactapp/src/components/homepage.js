@@ -49,7 +49,7 @@ export default function Home() {
 
         </Modal>
 
-                <Col span={{xs: 24, sm: 8}} style={{margin : 10}}>
+                <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
 
                     <Card
                             hoverable
@@ -79,7 +79,7 @@ export default function Home() {
 
                 </Col>
 
-                <Col span={{xs: 24, sm: 8}} style={{margin : 10}}>
+                <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
 
                     <Card
                         hoverable
@@ -109,7 +109,7 @@ export default function Home() {
                 
                 </Col>
 
-                <Col span={{xs: 24, sm: 8}} style={{margin : 10}}>
+                <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
 
                     <Card
                             hoverable
@@ -138,7 +138,7 @@ export default function Home() {
 
                 </Col>
 
-                <Col span={{xs: 24, sm: 8}} style={{margin : 10}}>
+                <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
 
                     <Card
                         hoverable

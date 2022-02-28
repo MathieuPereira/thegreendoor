@@ -16,7 +16,7 @@ router.post('/create-sale', async function (req, res, next) {
    let startingDate = req.body.startingDate;
    let endingDate = req.body.endingDate;
    let categories = req.body.categories;
-   let brandLabels = req.body.brandName;
+   let brandLabels = req.body.brandLabels;
    console.log(brandName);
 
    if (!brandName || brandName == null ||brandName == 'undefined' || brandName == undefined) {
