@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var saleModel = require('../models/sales');
-var articleModel = require('../models/sales');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
@@ -21,7 +20,7 @@ router.post('/create-sale', async function (req, res, next) {
    console.log(brandName);
 
    if (!brandName || brandName == null ||brandName == 'undefined' || brandName == undefined) {
-      res.json({result: false, comment: 'Missing infos'});
+      res.json({result: false, comment: 'Missing brand name'});
    }
 
    // Date
