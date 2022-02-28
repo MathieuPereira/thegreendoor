@@ -1,6 +1,8 @@
 import React, {useState} from 'react';
-import { Card, Col, Row, Modal, Button } from 'antd';
+import {Card, Col, Row, Modal, Button} from 'antd';
 import {CloseOutlined} from "@ant-design/icons";
+import Header from '../modals_parcels/header';
+import Label from '../modals_parcels/labelBar';
 
 export default function Home() {
 
@@ -166,9 +168,7 @@ export default function Home() {
                     </Card>
 
                 </Col>
-
-         </Row>
-
-  );
+      </Row>
+   );
 }
 

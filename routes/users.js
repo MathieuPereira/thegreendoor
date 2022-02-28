@@ -32,24 +32,24 @@ router.post('/sign-up', async function (req, res) {
                   let userSaved = await newUser.save();
 
                   if (userSaved._id) {
-                     res.json({result: true, user: userSaved.token});
+                     res.status(200).json({token: userSaved.token});
                   } else {
-                     res.json({result: false, comment: "Une erreur s'est produite dans la base de données"});
+                     res.status(409).json({comment: "Une erreur s'est produite dans la base de données"});
                   }
                } else {
-                  res.json({result: false, comment: "Cet email à déjà été enregistré"});
+                  res.status(409).json({comment: "Cet email à déjà été enregistré"});
                }
             } else {
-               res.json({result: false, comment: "Le password rentré n'est pas valide"});
+               res.status(449).json({comment: "Le password rentré n'est pas valide"});
             }
          } else {
-            res.json({result: false, comment: "L'email rentré n'est pas valide"});
+            res.status(449).json({comment: "L'email rentré n'est pas valide"});
          }
       } else {
-         res.json({result: false, comment: "Le nom rentré n'est pas valide"});
+         res.status(449).json({comment: "Le nom rentré n'est pas valide"});
       }
    } else {
-      res.json({result: false, comment: "Le prénom rentré n'est pas valide"});
+      res.status(449).json({comment: "Le prénom rentré n'est pas valide"});
    }
 });
 
@@ -62,15 +62,15 @@ router.post('/sign-in', async function (req, res, next) {
          let searchedUser = await userModel.findOne({email: email});
 
          if (bcrypt.compareSync(password, searchedUser.password)) {
-            res.json({result: true, token: searchedUser.token});
+            res.status(200).json({token: searchedUser.token});
          } else {
-            res.json({ result: false, comment: "L'email ou le mot de passe est faux" });
+            res.status(409).json({ comment: "L'email ou le mot de passe est faux" });
          }
       } else {
-         res.json({result: false, comment: "Le password rentré n'est pas valide"});
+         res.status(449).json({ comment: "Le password rentré n'est pas valide" });
       }
    } else {
-      res.json({result: false, comment: "L'email rentré n'est pas valide"});
+      res.status(449).json({ comment: "L'email rentré n'est pas valide" });
    }
 });
 
