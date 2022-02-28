@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tooltip, Anchor } from 'antd';
+import { Tooltip } from 'antd';
 
 export default function Label() {
 
