@@ -3,7 +3,6 @@ import { Menu, Badge } from 'antd';
 import {Link} from "react-router-dom";
 
 // Menu = au passage de souris sur Mon Compte, sous-catégories qui apparaissent
-// Affix = permet de maintenir la labelBar à un endroit précis malgré le scroll
 
 export default function Header() {
 
@@ -44,25 +43,22 @@ export default function Header() {
 
         </div>
 
-        
-    
         <div span={{xs: 24}} style={{marginTop : 0, position : 'relative'}}>
             <img src={backGround} alt="Outdoor background" style={{height: 200, width : '100%'}}/>
             <p style={{ position: 'absolute', top: 10, left : 170, fontWeight: "bold", fontSize : 20}}>Ventes <span style={{color : '#207872'}}>Outdoor</span> éco-responsables</p>
         </div>
 
-
         <Menu span={{xs: 24}} style={{backgroundColor:"#FCF5EE", margin : 'auto', fontWeight: "bold", justifyContent: 'center', width : '70%', borderColor : 'black', fontSize : 15, padding : 5}} mode="horizontal">
 
-            <Menu.Item className="ant-menu-item" onClick={onSeaClick} >
+            <Menu.Item style={{width : 130, textAlign : 'center'}} className="ant-menu-item" onClick={onSeaClick} >
                 Mer
             </Menu.Item>
 
-            <Menu.Item className="ant-menu-item" onClick={onMountainClick}>
+            <Menu.Item style={{width : 130, textAlign : 'center'}} className="ant-menu-item" onClick={onMountainClick}>
                 Montagne
             </Menu.Item>
 
-            <Menu.Item className="ant-menu-item" onClick={onNatureClick}>
+            <Menu.Item style={{width : 130, textAlign : 'center'}} className="ant-menu-item" onClick={onNatureClick}>
                 Nature
             </Menu.Item>
             
@@ -72,7 +68,6 @@ export default function Header() {
 
   );
 }
-
 
 
 {/* Sous-menu dès que l'utilisateur est connecté
