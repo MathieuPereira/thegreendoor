@@ -116,7 +116,7 @@ input {
     text-transform: uppercase;
 }
 
-button {
+.signButton {
     cursor: pointer;
     border-radius: 6px;
     font-family: "Roboto", sans-serif;

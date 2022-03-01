@@ -8,10 +8,10 @@ test("Ajout d'une vente - Body Complet", async () => {
          brandFastDesc: "gage de qualité",
          brandDesc: "spécialisé info",
          maxDiscount: "50",
-         startingDate: "03/11/2022",
+         startingDate: "10/10/2022",
          endingDate: "01/01/2023",
-         categories: "montagne,nature",
-         brandLabels: "ecolo,vegan",
+         categories: "informatique",
+         brandLabels: "greencode",
       })
       .expect(200)
 });

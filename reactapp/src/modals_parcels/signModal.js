@@ -115,7 +115,7 @@ function SignModal() {
                         {iconLogin}
                      </div>
                   </form>
-                  <button onClick={() => handleSignin()} className="mt">Se connecter</button>
+                  <button className="signButton" onClick={() => handleSignin()} className="mt">Se connecter</button>
                   <a href=""><p className="forgetPassword">mot de passe oublié ? c’est par ici 👇</p></a>
                   <h5 className="signTitle mt">Ou connectez-vous via : </h5>
                   <img style={{width: "270px", height: "50px"}} alt="google auth picture"
@@ -147,7 +147,7 @@ function SignModal() {
                   </form>
                   <div className="submitRegister">
                      <p>*Champs Requis</p>
-                     <button onClick={() => handleSignup()}>S'inscrire</button>
+                     <button className="signButton" onClick={() => handleSignup()}>S'inscrire</button>
                   </div>
                </div>
             </div>
