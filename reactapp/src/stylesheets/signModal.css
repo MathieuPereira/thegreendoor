@@ -34,8 +34,8 @@
 .signTitle {
     font-family: "Montserrat", sans-serif;
     font-style: normal;
-    font-weight: 500;
-    font-size: 20px;
+    font-weight: 450;
+    font-size: 18px;
     line-height: 24px;
     align-self: start;
 
@@ -50,14 +50,14 @@ form {
     align-items: center;
 }
 input {
-    margin: 8px;
+    margin: 5px;
     width: 270px;
     height: 52px;
     font-size: 15px;
     padding: 10px;
 
     background: #FFFFFF;
-    border: 3px solid #000000;
+    border: 2px solid #000000;
     box-sizing: border-box;
 }
 
@@ -125,7 +125,7 @@ input {
     border-radius: 6px;
     font-family: "Roboto", sans-serif;
     font-style: normal;
-    font-weight: 800;
+    font-weight: 600;
     font-size: 13px;
 
     line-height: 15px;
@@ -134,12 +134,12 @@ input {
     text-transform: uppercase;
     color: #ffffff;
     background: #207872;
-    padding: 15px 20px 15px 20px;
+    padding: 15px 15px 15px 15px;
     border: solid #ffffff 2px;
     text-decoration: none;
 }
 
-button:hover {
+.buttonHover:hover {
     border: 2px solid #0072bb;
 }
 

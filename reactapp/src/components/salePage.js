@@ -8,17 +8,23 @@ import Footer from '../modals_parcels/footer';
 // Import antd
 import {Breadcrumb, Select} from "antd";
 import {Card, Col, Row, Modal, Button} from 'antd';
+import {Redirect} from "react-router-dom";
 
 const {Option} = Select;
 
-export default function SalePage() {
+export default function SalePage(props) {
 
+   // Function for the <Select/>
    function handleChange(value) {
    }
 
+   if (props.token != null) {
+      return <Redirect to="/"/>;
+   } else {
+
    return (
 
-      <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
+      <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
          <Header/>
          <Label/>
          <div style={{width: '70%', margin: 'auto', marginTop: 10}}>
@@ -41,15 +47,31 @@ export default function SalePage() {
                      borderRadius: 20,
                      alignItems: "center",
                      justifyContent: "space-evenly",
-                     width: "80%",
+                     width: "70%",
                      margin: "auto",
+                     backgroundColor: '#FFFFFF',
                   }}>
                      <img src="./assets/icones/biosourced_materials.png"
-                          style={{height: 35, border: '2px solid white', borderRadius: 15, backgroundColor: 'white'}}/>
+                          style={{
+                             height: 35,
+                             border: '2px solid white',
+                             borderRadius: 15,
+                             backgroundColor: '#FFFFFF',
+                          }}/>
                      <img src="./assets/icones/green_delivery.png"
-                          style={{height: 35, border: '2px solid white', borderRadius: 15, backgroundColor: 'white'}}/>
+                          style={{
+                             height: 35,
+                             border: '2px solid white',
+                             borderRadius: 15,
+                             backgroundColor: '#FFFFFF',
+                          }}/>
                      <img src="./assets/icones/ong.png"
-                          style={{height: 35, border: '2px solid white', borderRadius: 15, backgroundColor: 'white'}}/>
+                          style={{
+                             height: 35,
+                             border: '2px solid white',
+                             borderRadius: 15,
+                             backgroundColor: '#FFFFFF',
+                          }}/>
                   </div>
                   <div style={{backgroundColor: '#FFFFFF', width: "100%", marginTop: 10}}>
                      <p style={{marginLeft: "5%", paddingTop: 15, marginBottom: 0, fontWeight: 550, fontSize: 18}}>Trier
@@ -99,7 +121,7 @@ export default function SalePage() {
                </div>
                <Col style={{marginLeft: 25}}>
                   <p style={{width: "100%", fontSize: 16, color: '#207872'}}>⏰ Fin le dd month yyyy</p>
-                  <div style={{ display: "flex", justifyContent: 'space-around'}}>
+                  <div style={{display: "flex", justifyContent: 'space-around'}}>
                      <div style={{
                         backgroundColor: "#FFFFFF",
                         padding: 8,
@@ -119,7 +141,7 @@ export default function SalePage() {
                               margin: "auto",
                               marginBottom: 10,
                            }}>
-                           <h5 style={{fontWeight: 450, fontSize: 18}}>NAIKOON JKT</h5>
+                           <h5 style={{fontWeight: 450, fontSize: 18, marginBottom: 0}}>NAIKOON JKT</h5>
                            <button style={{
                               width: 80,
                               borderRadius: 8,
@@ -131,7 +153,8 @@ export default function SalePage() {
                            </button>
                         </div>
                         <span style={{width: 280, height: 0, alignSelf: "center", border: "1px #AEA9A9 solid"}}/>
-                        <p style={{fontSize: 16, fontWeight: 520, marginTop: 15}}><span style={{color: "#207872"}}>264,00 €</span> au lieu
+                        <p style={{fontSize: 16, fontWeight: 520, marginTop: 15}}><span style={{color: "#207872"}}>264,00 €</span> au
+                           lieu
                            de <span style={{textDecoration: "line-through"}}>330,00 €</span></p>
                         <img style={{width: 230, height: 250}} src="./assets/picture.jpeg" alt=""/>
                         <div style={{
@@ -142,16 +165,16 @@ export default function SalePage() {
                            margin: "auto",
                            marginTop: 20,
                         }}>
-                           <p style={{fontSize: 14, fontWeight: 450, cursor: "pointer", marginBottom: 0}}>Voir le
+                           <p style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0}}>Voir le
                               produit</p>
-                           <button style={{
+                           <button className="buttonHover" style={{
                               background: "#207872",
                               color: '#FFFFFF',
                               width: 110,
                               borderRadius: 32,
                               fontSize: 12,
-                              padding: "5px 30px 5px 30px",
-                              border: "solid #CCCCC 2px",
+                              padding: "5px 10px 5px 10px",
+                              border: "solid #C4C4C4 2px",
                               cursor: "pointer",
                            }}>Achat Express
                            </button>
@@ -167,4 +190,5 @@ export default function SalePage() {
 
       </div>
    );
+}
 }

@@ -1,13 +1,13 @@
 // Import react and react dependencies
 import React, {useEffect, useState} from 'react';
-
-// Import Icon from Ant Design Icon
-import {CloseOutlined, EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
+import {Link, Redirect} from "react-router-dom";
 
 // Import style
 import '../stylesheets/signModal.css';
+import {CloseOutlined, EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
+
+// Import Redux
 import {connect} from "react-redux";
-import {Redirect} from "react-router-dom";
 
 function SignModal(props) {
    // Verify if user is connected
@@ -72,17 +72,21 @@ function SignModal(props) {
 
    // Handle Signup
    var handleSignup = async () => {
-      let data = await fetch('/users/sign-up', {
-         method: 'POST',
-         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-         body: `firstName=${firstName}&lastName=${lastName}&email=${registerEmailAdress}&password=${registerPassword}`,
-      });
-      data = await data.json();
-      if (data.token) {
-         props.addToken(data.token);
-         setIsLogged(true);
+      if(cgu) {
+         let data = await fetch('/users/sign-up', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: `firstName=${firstName}&lastName=${lastName}&email=${registerEmailAdress}&password=${registerPassword}`,
+         });
+         data = await data.json();
+         if (data.token) {
+            props.addToken(data.token);
+            setIsLogged(true);
+         } else {
+            setErrorSignup(<p style={{color: "red"}}>{data.comment}</p>);
+         }
       } else {
-         setErrorSignup(<p style={{color: "red"}}>{data.comment}</p>);
+         setErrorSignup(<p style={{color: "red"}}>Veuillez accepter les CGU</p>);
       }
    };
 
@@ -126,8 +130,8 @@ function SignModal(props) {
                         {iconLogin}
                      </div>
                   </form>
-                  <button className="signButton mt" onClick={() => handleSignin()}>Se connecter</button>
-                  <a href=""><p className="forgetPassword">mot de passe oublié ? c’est par ici 👇</p></a>
+                  <button className="signButton mt buttonHover" onClick={() => handleSignin()}>Se connecter</button>
+                  <Link to="/"><p className="forgetPassword">mot de passe oublié ? c’est par ici 👇</p></Link>
                   <h5 className="signTitle mt">Ou connectez-vous via : </h5>
                   <img style={{width: "270px", height: "50px"}} alt="google auth picture"
                        src="./googleauthpicture.png"/>
@@ -158,7 +162,7 @@ function SignModal(props) {
                   </form>
                   <div className="submitRegister">
                      <p>*Champs Requis</p>
-                     <button className="signButton" onClick={() => handleSignup()}>S'inscrire</button>
+                     <button className="signButton buttonHover" onClick={() => handleSignup()}>S'inscrire</button>
                   </div>
                </div>
             </div>
