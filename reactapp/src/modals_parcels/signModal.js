@@ -1,5 +1,5 @@
 // Import react and react dependencies
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 // Import Icon from Ant Design Icon
 import {CloseOutlined, EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icons";
@@ -7,10 +7,11 @@ import {CloseOutlined, EyeInvisibleOutlined, EyeOutlined} from "@ant-design/icon
 // Import style
 import '../stylesheets/signModal.css';
 import {connect} from "react-redux";
+import {Redirect} from "react-router-dom";
 
-function SignModal() {
-   // Set Modal visible or not
-   const [isSignModalVisible, setIsSignModalVisible] = useState('hidden');
+function SignModal(props) {
+   // Verify if user is connected
+   const [isLogged, setIsLogged] = useState(false);
 
    // Inputs
    const [firstName, setFirstName] = useState('');
@@ -32,9 +33,17 @@ function SignModal() {
       className="iconPassword"
       onClick={() => isPasswordVisible('register', 'password')}/>,
    );
+
    // Error handlers
    const [errorSignUp, setErrorSignup] = useState('');
    const [errorSignin, setErrorSignin] = useState('');
+
+   // Verify if user already has token
+   useEffect(() => {
+      if (props.token) {
+         setIsLogged(true);
+      }
+   },[])
 
    // Function for set password visible or not
    var isPasswordVisible = (sign, inputType) => {
@@ -61,6 +70,7 @@ function SignModal() {
       }
    };
 
+   // Handle Signup
    var handleSignup = async () => {
       let data = await fetch('/users/sign-up', {
          method: 'POST',
@@ -69,13 +79,14 @@ function SignModal() {
       });
       data = await data.json();
       if (data.token) {
-         console.log('redirect');
+         props.addToken(data.token);
+         setIsLogged(true);
       } else {
          setErrorSignup(<p style={{color: "red"}}>{data.comment}</p>);
-
       }
    };
 
+   // Handle Signin
    var handleSignin = async () => {
       let data = await fetch('/users/sign-in', {
          method: 'POST',
@@ -84,22 +95,22 @@ function SignModal() {
       });
       data = await data.json();
       if (data.token) {
-         console.log('redirect');
+         props.addToken(data.token);
+         setIsLogged(true);
       } else {
          setErrorSignin(<p style={{color: "red"}}>{data.comment}</p>);
-
       }
    };
-
-   return (
-      <div className="App">
-         <button onClick={() => setIsSignModalVisible('visible')}>Show Modal</button>
-         <div className="modal" style={{visibility: isSignModalVisible}}
-              onClick={() => setIsSignModalVisible('hidden')}>
+   if (isLogged) {
+      return <Redirect to="/salepage"/>;
+   } else {
+      return (
+         <div className="modal" style={{visibility: props.state}}
+              onClick={() => props.changeParentState("hidden")}>
             <div className="sign" style={{zIndex: 25}} onClick={e => e.stopPropagation()}>
                <CloseOutlined
                   style={{position: "absolute", right: 3, top: 3, fontSize: "25px", cursor: "pointer"}}
-                  onClick={() => setIsSignModalVisible('hidden')}
+                  onClick={() => props.changeParentState("hidden")}
                />
                <div className="signSection">
                   <h5 className="signTitle">Heureux de vous revoir !</h5>
@@ -115,7 +126,7 @@ function SignModal() {
                         {iconLogin}
                      </div>
                   </form>
-                  <button className="signButton" onClick={() => handleSignin()} className="mt">Se connecter</button>
+                  <button className="signButton mt" onClick={() => handleSignin()}>Se connecter</button>
                   <a href=""><p className="forgetPassword">mot de passe oublié ? c’est par ici 👇</p></a>
                   <h5 className="signTitle mt">Ou connectez-vous via : </h5>
                   <img style={{width: "270px", height: "50px"}} alt="google auth picture"
@@ -152,8 +163,9 @@ function SignModal() {
                </div>
             </div>
          </div>
-      </div>
-   );
+      );
+   }
+
 }
 
 function mapDispatchToProps(dispatch) {

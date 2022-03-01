@@ -1,6 +1,7 @@
 var app = require("../app")
 var request = require("supertest")
 
+/*
 test("Ajout d'une vente - Body Complet", async () => {
    await request(app).post('/sales/create-sale')
       .send({
@@ -15,3 +16,4 @@ test("Ajout d'une vente - Body Complet", async () => {
       })
       .expect(200)
 });
+*/

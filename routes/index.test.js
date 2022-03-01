@@ -5,7 +5,7 @@ test("Home Page - Body Complet", async () => {
    await request(app).get('/')
       .expect(200)
 });
-
+/*
 test("Show Sale - Body Complet", async () => {
    await request(app).get('/show-sale')
       .query({
@@ -13,7 +13,7 @@ test("Show Sale - Body Complet", async () => {
       })
       .expect(200)
 });
-
+*/
 test("Show Sale - Body Incomplet", async () => {
    await request(app).get('/show-sale')
       .query({

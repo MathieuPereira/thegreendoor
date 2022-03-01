@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, Badge } from 'antd';
+import {Link} from "react-router-dom";
 
 // Menu = au passage de souris sur Mon Compte, sous-catégories qui apparaissent
 // Affix = permet de maintenir la labelBar à un endroit précis malgré le scroll
@@ -28,7 +29,7 @@ export default function Header() {
         
         <div span={{xs: 24}} style={{display : 'flex', flexDirection : 'row', padding : 5, marginLeft : 50, alignItems : 'center', justifyContent : 'space-between'}}>
 
-            <img src="./assets/logo.png" alt="Logo" style={{height: 50}}/>
+            <Link to="/"><img src="./assets/logo.png" alt="Logo" style={{height: 50}}/></Link>
 
             <div style={{display : 'flex', flexDirection : 'row', marginRight : 30, alignContent : 'center', alignItems : "center", fontSize : 15}}>
                 <p style={{marginBottom : 0, marginRight : 70}}>Qui sommes-nous ?</p>
