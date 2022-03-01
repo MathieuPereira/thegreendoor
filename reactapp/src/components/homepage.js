@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {connect} from 'react-redux'
 
 // Import de NOS composants
 import Header from '../modals_parcels/header';
@@ -9,12 +10,14 @@ import Footer from '../modals_parcels/footer';
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
 
-export default function Home() {
+export default function Home(props) {
 
    const {Meta} = Card;
 
     // Chargement des informations en DB selon la route /home
     const [salesList, setSalesList] = useState([]);
+    const [filter, setFilter] = useState('')
+    // const [selectedFilter, setSelectedFilter] = useState(props.selectedFilter);
 
     useEffect(() => {
         async function loadData() {
@@ -61,7 +64,7 @@ export default function Home() {
                     >
                         <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
                             <span style={{fontSize : 16, fontWeight: "bold"}}>{sale.brandName}</span>
-                            <span>Jusqu'à -{sale.maxDiscount}%</span>
+                            <span style={{color: "#207872", fontWeight: "bold"}}>Jusqu'à -{sale.maxDiscount}%</span>
                         </div>
 
                         <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>{sale.brandFastDesc}</span>
@@ -98,48 +101,77 @@ export default function Home() {
       setIsModalSignVisible(currentState);
    };
 
+   var selectedFilter = (currentState) => {
+    setFilter(currentState);
+ };
+
+ // Gère le chargement des Cards filtrées par Catégories. Le else correspond au clic sur le Logo, qui reset l'affichage
+ useEffect(() => {
+    if(filter != 'non-categorized'){
+    async function loadDataFiltered() {
+    let rawResponse = await fetch(`/home?categories=${filter}`,
+            {method: 'GET'});
+            var response = await rawResponse.json();
+            setSalesList(response.sales)
+   }
+   loadDataFiltered();
+} else {
+    async function loadDataFiltered() {
+        let rawResponse = await fetch(`/home`,
+                {method: 'GET'});
+                var response = await rawResponse.json();
+                setSalesList(response.sales)
+       }
+       loadDataFiltered();
+}
+
+  }, [filter])
+
+ console.log(filter)
+
   return (
 
         <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
-            <Header/>
+            {/* Gère le Reverse Data Flow avec le composant Header qui fait passer l'info d'un filtre ou clic Logo */}
+            <Header filter={filter} changeParentFilter={selectedFilter}/>
             <Label/>
             <Row style={{width : '100%', marginTop  : 10, justifyContent: 'center'}}>
-                <h4 style={{width : 250, textAlign : 'right', fontWeight: "550", fontSize: "16px", lineHeight: "24px", cursor: "pointer", color: "#207872"}}>LES VENTES DU MOMENT</h4>
+                <h4 style={{width : 250, textAlign : 'right',fontWeight: "550", fontSize: "16px", lineHeight: "24px", cursor: "pointer", color: "#207872"}}>LES VENTES DU MOMENT</h4>
                 <span style={{width: "1px", height: "30px", border: "1px black solid", marginLeft: "15px", marginRight: "15px", alignSelf: "start"}}></span>
                 <h4 style={{width : 250, textAlign : 'left', fontWeight: "550", fontSize: "16px", lineHeight: "24px", cursor: "pointer", color: "#C4C4C4"}}>LES VENTES A VENIR</h4>
             </Row>
 
             <Modal 
                 
-                    title={brand} 
+                title={brand} 
 
-                    width={600}
+                width={600}
                     
-                    centered 
+                centered 
                     
-                    visible={isModalVisible}
+                visible={isModalVisible}
 
-                    onCancel={handleCancel}
+                onCancel={handleCancel}
                 
-                    footer={[
-                        <Button key="Retour" onClick={handleCancel}>Retour</Button>,
+                footer={[
+                    <Button key="Retour" onClick={handleCancel}>Retour</Button>,
 
-               <Button key="submit" style={{marginLeft: 215, backgroundColor: '#207872', borderRadius: 40, border: 0}}
-                       type="primary" onClick={() => handleModalChangeVisibility("visible")}>
-                  Se connecter pour accéder à la vente
-               </Button>,
-            ]}
-         >
+                    <Button key="submit" style={{marginLeft: 215, backgroundColor: '#207872', borderRadius: 40, border: 0}}
+                            type="primary" onClick={() => handleModalChangeVisibility("visible")}>
+                        Se connecter pour accéder à la vente
+                    </Button>,
+                ]}
+            >
                     <p>{desc}</p>
 
-                </Modal>
+            </Modal>
 
-            <Row style={{width : '80%', margin : 'auto', marginTop  : 10 , justifyContent: 'center'}}>
+            <Row style={{width : '80%', margin : 'auto', marginTop  : 2 , justifyContent: 'center'}}>
 
                 {cardsFromDB}
 
             </Row>
-           <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
+            <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
             <Footer/>
         </div>
    );

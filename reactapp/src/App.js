@@ -7,7 +7,8 @@ import SalePage from "./components/salePage";
 // REDUX
 import {Provider} from 'react-redux'
 import {createStore, combineReducers} from 'redux'
-import token from './reducers/token.reducer'
+import token from './reducers/token.reducer';
+
 const store = createStore(combineReducers({token}))
 
 function App() {
