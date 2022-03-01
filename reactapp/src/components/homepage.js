@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import {Card, Col, Row, Modal, Button} from 'antd';
+import React, {useState, useEffect} from 'react';
 
 // Import de NOS composants
 import Header from '../modals_parcels/header';
@@ -8,14 +7,76 @@ import SignModal from '../modals_parcels/signModal';
 import Footer from '../modals_parcels/footer';
 
 
-// Import composant X modal
+// Import composant antd
+import {Card, Col, Row, Modal, Button} from 'antd';
 import {CloseOutlined} from "@ant-design/icons";
 
 export default function Home() {
 
     const { Meta } = Card;
 
+    const [salesList, setSalesList] = useState([]);
+
+    useEffect(() => {
+        async function loadData() {
+        var rawResponse = await fetch('/home');
+        var response = await rawResponse.json();
+        setSalesList(response.sales)
+       }
+       loadData();
+
+      }, [])
+
+    console.log(salesList)
+
+    var cardsFromDB = salesList.map((sale,i) => {
+    
+    var labelList = [];
+    for (var i=0; i<sale.brandLabels.length; i++){
+        labelList.push(<img src={`./assets/icones/${sale.brandLabels[i]}.png`} style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>)
+    }
+
+    var brandImg = `./assets/${sale.brandImg}.jpeg`
+
+        return (
+
+            <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
+
+                <Card
+
+                    hoverable
+                    onClick={() => onCardClick()}
+                    position='relative'
+                    cover={
+                    <img alt="Samaya" src={brandImg} style={{height : 200, width : 470}}/>
+                    }
+                >
+                    
+                    <div style={{position : 'absolute', top: 10, left : 430}}>
+                        {labelList}
+                    </div>
+                                        
+                    <div 
+                        style={{height : 20, padding: 0, marginTop : 0, display : 'flex', flexDirection : 'column', justifyContent : 'center' }}
+                    >
+                        <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
+                            <span style={{fontSize : 16, fontWeight: "bold"}}>{sale.brandName}</span>
+                            <span>Jusqu'à -{sale.maxDiscount}%</span>
+                        </div>
+
+                        <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>{sale.brandFastDesc}</span>
+                    </div>
+                                        
+                </Card>
+
+            </Col>
+
+          )});
+
+
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [brand, setBrand] = useState('')
+    const [desc, setDesc] = useState('')
 
     function onCardClick() {
         setIsModalVisible(true);
@@ -67,123 +128,8 @@ export default function Home() {
 
             <Row style={{width : '80%', margin : 'auto', marginTop  : 10 , justifyContent: 'center'}}>
 
-                        <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
-
-                            <Card
-                                    hoverable
-                                    onClick={() => onCardClick()}
-                                    position='relative'
-                                    cover={
-                                    <img alt="Samaya" src='./assets/samaya.jpeg' style={{height : 200, width : 470}}/>
-                                    }
-                                >
-                                    <div style={{position : 'absolute', top: 10, left : 430}}>
-                                        <img src="./assets/icones/french_flag.png" style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                        <img src="./assets/icones/european_flag.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                        <img src="./assets/icones/co2_limited.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                    </div>
-                                    <div 
-                                    style={{height : 20, padding: 0, marginTop : 0, display : 'flex', flexDirection : 'column', justifyContent : 'center' }}
-                                    >
-                                        <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
-                                            <span style={{fontSize : 16, fontWeight: "bold"}}>Marque</span>
-                                            <span>Jusqu'à -XX%</span>
-                                        </div>
-
-                                        <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>Description rapide de la marque</span>
-                                    </div>
-                                    
-                            </Card>
-
-                        </Col>
-
-                        <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
-
-                            <Card
-                                hoverable
-                                onClick={() => onCardClick()}
-                                position='relative'
-                                cover={
-                                <img alt="Samaya" src='./assets/picture.jpeg' style={{height : 200, width : 470}}/>
-                                }
-                            >
-                                <div style={{position : 'absolute', top: 10, left : 430}}>
-                                    <img src="./assets/icones/biosourced_materials.png" style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                    <img src="./assets/icones/green_delivery.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                    <img src="./assets/icones/ong.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                </div>
-                                <div 
-                                style={{height : 20, padding: 0, marginTop : 0, display : 'flex', flexDirection : 'column', justifyContent : 'center' }}
-                                >
-                                    <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
-                                        <span style={{fontSize : 16, fontWeight: "bold"}}>Marque</span>
-                                        <span>Jusqu'à -XX%</span>
-                                    </div>
-
-                                    <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>Description rapide de la marque</span>
-                                </div>
-                                
-                            </Card>
-                        
-                        </Col>
-
-                        <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
-
-                            <Card
-                                    hoverable
-                                    onClick={() => onCardClick()}
-                                    position='relative'
-                                    cover={
-                                    <img alt="Samaya" src='./assets/norrona.jpeg' style={{height : 200, width : 470}}/>
-                                    }
-                                >
-                                    <div style={{position : 'absolute', top: 10, left : 430}}>
-                                        <img src="./assets/icones/french_flag.png" style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                        <img src="./assets/icones/recycle_materials.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                    </div>
-                                    <div 
-                                    style={{height : 20, padding: 0, marginTop : 0, display : 'flex', flexDirection : 'column', justifyContent : 'center' }}
-                                    >
-                                        <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
-                                            <span style={{fontSize : 16, fontWeight: "bold"}}>Marque</span>
-                                            <span>Jusqu'à -XX%</span>
-                                        </div>
-
-                                        <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>Description rapide de la marque</span>
-                                    </div>
-                                    
-                            </Card>
-
-                        </Col>
-
-                        <Col span={{xs: 24, sm: 12}} style={{margin : 10}}>
-
-                            <Card
-                                hoverable
-                                onClick={() => onCardClick()}
-                                position='relative'
-                                cover={
-                                <img alt="Samaya" src='./assets/icebreaker.jpeg' style={{height : 200, width : 470}}/>
-                                }
-                            >
-                                <div style={{position : 'absolute', top: 10, left : 430}}>
-                                    <img src="./assets/icones/vegan.png" style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                    <img src="./assets/icones/recycle_packaging.png"  style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>
-                                </div>
-                                <div 
-                                style={{height : 20, padding: 0, marginTop : 0, display : 'flex', flexDirection : 'column', justifyContent : 'center' }}
-                                >
-                                    <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between' }}>
-                                        <span style={{fontSize : 16, fontWeight: "bold"}}>Marque</span>
-                                        <span>Jusqu'à -XX%</span>
-                                    </div>
-
-                                    <span style={{color : 'rgba(0, 0, 0, 0.45)', marginTop : 5}}>Description rapide de la marque</span>
-                                </div>
-                                
-                            </Card>
-
-                        </Col>
+                {cardsFromDB}
+      
             </Row>
             <Footer/>
         </div>
