@@ -12,11 +12,12 @@ router.post('/create-sale', async function (req, res, next) {
    let brandName = req.body.brandName;
    let brandFastDesc = req.body.brandFastDesc;
    let brandDesc = req.body.brandDesc;
+   let brandImg = req.body.brandImg;
    let maxDiscount = req.body.maxDiscount;
    let startingDate = req.body.startingDate;
    let endingDate = req.body.endingDate;
    let categories = req.body.categories;
-   let brandLabels = req.body.brandName;
+   let brandLabels = req.body.brandLabels;
 
    // Date
    startingDate = startingDate.split('/');
@@ -32,6 +33,7 @@ router.post('/create-sale', async function (req, res, next) {
       brandName: brandName,
       brandFastDesc: brandFastDesc,
       brandDesc: brandDesc,
+      brandImg : brandImg,
       maxDiscount: maxDiscount,
       startingDate: startingDate,
       endingDate: endingDate,

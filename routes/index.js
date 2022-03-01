@@ -7,7 +7,7 @@ var request = require('sync-request');
 GET home page.
  Each if is used to add an property to the filter which will then search in the db
 */
-router.get('/', async function (req, res, next) {
+router.get('/home', async function (req, res, next) {
    let filter = {};
    let today = new Date;
    today = today.toISOString();

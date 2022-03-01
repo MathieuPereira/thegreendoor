@@ -14,6 +14,7 @@ var saleSchema = mongoose.Schema({
     brandName : String,
     brandFastDesc : String, 
     brandDesc : String,
+    brandImg : String,
     brandLabels : [String], 
     startingDate : Date,
     endingDate : Date,
