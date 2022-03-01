@@ -1,10 +1,7 @@
+import React from 'react';
 import './App.css';
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './components/homepage'
-import Footer from './modals_parcels/footer';
-// import brandModal from './modals_parcels/brandModal'
-import { Menu, Dropdown, Tooltip, Affix, Image, Button } from 'antd';
-import {Link} from 'react-router-dom'
-import brandModal from './modals_parcels/brandModal';
 import SalePage from "./components/salePage";
 
 // REDUX
@@ -17,12 +14,14 @@ function App() {
 
    return (
       <Provider store={store}>
-         <div style={{backgroundColor: "#FCF5EE", height: '100%', fontFamily: 'Montserrat'}}>
-
-        <SalePage />
-        <Footer />
-
-         </div>
+         
+            <Router>
+               <Switch>
+                  <Route component={Home} path="/" exact />
+                  <Route component={SalePage} path="/salepage" />
+               </Switch>
+            </Router>
+       
       </Provider>
    );
 }

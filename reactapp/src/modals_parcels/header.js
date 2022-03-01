@@ -24,7 +24,7 @@ export default function Header() {
     };
   return (
 
-    <div>
+    <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
         
         <div span={{xs: 24}} style={{display : 'flex', flexDirection : 'row', padding : 5, marginLeft : 50, alignItems : 'center', justifyContent : 'space-between'}}>
 

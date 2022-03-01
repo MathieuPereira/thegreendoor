@@ -1,9 +1,15 @@
 import React, {useState} from 'react';
 import {Card, Col, Row, Modal, Button} from 'antd';
-import {CloseOutlined} from "@ant-design/icons";
+
+// Import de NOS composants
 import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import SignModal from '../modals_parcels/signModal';
+import Footer from '../modals_parcels/footer';
+
+
+// Import composant X modal
+import {CloseOutlined} from "@ant-design/icons";
 
 export default function Home() {
 
@@ -27,7 +33,7 @@ export default function Home() {
 
   return (
 
-        <div>
+        <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
             <Header/>
             <Label/>
             <Row style={{width : '100%', marginTop  : 10, justifyContent: 'center'}}>
@@ -49,7 +55,7 @@ export default function Home() {
                     footer={[
                         <Button key="Retour" onClick={handleCancel}>Retour</Button>,
 
-                        <Button key="submit" style={{marginLeft : 100, backgroundColor : '#207872', borderRadius : 40, border : 0}} type="primary" onClick={goToSell}>
+                        <Button key="submit" style={{marginLeft : 215, backgroundColor : '#207872', borderRadius : 40, border : 0}} type="primary" onClick={goToSell}>
                         Se connecter pour accéder à la vente
                         </Button>
                     ]}
@@ -179,6 +185,7 @@ export default function Home() {
 
                         </Col>
             </Row>
+            <Footer/>
         </div>
    );
 }

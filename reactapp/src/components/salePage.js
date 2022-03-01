@@ -1,6 +1,11 @@
 import React, {useState} from 'react';
+
+// Import de NOS composants
 import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
+import Footer from '../modals_parcels/footer';
+
+// Import antd
 import {Breadcrumb, Select} from "antd";
 import {Card, Col, Row, Modal, Button} from 'antd';
 
@@ -13,7 +18,7 @@ export default function SalePage() {
 
    return (
 
-      <div>
+      <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
          <Header/>
          <Label/>
          <div style={{width: '70%', margin: 'auto', marginTop: 10}}>
@@ -157,6 +162,8 @@ export default function SalePage() {
             </Row>
 
          </div>
+
+         <Footer/>
 
       </div>
    );
