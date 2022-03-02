@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import { useParams } from "react-router-dom";
 import {connect} from 'react-redux'
 
 // Import de NOS composants
@@ -12,22 +13,26 @@ import {Card, Col, Row, Modal, Button} from 'antd';
 
 export default function Home(props) {
 
+    var { category } = useParams();
+
    const {Meta} = Card;
 
     // Chargement des informations en DB selon la route /home
     const [salesList, setSalesList] = useState([]);
     const [filter, setFilter] = useState('')
-    // const [selectedFilter, setSelectedFilter] = useState(props.selectedFilter);
+    const [type, setType] = useState('')
 
+    // Paramètre dynamique passé dans la route pour afficher durant toute la navigation les ventes par caté
     useEffect(() => {
         async function loadData() {
-        var rawResponse = await fetch('/home');
+        var rawResponse = await fetch(`/home?categories=${category}`);
         var response = await rawResponse.json();
+        console.log(response.sales)
         setSalesList(response.sales)
        }
        loadData();
 
-      }, [])
+      }, [category])
 
     console.log(salesList)
 
@@ -36,10 +41,10 @@ export default function Home(props) {
 
         var labelList = [];
         for (var i=0; i<sale.brandLabels.length; i++){
-            labelList.push(<img src={`./assets/icones/${sale.brandLabels[i]}.png`} style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>)
+            labelList.push(<img src={`/assets/icones/${sale.brandLabels[i]}.png`} style={{height: 30, marginBottom : 5, border: '2px solid white', borderRadius : 15, backgroundColor : 'white'}}/>)
         }
 
-        var brandImg = `./assets/${sale.brandImg}.jpeg`
+        var brandImg = `/assets/${sale.brandImg}.jpeg`
 
         return (
 
@@ -51,7 +56,7 @@ export default function Home(props) {
                     onClick={() => onCardClick(sale.brandName, sale.brandDesc)}
                     position='relative'
                     cover={
-                    <img alt="Samaya" src={brandImg} style={{height : 200, width : 470}}/>
+                    <img alt={sale.brandName} src={brandImg} style={{height : 200, width : 470}}/>
                     }
                 >
 
@@ -105,35 +110,11 @@ export default function Home(props) {
     setFilter(currentState);
  };
 
- // Gère le chargement des Cards filtrées par Catégories. Le else correspond au clic sur le Logo, qui reset l'affichage
- useEffect(() => {
-    if(filter != 'non-categorized'){
-    async function loadDataFiltered() {
-    let rawResponse = await fetch(`/home?categories=${filter}`,
-            {method: 'GET'});
-            var response = await rawResponse.json();
-            setSalesList(response.sales)
-   }
-   loadDataFiltered();
-} else {
-    async function loadDataFiltered() {
-        let rawResponse = await fetch(`/home`,
-                {method: 'GET'});
-                var response = await rawResponse.json();
-                setSalesList(response.sales)
-       }
-       loadDataFiltered();
-}
-
-  }, [filter])
-
- console.log(filter)
-
   return (
 
         <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
-            {/* Gère le Reverse Data Flow avec le composant Header qui fait passer l'info d'un filtre ou clic Logo */}
-            <Header filter={filter} changeParentFilter={selectedFilter}/>
+
+            <Header/>
             <Label/>
             <Row style={{width : '100%', marginTop  : 10, justifyContent: 'center'}}>
                 <h4 style={{width : 250, textAlign : 'right',fontWeight: "550", fontSize: "16px", lineHeight: "24px", cursor: "pointer", color: "#207872"}}>LES VENTES DU MOMENT</h4>
@@ -176,4 +157,3 @@ export default function Home(props) {
         </div>
    );
 }
-

@@ -12,7 +12,9 @@ router.get('/home', async function (req, res, next) {
    let today = new Date;
    today = today.toISOString();
 
-   if (req.query.categories != null)
+   console.log(req.query.categories)
+
+   if (req.query.categories != null && req.query.categories != 'undefined')
       filter.categories = req.query.categories;
 
    if (req.query.filter === 'to-be-started') {

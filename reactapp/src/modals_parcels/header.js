@@ -1,37 +1,17 @@
 import React, {useState} from 'react';
 import {Menu, Badge} from 'antd';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
 
 function Header(props) {
 
    var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
-
    const [basketCount, setBasketCount] = useState(0);
-
-   // Gestion des clics Catégories et Logos, qui font transiter l'info en Reverse Data Flow au composant Home
-   const onSeaClick = () => {
-      console.log('Clic sur catégorie Mer détecté');
-      props.changeParentFilter('Mer');
-      props.addCategory("Mer");
-   };
-
-   const onMountainClick = () => {
-      console.log('Clic sur catégorie Montagne détecté');
-      props.changeParentFilter('Montagne');
-      props.addCategory("Montagne");
-   };
-
-   const onNatureClick = () => {
-      console.log('Clic sur catégorie Nature détecté');
-      props.changeParentFilter('Nature');
-      props.addCategory("Nature");
-   };
 
    const onLogoClick = () => {
       console.log('Clic sur le logo détecté');
-      props.changeParentFilter('non-categorized');
+      return <Redirect to="/home" />
       props.addCategory("");
    };
 
@@ -48,7 +28,7 @@ function Header(props) {
             justifyContent: 'space-between',
          }}>
 
-            <Link to="/"><img src="./assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
+            <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
 
             <div style={{
                display: 'flex',
@@ -59,11 +39,10 @@ function Header(props) {
                fontSize: 15,
             }}>
                <p style={{marginBottom: 0, marginRight: 70}}>Qui sommes-nous ?</p>
-               <p style={{marginLeft: 50, marginRight: 20, marginBottom: 0}}>S'inscrire</p>
                <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0}}>Se connecter</p>
                <div style={{marginLeft: 50, marginRight: 30}}>
                   <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
-                     <img src="./assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
+                     <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
                   </Badge>
                </div>
             </div>
@@ -87,16 +66,16 @@ function Header(props) {
             padding: 5,
          }} mode="horizontal">
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" onClick={onSeaClick}>
-               Mer
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+               <Link to="/home/Mer">Mer</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" onClick={onMountainClick}>
-               Montagne
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+               <Link to="/home/Montagne">Montagne</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" onClick={onNatureClick}>
-               Nature
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+               <Link to="/home/Nature">Nature</Link>
             </Menu.Item>
 
          </Menu>
