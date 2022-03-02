@@ -1,19 +1,38 @@
 import React, {useState} from 'react';
-import {Menu, Badge} from 'antd';
+import {Menu, Badge, Carousel} from 'antd';
 import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
 
 function Header(props) {
 
-   var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
+   var backGround1 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
+   var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
+   var surf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg'
+   var surf2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646218684/thegreendoor/background/pexels-tyler-lastovich-1671627_xy9ere.jpg'
+   var surf3 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217629/thegreendoor/background/pexels-pixabay-390051_nyx9eq.jpg'
+
    const [basketCount, setBasketCount] = useState(0);
 
    const onLogoClick = () => {
       console.log('Clic sur le logo détecté');
       return <Redirect to="/home" />
-      props.addCategory("");
    };
+
+   // Carousel
+   function onChange(a, b, c) {
+      console.log(a, b, c);
+    }
+
+    const settings = {
+      dots:true,
+      infinite:true,
+      speed:2500,
+      slidesToShow:1,
+      autoplay:true,
+      autoplaySpeed : 8000
+    };
+
 
    return (
 
@@ -49,11 +68,22 @@ function Header(props) {
 
          </div>
 
-         <div span={{xs: 24}} style={{marginTop: 0, position: 'relative'}}>
-            <img src={backGround} alt="Outdoor background" style={{height: 200, width: '100%'}}/>
-            <p style={{position: 'absolute', top: 10, left: 170, fontWeight: "bold", fontSize: 20}}>Ventes <span
-               style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
-         </div>
+         <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
+
+            <div>
+               <img src={backGround1} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+            <div>
+               <img src={backGround2} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+            <div>
+               <img src={surf} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+
+         </Carousel>
+
+         <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
+            Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
 
          <Menu span={{xs: 24}} style={{
             backgroundColor: "#FCF5EE",

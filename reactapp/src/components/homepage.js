@@ -56,7 +56,7 @@ export default function Home(props) {
                     onClick={() => onCardClick(sale.brandName, sale.brandDesc)}
                     position='relative'
                     cover={
-                    <img alt={sale.brandName} src={brandImg} style={{height : 200, width : 470}}/>
+                    <img alt={sale.brandName} src={brandImg} style={{height : 200, width : 480}}/>
                     }
                 >
 
