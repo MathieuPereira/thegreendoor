@@ -14,6 +14,7 @@
     "jest": "^27.5.1",
     "mongoose": "^6.2.3",
     "morgan": "~1.9.1",
+    "stripe": "^8.206.0",
     "supertest": "^6.2.2",
     "sync-request": "^6.1.0",
     "uid2": "^1.0.0"

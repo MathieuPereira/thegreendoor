@@ -7,6 +7,7 @@ import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import SignModal from '../modals_parcels/signModal';
 import Footer from '../modals_parcels/footer';
+import Stripe from '../components/tempStripePage';
 
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
@@ -19,8 +20,6 @@ export default function Home(props) {
 
     // Chargement des informations en DB selon la route /home
     const [salesList, setSalesList] = useState([]);
-    const [filter, setFilter] = useState('')
-    const [type, setType] = useState('')
 
     // Paramètre dynamique passé dans la route pour afficher durant toute la navigation les ventes par caté
     useEffect(() => {
@@ -106,10 +105,6 @@ export default function Home(props) {
       setIsModalSignVisible(currentState);
    };
 
-   var selectedFilter = (currentState) => {
-    setFilter(currentState);
- };
-
   return (
 
         <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
@@ -153,6 +148,7 @@ export default function Home(props) {
 
             </Row>
             <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
+            {/* <Stripe/> */}
             <Footer/>
         </div>
    );

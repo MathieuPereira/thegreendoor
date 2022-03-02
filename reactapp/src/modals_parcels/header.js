@@ -9,8 +9,6 @@ function Header(props) {
    var backGround1 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
    var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
    var surf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg'
-   var surf2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646218684/thegreendoor/background/pexels-tyler-lastovich-1671627_xy9ere.jpg'
-   var surf3 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217629/thegreendoor/background/pexels-pixabay-390051_nyx9eq.jpg'
 
    const [basketCount, setBasketCount] = useState(0);
 
@@ -27,7 +25,7 @@ function Header(props) {
     const settings = {
       dots:true,
       infinite:true,
-      speed:2500,
+      speed:1800,
       slidesToShow:1,
       autoplay:true,
       autoplaySpeed : 8000
