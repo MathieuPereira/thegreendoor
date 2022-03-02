@@ -11,7 +11,7 @@ import Footer from '../modals_parcels/footer';
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
 
-export default function Home(props) {
+function Home(props) {
 
     var { category } = useParams();
 
@@ -19,11 +19,10 @@ export default function Home(props) {
 
     // Chargement des informations en DB selon la route /home
     const [salesList, setSalesList] = useState([]);
-    const [filter, setFilter] = useState('')
-    const [type, setType] = useState('')
 
     // Paramètre dynamique passé dans la route pour afficher durant toute la navigation les ventes par caté
     useEffect(() => {
+       props.addCategory(category);
         async function loadData() {
         var rawResponse = await fetch(`/home?categories=${category}`);
         var response = await rawResponse.json();
@@ -87,6 +86,7 @@ export default function Home(props) {
     const [desc, setDesc] = useState('')
 
     function onCardClick(name, desc) {
+       props.addBrand(name);
         setBrand(name);
         setDesc(desc);
         setIsModalVisible(true);
@@ -105,10 +105,6 @@ export default function Home(props) {
    var handleModalChangeVisibility = (currentState) => {
       setIsModalSignVisible(currentState);
    };
-
-   var selectedFilter = (currentState) => {
-    setFilter(currentState);
- };
 
   return (
 
@@ -157,3 +153,19 @@ export default function Home(props) {
         </div>
    );
 }
+
+function mapDispatchToProps(dispatch) {
+   return {
+      addBrand: function (brand) {
+         dispatch({type: 'add-brand', brand: brand});
+      },
+      addCategory: function (category) {
+         dispatch({type: 'add-category', category : category})
+      }
+   };
+}
+
+export default connect(
+   null,
+   mapDispatchToProps,
+)(Home);

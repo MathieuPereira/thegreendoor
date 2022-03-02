@@ -38,13 +38,6 @@ function SignModal(props) {
    const [errorSignUp, setErrorSignup] = useState('');
    const [errorSignin, setErrorSignin] = useState('');
 
-   // Verify if user already has token
-   useEffect(() => {
-      if (props.token) {
-         setIsLogged(true);
-      }
-   },[])
-
    // Function for set password visible or not
    var isPasswordVisible = (sign, inputType) => {
       if (sign === 'register') {
@@ -72,7 +65,7 @@ function SignModal(props) {
 
    // Handle Signup
    var handleSignup = async () => {
-      if(cgu) {
+      if (cgu) {
          let data = await fetch('/users/sign-up', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
@@ -105,8 +98,13 @@ function SignModal(props) {
          setErrorSignin(<p style={{color: "red"}}>{data.comment}</p>);
       }
    };
+
    if (isLogged) {
-      return <Redirect to="/salepage"/>;
+      if (props.navigation.brand != undefined) {
+         return <Redirect to={`/sale/${props.navigation.brand}`}/>;
+      } else {
+         return <Redirect to="/"/>
+      }
    } else {
       return (
          <div className="modal" style={{visibility: props.state}}
@@ -172,6 +170,13 @@ function SignModal(props) {
 
 }
 
+function mapStateToProps(state) {
+   return {
+      token: state.token,
+      navigation: state.navigation,
+   };
+}
+
 function mapDispatchToProps(dispatch) {
    return {
       addToken: function (token) {
@@ -181,6 +186,6 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(
-   null,
+   mapStateToProps,
    mapDispatchToProps,
 )(SignModal);

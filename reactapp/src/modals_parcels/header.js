@@ -4,15 +4,14 @@ import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
 
-function Header(props) {
+export default function Header(props) {
 
    var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
    const [basketCount, setBasketCount] = useState(0);
 
    const onLogoClick = () => {
-      console.log('Clic sur le logo détecté');
-      return <Redirect to="/home" />
       props.addCategory("");
+      return <Redirect to="/home" />
    };
 
    return (
@@ -70,7 +69,7 @@ function Header(props) {
                <Link to="/home/Mer">Mer</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
                <Link to="/home/Montagne">Montagne</Link>
             </Menu.Item>
 
@@ -85,15 +84,3 @@ function Header(props) {
    );
 }
 
-function mapDispatchToProps(dispatch) {
-   return {
-      addCategory: function (category) {
-         dispatch({type: 'add-category', category: category});
-      },
-   };
-}
-
-export default connect(
-   null,
-   mapDispatchToProps,
-)(Header);

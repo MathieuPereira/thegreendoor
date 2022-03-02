@@ -4,15 +4,15 @@ var saleModel = require('../models/sales');
 var request = require('sync-request');
 
 /*
-GET home page.
+ GET home page.
  Each if is used to add an property to the filter which will then search in the db
-*/
+ */
 router.get('/home', async function (req, res, next) {
    let filter = {};
    let today = new Date;
    today = today.toISOString();
 
-   console.log(req.query.categories)
+   console.log(req.query.categories);
 
    if (req.query.categories != null && req.query.categories != 'undefined')
       filter.categories = req.query.categories;
@@ -29,19 +29,19 @@ router.get('/home', async function (req, res, next) {
 });
 
 router.get('/show-sale', async function (req, res, next) {
+   let brandName = req.query.brandName.replace('%20', ' ');
    let today = new Date;
    let sale = await saleModel.findOne({
-      brandName: req.query.brandName,
+      brandName: brandName,
       startingDate: {$lt: (today)},
-      endingDate: {$gt: (today)}
+      endingDate: {$gt: (today)},
    }).populate();
-   console.log(`**** ${sale} ****`);
 
+   let products = sale.articles;
    if (!sale)
-      res.status(404).json({sale: 'not found'})
+      res.status(404).json({sale: 'not found'});
    else
-      res.status(200).json({sale: sale});
+      res.status(200).json({sale: sale, products: products});
 });
-
 
 module.exports = router;

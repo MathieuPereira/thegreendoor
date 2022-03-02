@@ -1,11 +1,13 @@
 export default function(navigation = {}, action){
-   if(action.type === 'add-category'){
-      let copiedNavigation = JSON.parse(JSON.stringify(navigation));
-      copiedNavigation.category = action.category;
-      return copiedNavigation;
-   } else if (action.type === 'addNavigation') {
-      let copiedNavigation = JSON.parse(JSON.stringify(navigation));
-      copiedNavigation.brand = action.brand;
-      return copiedNavigation;
+   switch(action.type) {
+      case 'add-category' :
+         navigation.category = action.category;
+         return navigation;
+      case 'add-brand' :
+         navigation.brand = action.brand;
+         return navigation;
+      default :
+         return navigation;
    }
+
 }

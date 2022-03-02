@@ -11,7 +11,7 @@ import token from './reducers/token.reducer';
 import navigation from './reducers/navigation.reducer'
 
 // CombineReducers token & navigation
-const store = createStore(combineReducers({token}))
+const store = createStore(combineReducers({token, navigation}))
 
 function App() {
 
@@ -22,7 +22,7 @@ function App() {
                <Switch>
                   <Route component={Home} path="/" exact />  
                   <Route component={Home} path="/home/:category" />
-                  <Route component={SalePage} path="/salepage" />
+                  <Route component={SalePage} path="/sale/:brand" />
                </Switch>
             </Router>
        
