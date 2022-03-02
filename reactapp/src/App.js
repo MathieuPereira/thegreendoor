@@ -3,6 +3,7 @@ import './App.css';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './components/homepage'
 import SalePage from "./components/salePage";
+import ProductPage from "./components/productPage";
 
 // REDUX
 import {Provider} from 'react-redux'
@@ -23,6 +24,7 @@ function App() {
                   <Route component={Home} path="/" exact />  
                   <Route component={Home} path="/home/:category" />
                   <Route component={SalePage} path="/sale/:brand" />
+                  <Route component={ProductPage} path="/product/" />
                </Switch>
             </Router>
        
