@@ -7,6 +7,7 @@ import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import SignModal from '../modals_parcels/signModal';
 import Footer from '../modals_parcels/footer';
+import Stripe from '../components/tempStripePage';
 
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
@@ -55,7 +56,7 @@ function Home(props) {
                     onClick={() => onCardClick(sale.brandName, sale.brandDesc)}
                     position='relative'
                     cover={
-                    <img alt={sale.brandName} src={brandImg} style={{height : 200, width : 470}}/>
+                    <img alt={sale.brandName} src={brandImg} style={{height : 200, width : 480}}/>
                     }
                 >
 
@@ -149,6 +150,7 @@ function Home(props) {
 
             </Row>
             <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
+            {/* <Stripe/> */}
             <Footer/>
         </div>
    );

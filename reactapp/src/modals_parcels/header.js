@@ -1,18 +1,36 @@
 import React, {useState} from 'react';
-import {Menu, Badge} from 'antd';
+import {Menu, Badge, Carousel} from 'antd';
 import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
 
 export default function Header(props) {
 
-   var backGround = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
+   var backGround1 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
+   var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
+   var surf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg'
+
    const [basketCount, setBasketCount] = useState(0);
 
    const onLogoClick = () => {
       props.addCategory("");
       return <Redirect to="/home" />
    };
+
+   // Carousel
+   function onChange(a, b, c) {
+      console.log(a, b, c);
+    }
+
+    const settings = {
+      dots:true,
+      infinite:true,
+      speed:1800,
+      slidesToShow:1,
+      autoplay:true,
+      autoplaySpeed : 8000
+    };
+
 
    return (
 
@@ -48,11 +66,22 @@ export default function Header(props) {
 
          </div>
 
-         <div span={{xs: 24}} style={{marginTop: 0, position: 'relative'}}>
-            <img src={backGround} alt="Outdoor background" style={{height: 200, width: '100%'}}/>
-            <p style={{position: 'absolute', top: 10, left: 170, fontWeight: "bold", fontSize: 20}}>Ventes <span
-               style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
-         </div>
+         <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
+
+            <div>
+               <img src={backGround1} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+            <div>
+               <img src={backGround2} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+            <div>
+               <img src={surf} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+            </div>
+
+         </Carousel>
+
+         <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
+            Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
 
          <Menu span={{xs: 24}} style={{
             backgroundColor: "#FCF5EE",
@@ -69,7 +98,7 @@ export default function Header(props) {
                <Link to="/home/Mer">Mer</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
                <Link to="/home/Montagne">Montagne</Link>
             </Menu.Item>
 

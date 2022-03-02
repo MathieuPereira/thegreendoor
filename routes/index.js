@@ -3,16 +3,19 @@ var router = express.Router();
 var saleModel = require('../models/sales');
 var request = require('sync-request');
 
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+
 /*
- GET home page.
+GET home page.
  Each if is used to add an property to the filter which will then search in the db
- */
+*/
 router.get('/home', async function (req, res, next) {
    let filter = {};
    let today = new Date;
    today = today.toISOString();
 
-   console.log(req.query.categories);
+   console.log(req.query.categories)
 
    if (req.query.categories != null && req.query.categories != 'undefined')
       filter.categories = req.query.categories;
@@ -43,5 +46,57 @@ router.get('/show-sale', async function (req, res, next) {
    else
       res.status(200).json({sale: sale, products: products});
 });
+
+// Gestion du module Stripe
+router.post('/create-checkout-session', async (req, res) => {
+
+   var stripeItems = [];
+   var fraisPort = 0;
+   var totalCmd = 0;
+
+   stripeItems.push({
+      price_data: {
+        currency: 'eur',
+        product_data: {
+          name: 'Article',
+        },
+        unit_amount: 100 * 100,
+      },
+      quantity: 1,
+    });
+
+   if (fraisPort > 0) {
+      stripeItems.push({
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: 'Frais de livraison',
+          },
+          unit_amount: fraisPort * 100,
+        },
+        quantity: 1,
+      });
+    }
+
+   const session = await stripe.checkout.sessions.create({
+      customer_email: 'customer@example.com',
+      billing_address_collection: 'auto',
+      shipping_address_collection: { allowed_countries: ['FR']},
+      line_items: stripeItems,
+      mode: 'payment',
+      success_url: 'https://localhost:3000/success',
+      cancel_url: 'https://localhost:3000/cancel',
+    });
+
+    res.redirect(303, session.url);
+  });
+
+  router.get('/success', function (req, res, next) {
+   res.render('confirm');
+ })
+
+ router.get('/cancel', function (req, res, next) {
+   res.render('cancel');
+ })
 
 module.exports = router;
