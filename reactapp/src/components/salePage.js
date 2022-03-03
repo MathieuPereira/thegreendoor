@@ -9,7 +9,7 @@ import Footer from '../modals_parcels/footer';
 // Import antd & style
 import {Breadcrumb, Select} from "antd";
 import {connect} from "react-redux";
-import '../stylesheets/salePage.css'
+import '../stylesheets/salePage.css';
 
 const {Option} = Select;
 
@@ -53,11 +53,6 @@ function SalePage(props) {
    // Function for the <Select/>
    function handleChange(value) {
    }
-
-   console.log(productsList);
-   console.log(saleImg);
-   console.log(saleEnding);
-   console.log(saleLabels);
 
    var productsCards = productsList.map((product, i) => {
 
@@ -111,18 +106,21 @@ function SalePage(props) {
                margin: "auto",
                marginTop: 20,
             }}>
-               <p style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0}}>Voir le
-                  produit</p>
-               <button className="buttonHover" style={{
-                  background: "#207872",
-                  color: '#FFFFFF',
-                  width: 110,
-                  borderRadius: 32,
-                  fontSize: 12,
-                  padding: "5px 10px 5px 10px",
-                  border: "solid #C4C4C4 2px",
-                  cursor: "pointer",
-               }}>Achat Express
+               <Link to={`/sale/${props.navigation.brand}/${product.name}`}><p
+                  style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0}}>Voir le
+                  produit</p></Link>
+               <button className="buttonHover"
+                       onClick={props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice)}
+                       style={{
+                          background: "#207872",
+                          color: '#FFFFFF',
+                          width: 110,
+                          borderRadius: 32,
+                          fontSize: 12,
+                          padding: "5px 10px 5px 10px",
+                          border: "solid #C4C4C4 2px",
+                          cursor: "pointer",
+                       }}>Achat Express
                </button>
             </div>
          </div>
@@ -153,7 +151,7 @@ function SalePage(props) {
          <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
             <Header/>
             <Label/>
-            <div style={{ margin: 'auto', marginTop: 10}} className="showProduct">
+            <div style={{margin: 'auto', marginTop: 10}} className="showProduct">
                {breadCrumb}
                <div className="displayProducts">
                   <div style={{height: "100%"}} className="rightInfosProductPage">
@@ -166,7 +164,12 @@ function SalePage(props) {
                      </div>
 
                      <div className="displayFilterProducts">
-                        <div style={{display: "flex", justifyContent: 'center', flexDirection: "column", alignItems: "center"}}>
+                        <div style={{
+                           display: "flex",
+                           justifyContent: 'center',
+                           flexDirection: "column",
+                           alignItems: "center",
+                        }}>
                            <p style={{
                               marginLeft: "5%",
                               paddingTop: 15,
@@ -183,7 +186,12 @@ function SalePage(props) {
                               <Option value="Yiminghe">yiminghe</Option>
                            </Select>
                         </div>
-                        <div style={{display: "flex", justifyContent: 'center', flexDirection: "column", alignItems: "center"}}>
+                        <div style={{
+                           display: "flex",
+                           justifyContent: 'center',
+                           flexDirection: "column",
+                           alignItems: "center",
+                        }}>
 
                            <p style={{
                               marginLeft: "5%",
@@ -250,7 +258,22 @@ function mapStateToProps(state) {
    };
 }
 
+function mapDispatchToProps(dispatch) {
+   return {
+      addArticle: function (name, img, normalPrice, reducedPrice) {
+         dispatch({
+            type: 'addArticle',
+            name: name,
+            img: img,
+            size: 'M',
+            normalPrice: normalPrice,
+            reducedPrice: reducedPrice,
+         });
+      },
+   };
+}
+
 export default connect(
    mapStateToProps,
-   null,
+   mapDispatchToProps,
 )(SalePage);

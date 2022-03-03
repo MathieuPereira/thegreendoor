@@ -1,18 +1,40 @@
 export default function (basket = [], action) {
+   let basketCopy = [...basket];
    switch (action.type) {
-      case 'add-article' :
-         let basketCopy = [...basket]
+      case 'addArticle' :
+         for (let e of basketCopy) {
+            if (e.name === action.name) {
+               e.quantity += 1;
+               return basketCopy;
+            }
+         }
          basketCopy.push({
             name: action.name,
             img: action.img,
-            quantity: 0,
-         })
+            quantity: 1,
+            size: action.size,
+            normalPrice: action.normalPrice,
+            reducedPrice: action.reducedPrice,
+         });
          return basketCopy;
-      case 'delete-article' :
+      case 'deleteArticle' :
+         basketCopy = basketCopy.filter(e => e.name !== action.name);
          return basketCopy;
-      case 'modify-article-quantity' :
+      case 'modifyArticleQuantity' :
+         for (let e of basketCopy) {
+            if (e.name === action.name) {
+               e.quantity += action.quantity;
+               return basketCopy;
+            }
+         }
          return basketCopy;
-      case 'modify-article-size' :
+      case 'modifyArticleSize' :
+         for (let e of basketCopy) {
+            if (e.name === action.name) {
+               e.size = action.size;
+               return basketCopy;
+            }
+         }
          return basketCopy;
       default :
          return basket;
