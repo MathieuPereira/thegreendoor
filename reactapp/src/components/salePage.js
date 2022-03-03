@@ -7,7 +7,7 @@ import Label from '../modals_parcels/labelBar';
 import Footer from '../modals_parcels/footer';
 
 // Import antd & style
-import {Breadcrumb, Select} from "antd";
+import {Breadcrumb, Select, Modal, Button} from "antd";
 import {connect} from "react-redux";
 import '../stylesheets/salePage.css';
 
@@ -33,6 +33,18 @@ function SalePage(props) {
       loadData();
    }, []);
 
+   // Gestion de la modal de mise au panier
+   const [isModalVisible, setIsModalVisible] = useState(false);
+
+   function onButtonClick() {
+      setIsModalVisible(true);
+   }
+
+   const handleCancel = () => {
+      setIsModalVisible(false);
+   };
+
+   // Fil d'ariane de navigation
    var breadCrumb;
    if (props.navigation.category != null) {
       breadCrumb =
@@ -59,19 +71,7 @@ function SalePage(props) {
       var reduction = (product.reducedPrice - product.normalPrice) / product.reducedPrice * 100;
 
       return (
-         <div key={i} className="productCard" style={{
-            backgroundColor: "#FFFFFF",
-            padding: 8,
-            height: 450,
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            marginLeft: 5,
-            marginRight: 5,
-            marginTop: 10,
-            marginBottom: 10,
-         }}>
+         <div key={i} className="productCard" style={productCard}>
             <div
                style={{
                   display: "flex",
@@ -82,14 +82,8 @@ function SalePage(props) {
                   marginBottom: 10,
                }}>
                <h5 style={{fontWeight: 450, fontSize: 18, marginBottom: 0}}>{product.name}</h5>
-               <button style={{
-                  width: 80,
-                  borderRadius: 8,
-                  backgroundColor: '#000000',
-                  color: '#FFFFFF',
-                  padding: "5px 15px 5px 15px",
-                  border: "transparent",
-               }}> {reduction}%
+               <button style={discountButton}>
+                  {reduction}%
                </button>
             </div>
             <span style={{width: '95%', height: 0, alignSelf: "center", border: "1px #AEA9A9 solid"}}/>
@@ -107,20 +101,11 @@ function SalePage(props) {
                marginTop: 20,
             }}>
                <Link to={`/sale/${props.navigation.brand}/${product.name}`}><p
-                  style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0}}>Voir le
+                  style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0, marginLeft : 5}}>Voir le
                   produit</p></Link>
                <button className="buttonHover"
-                       onClick={() => props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice)}
-                       style={{
-                          background: "#207872",
-                          color: '#FFFFFF',
-                          width: 110,
-                          borderRadius: 32,
-                          fontSize: 12,
-                          padding: "5px 10px 5px 10px",
-                          border: "solid #C4C4C4 2px",
-                          cursor: "pointer",
-                       }}>Achat Express
+                       onClick={() => {props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice); onButtonClick()}}
+                       style={express}>Achat Express
                </button>
             </div>
          </div>
@@ -129,18 +114,12 @@ function SalePage(props) {
    });
 
    if (productsCards.length === 0) {
-      productsCards = <p style={{color: "#000000"}}>Désolé, aucun article disponible sur cette vente</p>;
+      productsCards = <p style={{color: "#000000"}}>Désolé, aucun article n'est disponible sur cette vente</p>;
    }
 
    var labelList = [];
    for (var i = 0; i < saleLabels.length; i++) {
-      labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={{
-         height: 30,
-         marginBottom: 5,
-         border: '2px solid white',
-         borderRadius: 15,
-         backgroundColor: 'white',
-      }}/>);
+      labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={label}/>);
    }
 
    if (props.token == null) {
@@ -158,7 +137,7 @@ function SalePage(props) {
                      <div style={{width: "100%", height: 250, position: 'relative'}}>
                         <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/${saleImg}.jpeg`}
                              alt="picture"/>
-                        <div style={{position: 'absolute', top: 4, right: 4, display: "flex", flexDirection: "column"}}>
+                        <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
                            {labelList}
                         </div>
                      </div>
@@ -182,8 +161,8 @@ function SalePage(props) {
                                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
                               <Option value="popularite">Popularité</Option>
-                              <Option value="lucy">Lucy</Option>
-                              <Option value="Yiminghe">yiminghe</Option>
+                              <Option value="prix">Prix</Option>
+
                            </Select>
                         </div>
                         <div style={{
@@ -203,23 +182,18 @@ function SalePage(props) {
                            <Select defaultValue="Type de produits"
                                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
-                              <Option value="popularite">POPULARITE</Option>
-                              <Option value="lucy">Lucy</Option>
-                              <Option value="Yiminghe">yiminghe</Option>
+                              <Option value="Chaussures">Chaussures</Option>
+                              <Option value="Vêtements">Vêtements</Option>
+                              <Option value="Accessoires">Accessoires</Option>
                            </Select>
                            <Select defaultValue="Genre"
                                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
                               <Option value="men">Homme</Option>
                               <Option value="women">Femme</Option>
+                              <Option value="women">Enfant</Option>
                            </Select>
-                           <Select defaultValue="Taille" style={{
-                              width: "90%",
-                              marginLeft: "5%",
-                              textTransform: "uppercase",
-                              paddingBottom: 15,
-                              marginTop: 10,
-                           }} onChange={handleChange}>
+                           <Select defaultValue="Taille" style={filter} onChange={handleChange}>
                               <Option value="xs">XS</Option>
                               <Option value="s">S</Option>
                               <Option value="m">M</Option>
@@ -246,6 +220,53 @@ function SalePage(props) {
                </div>
             </div>
             <Footer/>
+
+            <Modal
+
+                title="Votre article a bien été ajouté au panier 😎"
+
+                width={600}
+
+                centered
+
+                visible={isModalVisible}
+
+                onCancel={handleCancel}
+
+                footer={[
+                    <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between'}}>
+                        <Button key="Continue" onClick={handleCancel}>Continuer mes achats</Button>
+
+                    <Link to="/basket"><Button key="submit" style={{backgroundColor: '#207872', borderRadius: 40, border: 0}}
+                                type="primary" onClick={() => console.log("Kikou")}>
+                            Voir mon panier
+                        </Button></Link>
+                    </div>
+                ]}
+                >
+                <div style={{display : 'flex', alignItems : 'center'}}>
+
+                    <div>
+                        <img style={{width: 120, height: 150, marginRight : 20}} src={`/assets/Produits/picture_1.jpeg`} alt=""/>
+                    </div>
+
+                    <div style={{display : 'flex', justifyContent : 'space-between', fontSize : 16, fontFamily : 'Montserrat', width : '100%'}}>
+
+                        <div style={{display : 'flex', flexDirection : 'column'}}>
+                            <p>NOM DU PRODUIT</p>
+                            <p>TAILLE : <span style={{color : '#207872', fontWeight: 'bold'}}>M</span></p>
+                        </div>
+
+                        <div style={{display : 'flex', flexDirection : 'column', textAlign : 'right'}}>
+                            <p style={{marginBottom : 5}}>Prix : <span style={{color : '#207872', fontWeight: 'bold'}}>264,00 €</span></p>
+                            <p style={{fontSize: 15, textDecoration: "line-through"}}> 330,00 €</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </Modal>
          </div>
       );
    }
@@ -277,3 +298,54 @@ export default connect(
    mapStateToProps,
    mapDispatchToProps,
 )(SalePage);
+
+const label = {
+   height: 30,
+   marginBottom: 5,
+   border: '2px solid white',
+   borderRadius: 15,
+   backgroundColor: 'white',
+}
+
+const productCard={
+   backgroundColor: "#FFFFFF",
+   padding: 8,
+   height: 450,
+   display: "flex",
+   flexDirection: "column",
+   justifyContent: "center",
+   alignItems: "center",
+   marginLeft: 5,
+   marginRight: 5,
+   marginTop: 10,
+   marginBottom: 10
+}
+
+const discountButton ={
+   width: 80,
+   borderRadius: 8,
+   backgroundColor: '#000000',
+   color: '#FFFFFF',
+   padding: "5px 15px 5px 15px",
+   border: "transparent",
+}
+
+const express = {
+   background: "#207872",
+   color: '#FFFFFF',
+   borderColor : 'white',
+   width: 110,
+   borderRadius: 32,
+   fontSize: 12,
+   padding: "5px 10px 5px 10px",
+   border: "solid #C4C4C4 2px",
+   cursor: "pointer",
+}
+
+const filter = {
+   width: "90%",
+   marginLeft: "5%",
+   textTransform: "uppercase",
+   paddingBottom: 15,
+   marginTop: 10
+}

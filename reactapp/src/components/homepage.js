@@ -151,7 +151,6 @@ function Home(props) {
 
             </Row>
             <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
-            {/* <Stripe/> */}
             <Footer/>
         </div>
    );
