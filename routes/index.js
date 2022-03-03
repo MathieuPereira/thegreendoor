@@ -29,6 +29,7 @@ router.get('/home', async function (req, res, next) {
    res.status(200).json({sales: sales});
 });
 
+// Show sale or product depends of the query elements
 router.get('/show-sale', async function (req, res, next) {
    let brandName = req.query.brandName.replace('%20', ' ');
    let today = new Date;
@@ -36,27 +37,30 @@ router.get('/show-sale', async function (req, res, next) {
       brandName: brandName,
       startingDate: {$lt: (today)},
       endingDate: {$gt: (today)},
-   }).populate();
+   });
 
    if (!sale) {
       res.status(404).json({sale: 'brand not found'});
    } else {
-      /*
       let products = sale.articles;
-      if (req.query.product != null && req.query.product != "undefined") {
+
+      if (req.query.productName != null && req.query.productName !== "undefined") {
+         let productName = req.query.productName.replace('%20', ' ');
          let product
+
          for (let e of products) {
-            console.log(e.name + '  --  ' + req.query.product);
-            if (e.name == req.query.product)
+            console.log(e.name + '  --  ' + productName);
+            if (e.name === productName)
                product = e;
          }
-         if (product != undefined || product != null) {
+         if (!product) {
             res.status(404).json({sale: 'products not found'});
          } else {
             res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, products: product});
          }
-      }*/
-      res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, saleEnding: sale.endingDate, products: products});
+      } else {
+         res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, saleEnding: sale.endingDate, products: products});
+      }
    }
 });
 
