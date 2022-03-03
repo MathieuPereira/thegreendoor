@@ -7,7 +7,6 @@ import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import SignModal from '../modals_parcels/signModal';
 import Footer from '../modals_parcels/footer';
-import Stripe from '../components/tempStripePage';
 
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
@@ -132,12 +131,14 @@ function Home(props) {
                 onCancel={handleCancel}
                 
                 footer={[
-                    <Button key="Retour" onClick={handleCancel}>Retour</Button>,
+                    <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between'}}>
+                    <Button key="Retour" onClick={handleCancel}>Retour</Button>
 
-                    <Button key="submit" style={{marginLeft: 215, backgroundColor: '#207872', borderRadius: 40, border: 0}}
+                    <Button key="submit" style={{backgroundColor: '#207872', borderRadius: 40, border: 0}}
                             type="primary" onClick={() => handleModalChangeVisibility("visible")}>
                         Se connecter pour accéder à la vente
-                    </Button>,
+                    </Button>
+                    </div>,
                 ]}
             >
                     <p>{desc}</p>
