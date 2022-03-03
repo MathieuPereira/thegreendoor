@@ -15,8 +15,6 @@ router.get('/home', async function (req, res, next) {
    let today = new Date;
    today = today.toISOString();
 
-   console.log(req.query.categories)
-
    if (req.query.categories != null && req.query.categories != 'undefined')
       filter.categories = req.query.categories;
 
@@ -40,11 +38,26 @@ router.get('/show-sale', async function (req, res, next) {
       endingDate: {$gt: (today)},
    }).populate();
 
-   let products = sale.articles;
-   if (!sale)
-      res.status(404).json({sale: 'not found'});
-   else
-      res.status(200).json({sale: sale, products: products});
+   if (!sale) {
+      res.status(404).json({sale: 'brand not found'});
+   } else {
+      /*
+      let products = sale.articles;
+      if (req.query.product != null && req.query.product != "undefined") {
+         let product
+         for (let e of products) {
+            console.log(e.name + '  --  ' + req.query.product);
+            if (e.name == req.query.product)
+               product = e;
+         }
+         if (product != undefined || product != null) {
+            res.status(404).json({sale: 'products not found'});
+         } else {
+            res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, products: product});
+         }
+      }*/
+      res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, saleEnding: sale.endingDate, products: products});
+   }
 });
 
 // Gestion du module Stripe
@@ -92,11 +105,11 @@ router.post('/create-checkout-session', async (req, res) => {
   });
 
   router.get('/success', function (req, res, next) {
-   res.render('confirm');
+   res.json('confirm');
  })
 
  router.get('/cancel', function (req, res, next) {
-   res.render('cancel');
+   res.json('cancel');
  })
 
 module.exports = router;
