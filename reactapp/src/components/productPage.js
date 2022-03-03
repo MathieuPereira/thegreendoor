@@ -6,9 +6,7 @@ import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import Footer from '../modals_parcels/footer';
 
-import {Divider} from 'antd';
-
-import {Select, Breadcrumb} from "antd";
+import {Select, Breadcrumb, Divider} from "antd";
 import {connect} from "react-redux";
 
 const {Option} = Select;
@@ -25,7 +23,7 @@ function ProductPage(props) {
       async function loadData() {
          var rawResponse = await fetch(`/show-sale?brandName=${brand}&productName=${product}`);
          var response = await rawResponse.json();
-         console.log(response)
+         // console.log(response)
          setProductConsulted(response.products);
          setSaleLabels(response.saleLabels);
          setSaleImg(response.saleImg);
@@ -34,21 +32,11 @@ function ProductPage(props) {
       loadData();
    }, []);
 
-   console.log(productConsulted);
-   console.log(saleImg);
-   console.log(saleLabels);
-
    var reduction = (productConsulted.reducedPrice - productConsulted.normalPrice) / productConsulted.reducedPrice * 100;
 
     var labelList = [];
     for (var i = 0; i < saleLabels.length; i++) {
-       labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={{
-          height: 30,
-          marginBottom: 5,
-          border: '2px solid white',
-          borderRadius: 15,
-          backgroundColor: 'white',
-       }}/>);
+       labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={label}/>);
     }
  
    function handleChange(value) {
@@ -73,9 +61,9 @@ function ProductPage(props) {
          </Breadcrumb>;
    }
    
-   // if (props.token == null) {
-   //     return <Redirect to="/"/>;
-   // } else {
+   if (props.token == null) {
+       return <Redirect to="/"/>;
+   } else {
 
    return (
 
@@ -137,13 +125,7 @@ function ProductPage(props) {
                         <Option value="women">Femme</Option>
                         <Option value="children">Enfant</Option>
                      </Select>
-                     <Select defaultValue="Taille" style={{
-                        width: "90%",
-                        marginLeft: "5%",
-                        textTransform: "uppercase",
-                        marginTop: 10,
-                        marginBottom : 10
-                     }} onChange={handleChange}>
+                     <Select defaultValue="Taille" style={filter} onChange={handleChange}>
                         <Option value="xs">XS</Option>
                         <Option value="s">S</Option>
                         <Option value="m">M</Option>
@@ -180,14 +162,8 @@ function ProductPage(props) {
                            }}>
 
                               <h5 style={{fontWeight: 450, fontSize: 18, marginBottom: 0}}>{productConsulted.name}</h5>
-                              <button style={{
-                                 width: 80,
-                                 borderRadius: 8,
-                                 backgroundColor: '#000000',
-                                 color: '#FFFFFF',
-                                 padding: "5px 15px 5px 15px",
-                                 border: "transparent",
-                              }}> {reduction}%
+                              <button style={discountButton}> 
+                                 {reduction}%
                               </button>
 
                            </div>
@@ -200,23 +176,15 @@ function ProductPage(props) {
 
                      {/* Concerne la colonne de droite de la productCard*/}
 
-                     <div style={{
-                              backgroundColor: "#FFFFFF",
-                              padding: 8,
-                              paddingTop : 0,
-                              width: '50%',
-                              display : 'flex',
-                              flexDirection : 'column',
-                              justifyContent: "space-around",
-                     }}>
+                     <div style={rightColumn}>
 
-                           <p style={{display : 'flex', flexDirection : 'column', alignItems: 'end', fontWeight: 520, fontFamily : 'Montserrat', marginRight : 15}}><span style={{fontSize: 28, color: "#207872"}}>
+                        <p style={{display : 'flex', flexDirection : 'column', alignItems: 'end', fontWeight: 520, fontFamily : 'Montserrat', marginRight : 15}}><span style={{fontSize: 28, color: "#207872"}}>
                            {productConsulted.reducedPrice},00 €</span><span style={{fontSize: 15, textDecoration: "line-through"}}> {productConsulted.normalPrice},00 €</span>
-                           </p>
+                        </p>
 
-                           <div style={{height : 80, marginLeft : 10}}>
+                        <div style={{height : 80, marginLeft : 10}}>
 
-                              <Select defaultValue="Taille"
+                           <Select defaultValue="Taille"
                                  style={{width: "40%", textTransform: "uppercase", marginTop: 20, marginBottom : 10}}
                                  onChange={handleChange}>
                                  <Option value="xs">XS</Option>
@@ -225,38 +193,21 @@ function ProductPage(props) {
                                  <Option value="l">L</Option>
                                  <Option value="xl">XL</Option>
                                  <Option value="xxl">XXL</Option>
-                              </Select>
+                           </Select>
 
-                              <p style={{fontSize : 12, marginRight : 10, color : 'blue', textDecoration: 'underline'}}>Guide des tailles</p>
+                           <p style={{fontSize : 12, marginRight : 10, color : 'blue', textDecoration: 'underline'}}>Guide des tailles</p>
                            
-                           </div>
+                        </div>
 
-                           <div style={{height : 200, marginLeft : 10}}>
-
-                              <h2>Descriptif rapide</h2>
-
-                              <p style={{fontSize : 12, marginRight : 10}}> {productConsulted.fastDesc}</p>
-
-                           </div>
+                        <div style={{height : 200, marginLeft : 10}}>
+                           <h2>Descriptif rapide</h2>
+                           <p style={{fontSize : 12, marginRight : 10}}> {productConsulted.fastDesc}</p>
+                        </div>
 
                            <div>
-
-                              <button className="buttonHover" style={{
-                                 marginTop : 20,
-                                 background: "#207872",
-                                 color: '#FFFFFF',
-                                 width: 180,
-                                 borderRadius: 32,
-                                 fontSize: 14,
-                                 padding: "5px 10px 5px 10px",
-                                 borderColor : '#FFFFFF',
-                                 border: "solid #C4C4C4 2px",
-                                 cursor: "pointer",
-                                 marginLeft : 10
-                              }}>
+                              <button style={addButton}>
                                  Ajouter au panier
                               </button>
-
                            </div>
 
                      </div>
@@ -265,19 +216,16 @@ function ProductPage(props) {
 
                   <div style={{marginLeft : 20, marginTop : 10, display: "flex", flexDirection: "column"}}>
 
-                     <div style={{
-                                 backgroundColor: "#FFFFFF",
-                                 padding: 15,
-                                 width: '100%',
-                                 margin: 0,
-                        }}>
+                     <div style={{backgroundColor: "#FFFFFF", padding: 15,width: '100%', margin: 0}}>
 
                         <h2>Caractéristiques principales</h2>
 
                         <Divider style={{marginLeft : 2, marginTop : 3, marginBottom : 15, width: '50%', alignSelf: "start", border: "0.5px #AEA9A9 solid"}}/>
-
+                        
                         <p style={{fontSize : 12, marginRight : 10}}>{productConsulted.fastDesc}</p>
+
                      </div>
+
                   </div>
 
                </div>
@@ -288,9 +236,8 @@ function ProductPage(props) {
         <Footer/>
       </div>
    );
-   // }
 }
-// }
+}
 
 function mapStateToProps(state) {
    return {
@@ -303,3 +250,53 @@ export default connect(
    mapStateToProps,
    null,
 )(ProductPage);
+
+
+const label = {
+   height: 30,
+   marginBottom: 5,
+   border: '2px solid white',
+   borderRadius: 15,
+   backgroundColor: 'white',
+}
+
+const rightColumn = {
+      backgroundColor: "#FFFFFF",
+      padding: 8,
+      paddingTop : 0,
+      width: '50%',
+      display : 'flex',
+      flexDirection : 'column',
+      justifyContent: "space-around"
+}
+
+const discountButton = {
+   width: 80,
+   borderRadius: 8,
+   backgroundColor: '#000000',
+   color: '#FFFFFF',
+   padding: "5px 15px 5px 15px",
+   border: "transparent"
+}
+
+const addButton = {
+   marginTop : 20,
+   background: "#207872",
+   color: '#FFFFFF',
+   width: 180,
+   borderRadius: 32,
+   fontSize: 14,
+   padding: "5px 10px 5px 10px",
+   borderColor : 'white',
+   border: "solid #C4C4C4 2px",
+   cursor: "pointer",
+   marginLeft : 10
+}
+
+const filter = {
+   width: "90%",
+   marginLeft: "5%",
+   textTransform: "uppercase",
+   marginTop: 10,
+   marginBottom : 10
+}
