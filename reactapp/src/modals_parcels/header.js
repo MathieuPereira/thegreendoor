@@ -4,33 +4,32 @@ import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
 
-export default function Header(props) {
+function Header(props) {
 
    var backGround1 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
-   var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg'
-   var surf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg'
+   var backGround2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg';
+   var surf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg';
 
    const [basketCount, setBasketCount] = useState(0);
 
    const onLogoClick = () => {
       props.addCategory("");
-      return <Redirect to="/home" />
+      return <Redirect to="/home"/>;
    };
 
    // Carousel
    function onChange(a, b, c) {
       console.log(a, b, c);
-    }
+   }
 
-    const settings = {
-      dots:true,
-      infinite:true,
-      speed:1800,
-      slidesToShow:1,
-      autoplay:true,
-      autoplaySpeed : 8000
-    };
-
+   const settings = {
+      dots: true,
+      infinite: true,
+      speed: 1800,
+      slidesToShow: 1,
+      autoplay: true,
+      autoplaySpeed: 8000,
+   };
 
    return (
 
@@ -58,9 +57,11 @@ export default function Header(props) {
                <p style={{marginBottom: 0, marginRight: 70}}>Qui sommes-nous ?</p>
                <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0}}>Se connecter</p>
                <div style={{marginLeft: 50, marginRight: 30}}>
-                  <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
-                     <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
-                  </Badge>
+                  <Link to={'/basket'}>
+                     <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
+                        <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
+                     </Badge>
+                  </Link>
                </div>
             </div>
 
@@ -94,15 +95,15 @@ export default function Header(props) {
             padding: 5,
          }} mode="horizontal">
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
                <Link to="/home/Mer">Mer</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
                <Link to="/home/Montagne">Montagne</Link>
             </Menu.Item>
 
-            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item" >
+            <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
                <Link to="/home/Nature">Nature</Link>
             </Menu.Item>
 
@@ -112,4 +113,17 @@ export default function Header(props) {
 
    );
 }
+
+function mapStateToProps(state) {
+   return {
+      token: state.token,
+      basket: state.basket,
+   };
+}
+
+export default connect(
+   mapStateToProps,
+   null,
+)(Header);
+
 

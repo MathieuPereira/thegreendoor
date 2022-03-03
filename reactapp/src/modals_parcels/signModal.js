@@ -99,7 +99,7 @@ function SignModal(props) {
       }
    };
 
-   if (isLogged) {
+   if (isLogged || props.token != null && props.state === 'visible') {
       if (props.navigation.brand != undefined) {
          return <Redirect to={`/sale/${props.navigation.brand}`}/>;
       } else {

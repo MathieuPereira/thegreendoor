@@ -23,7 +23,7 @@ export default function (basket = [], action) {
       case 'modifyArticleQuantity' :
          for (let e of basketCopy) {
             if (e.name === action.name) {
-               e.quantity += action.quantity;
+               e.quantity = action.quantity;
                return basketCopy;
             }
          }

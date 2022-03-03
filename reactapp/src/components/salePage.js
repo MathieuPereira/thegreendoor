@@ -110,7 +110,7 @@ function SalePage(props) {
                   style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0}}>Voir le
                   produit</p></Link>
                <button className="buttonHover"
-                       onClick={props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice)}
+                       onClick={() => props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice)}
                        style={{
                           background: "#207872",
                           color: '#FFFFFF',
