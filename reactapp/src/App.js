@@ -19,16 +19,16 @@ function App() {
 
    return (
       <Provider store={store}>
-
-         <Router>
-            <Switch>
-               <Route component={Home} path="/" exact/>
-               <Route component={Home} path="/home/:category"/>
-               <Route component={SalePage} path="/sale/:brand" exact/>
-               <Route component={ProductPage} path="/product/"/>
-            </Switch>
-         </Router>
-
+         
+            <Router>
+               <Switch>
+                  <Route component={Home} path="/" exact />  
+                  <Route component={Home} path="/home/:category" />
+                  <Route component={SalePage} path="/sale/:brand" exact />
+                  <Route component={ProductPage} path="/sale/:brand/:product" />
+               </Switch>
+            </Router>
+       
       </Provider>
    );
 }

@@ -8,27 +8,71 @@ import Footer from '../modals_parcels/footer';
 
 import {Divider} from 'antd';
 
-import {Breadcrumb, Select} from "antd";
+import {Select, Breadcrumb} from "antd";
 import {connect} from "react-redux";
 
 const {Option} = Select;
 
 function ProductPage(props) {
 
-    function handleChange(value) {
-    }
+   var {brand} = useParams();
+   var {product} = useParams();
+   const [productConsulted, setProductConsulted] = useState([]);
+   const [saleLabels, setSaleLabels] = useState([]);
+   const [saleImg, setSaleImg] = useState('');
 
-   //  var labelList = [];
-   //  for (var i = 0; i < saleLabels.length; i++) {
-   //     labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={{
-   //        height: 30,
-   //        marginBottom: 5,
-   //        border: '2px solid white',
-   //        borderRadius: 15,
-   //        backgroundColor: 'white',
-   //     }}/>);
-   //  }
+   useEffect(() => {
+      async function loadData() {
+         var rawResponse = await fetch(`/show-sale?brandName=${brand}&productName=${product}`);
+         var response = await rawResponse.json();
+         console.log(response)
+         setProductConsulted(response.products);
+         setSaleLabels(response.saleLabels);
+         setSaleImg(response.saleImg);
+      }
+
+      loadData();
+   }, []);
+
+   console.log(productConsulted);
+   console.log(saleImg);
+   console.log(saleLabels);
+
+   var reduction = (productConsulted.reducedPrice - productConsulted.normalPrice) / productConsulted.reducedPrice * 100;
+
+    var labelList = [];
+    for (var i = 0; i < saleLabels.length; i++) {
+       labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={{
+          height: 30,
+          marginBottom: 5,
+          border: '2px solid white',
+          borderRadius: 15,
+          backgroundColor: 'white',
+       }}/>);
+    }
  
+   function handleChange(value) {
+   }
+
+   var breadCrumb;
+   if (props.navigation.category != null) {
+      breadCrumb =
+         <Breadcrumb separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
+            <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link
+               to={`/home/${props.navigation.category}`}>{props.navigation.category}</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>{brand}</Breadcrumb.Item>
+            <Breadcrumb.Item>{product}</Breadcrumb.Item>
+         </Breadcrumb>;
+   } else {
+      breadCrumb =
+         <Breadcrumb separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
+            <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
+            <Breadcrumb.Item><Link to="/">{brand}</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>{product}</Breadcrumb.Item>
+         </Breadcrumb>;
+   }
+   
    // if (props.token == null) {
    //     return <Redirect to="/"/>;
    // } else {
@@ -39,40 +83,18 @@ function ProductPage(props) {
          <Header/>
          <Label/>
          <div style={{width: '70%', margin: 'auto', marginTop: 10}}>
-
+            {breadCrumb}
             <div style={{display: 'flex', justifyContent: 'flex-start', flexDirection: "row", flexWrap: 'nowrap'}}>
                <div style={{width: '250px', height: "100%"}}>
 
                    {/* Concerne l'image de la marque*/}
                   <div style={{width: 250, height: 250, position: 'relative', marginBottom : 10}}>
-                     <img style={{width: "250px", height: "250px"}} src={`/assets/picture.jpeg`}
+                     <img style={{width: "250px", height: "250px"}} src={`/assets/${saleImg}.jpeg`}
                           alt="picture"/>
 
                      <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
 
-                        <img src={`/assets/icones/french_flag.png`} style={{
-                              height: 30,
-                              marginBottom: 5,
-                              border: '2px solid white',
-                              borderRadius: 15,
-                              backgroundColor: 'white',
-                           }}/>
-
-                        <img src={`/assets/icones/biosourced_materials.png`} style={{
-                           height: 30,
-                           marginBottom: 5,
-                           border: '2px solid white',
-                           borderRadius: 15,
-                           backgroundColor: 'white',
-                        }}/>
-
-                        <img src={`/assets/icones/green_delivery.png`} style={{
-                           height: 30,
-                           marginBottom: 5,
-                           border: '2px solid white',
-                           borderRadius: 15,
-                           backgroundColor: 'white',
-                        }}/>
+                        {labelList}
 
                      </div>
 
@@ -119,8 +141,8 @@ function ProductPage(props) {
                         width: "90%",
                         marginLeft: "5%",
                         textTransform: "uppercase",
-                        paddingBottom: 15,
                         marginTop: 10,
+                        marginBottom : 10
                      }} onChange={handleChange}>
                         <Option value="xs">XS</Option>
                         <Option value="s">S</Option>
@@ -157,7 +179,7 @@ function ProductPage(props) {
                               marginLeft : 5
                            }}>
 
-                              <h5 style={{fontWeight: 450, fontSize: 18, marginBottom: 0}}>NAIKOON JKT</h5>
+                              <h5 style={{fontWeight: 450, fontSize: 18, marginBottom: 0}}>{productConsulted.name}</h5>
                               <button style={{
                                  width: 80,
                                  borderRadius: 8,
@@ -165,14 +187,14 @@ function ProductPage(props) {
                                  color: '#FFFFFF',
                                  padding: "5px 15px 5px 15px",
                                  border: "transparent",
-                              }}> -20%
+                              }}> {reduction}%
                               </button>
 
                            </div>
 
                            <Divider style={{margin : 5, marginTop : 10, alignSelf: "start", border: "0.5px #AEA9A9 solid"}}/>
                      
-                           <img style={{width: 300, height: 435}} src={`/assets/Produits/picture_1.jpeg`} alt=""/>
+                           <img style={{width: 300, height: 435}} src={`/assets/Produits/${productConsulted.img}.jpeg`} alt=""/>
 
                      </div>
 
@@ -189,7 +211,7 @@ function ProductPage(props) {
                      }}>
 
                            <p style={{display : 'flex', flexDirection : 'column', alignItems: 'end', fontWeight: 520, fontFamily : 'Montserrat', marginRight : 15}}><span style={{fontSize: 28, color: "#207872"}}>
-                              176,00 €</span><span style={{fontSize: 15, textDecoration: "line-through"}}>220,00 €</span>
+                           {productConsulted.reducedPrice},00 €</span><span style={{fontSize: 15, textDecoration: "line-through"}}> {productConsulted.normalPrice},00 €</span>
                            </p>
 
                            <div style={{height : 80, marginLeft : 10}}>
@@ -213,7 +235,7 @@ function ProductPage(props) {
 
                               <h2>Descriptif rapide</h2>
 
-                              <p style={{fontSize : 12, marginRight : 10}}>La flexibilité haut de gamme. La Naikoon jacket inclut notre toute nouvelle technologie à base de fibres biosourcées, réalisées à partir de déchets de cannes à sucre qui sont ensuite convertis en polyester biosourcé. Cette veste intègre une shell extérieure confortable et stretch pour une liberté de mouvement absolue.</p>
+                              <p style={{fontSize : 12, marginRight : 10}}> {productConsulted.fastDesc}</p>
 
                            </div>
 
@@ -254,7 +276,7 @@ function ProductPage(props) {
 
                         <Divider style={{marginLeft : 2, marginTop : 3, marginBottom : 15, width: '50%', alignSelf: "start", border: "0.5px #AEA9A9 solid"}}/>
 
-                        <p style={{fontSize : 12, marginRight : 10}}>La flexibilité haut de gamme. La Naikoon jacket inclut notre toute nouvelle technologie à base de fibres biosourcées, réalisées à partir de déchets de cannes à sucre qui sont ensuite convertis en polyester biosourcé. Cette veste intègre une shell extérieure confortable et stretch pour une liberté de mouvement absolue. Elle incorpore notre membrane DRYPLAY imper-respirante 20K/20K garantie sans PFOA/PFOS et qui assure une thermorégulation optimale tandis que sa doublure Coremax protège du froid les zones les plus sensibles. Pour ne laisser aucune chance à l'humidité, ses coutures sont entièrement cousues-collées et les zips YKK sont également étanches. Pour une protection additionnelle, la capuche, les manchettes et la jupe pare-neige sont ajustables.</p>
+                        <p style={{fontSize : 12, marginRight : 10}}>{productConsulted.fastDesc}</p>
                      </div>
                   </div>
 
