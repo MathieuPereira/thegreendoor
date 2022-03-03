@@ -41,8 +41,8 @@ router.get('/show-sale', async function (req, res, next) {
    if (!sale) {
       res.status(404).json({sale: 'brand not found'});
    } else {
-      /*
       let products = sale.articles;
+      /*
       if (req.query.product != null && req.query.product != "undefined") {
          let product
          for (let e of products) {
@@ -57,6 +57,7 @@ router.get('/show-sale', async function (req, res, next) {
          }
       }*/
       res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, saleEnding: sale.endingDate, products: products});
+      // res.status(200).json({saleLabels: sale.brandLabels, saleImg: sale.brandImg, saleEnding: sale.endingDate, products: products});
    }
 });
 
