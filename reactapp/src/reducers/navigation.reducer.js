@@ -9,5 +9,4 @@ export default function(navigation = {}, action){
       default :
          return navigation;
    }
-
 }
