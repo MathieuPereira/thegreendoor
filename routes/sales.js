@@ -61,7 +61,7 @@ router.post('/add-articles', async function (req, res, next) {
       normalPrice: req.body.normalPrice,
       reducedPrice: req.body.reducedPrice,
       fastDesc: req.body.fastDesc,
-      detailedDesc: req.body.detailed,
+      detailedDesc: req.body.detailedDesc,
    });
 
    let savedSales = await sale.save();
