@@ -16,10 +16,12 @@ function ProductPage(props) {
 
    // Gestion de la modal de mise au panier
    const [isModalVisible, setIsModalVisible] = useState(false);
+   const [size, setSize] = useState('')
 
    function onButtonClick() {
-        setIsModalVisible(true);
-    } 
+       props.addArticle(productConsulted.name, productConsulted.img, size, productConsulted.normalPrice, productConsulted.reducedPrice)
+       setIsModalVisible(true);
+    }
 
     const handleCancel = () => {
        setIsModalVisible(false);
@@ -203,13 +205,13 @@ function ProductPage(props) {
 
                            <Select defaultValue="Taille"
                                  style={{width: "40%", textTransform: "uppercase", marginTop: 20, marginBottom : 10}}
-                                 onChange={handleChange}>
-                                 <Option value="xs">XS</Option>
-                                 <Option value="s">S</Option>
-                                 <Option value="m">M</Option>
-                                 <Option value="l">L</Option>
-                                 <Option value="xl">XL</Option>
-                                 <Option value="xxl">XXL</Option>
+                                 onChange={(e) => setSize(e)}>
+                                 <Option value="XS">XS</Option>
+                                 <Option value="S">S</Option>
+                                 <Option value="M">M</Option>
+                                 <Option value="L">L</Option>
+                                 <Option value="XL">XL</Option>
+                                 <Option value="XXL">XXL</Option>
                            </Select>
 
                            <p style={{fontSize : 12, marginRight : 10, color : 'blue', textDecoration: 'underline'}}>Guide des tailles</p>
@@ -278,19 +280,19 @@ function ProductPage(props) {
                 <div style={{display : 'flex', alignItems : 'center'}}>
     
                     <div>
-                        <img style={{width: 120, height: 150, marginRight : 20}} src={`/assets/Produits/picture_1.jpeg`} alt=""/>
+                        <img style={{width: 120, height: 150, marginRight : 20}} src={`/assets/Produits/${productConsulted.img}.jpeg`} alt=""/>
                     </div>
     
                     <div style={{display : 'flex', justifyContent : 'space-between', fontSize : 16, fontFamily : 'Montserrat', width : '100%'}}>
                     
                         <div style={{display : 'flex', flexDirection : 'column'}}>
-                            <p>NOM DU PRODUIT</p>
-                            <p>TAILLE : <span style={{color : '#207872', fontWeight: 'bold'}}>M</span></p>
+                            <p>{productConsulted.name}</p>
+                            <p>TAILLE : <span style={{color : '#207872', fontWeight: 'bold'}}>{size}</span></p>
                         </div>
     
                         <div style={{display : 'flex', flexDirection : 'column', textAlign : 'right'}}>
-                            <p style={{marginBottom : 5}}>Prix : <span style={{color : '#207872', fontWeight: 'bold'}}>264,00 €</span></p>
-                            <p style={{fontSize: 15, textDecoration: "line-through"}}> 330,00 €</p>
+                            <p style={{marginBottom : 5}}>Prix : <span style={{color : '#207872', fontWeight: 'bold'}}>{productConsulted.reducedPrice},00 €</span></p>
+                            <p style={{fontSize: 15, textDecoration: "line-through"}}> {productConsulted.normalPrice},00 €</p>
                         </div>
     
                     </div>
@@ -307,12 +309,28 @@ function mapStateToProps(state) {
    return {
       token: state.token,
       navigation: state.navigation,
+       basket: state.basket,
    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        addArticle: function (name, img, size, normalPrice, reducedPrice) {
+            dispatch({
+                type: 'addArticle',
+                name: name,
+                img: img,
+                size: size,
+                normalPrice: normalPrice,
+                reducedPrice: reducedPrice,
+            });
+        },
+    };
 }
 
 export default connect(
    mapStateToProps,
-   null,
+   mapDispatchToProps,
 )(ProductPage);
 
 

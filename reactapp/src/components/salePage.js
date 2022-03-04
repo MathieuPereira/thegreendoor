@@ -19,7 +19,6 @@ function SalePage(props) {
    const [saleImg, setSaleImg] = useState('');
    const [saleEnding, setSaleEnding] = useState(new Date);
    const [productsList, setProductsList] = useState([]);
-   const [selectValue, setSelectValue] = useState('TAILLE');
 
    useEffect(() => {
       async function loadData() {
@@ -32,10 +31,6 @@ function SalePage(props) {
       }
       loadData();
    }, []);
-
-    useEffect(() => {
-        props.modifyLastArticleSize(modalName, selectValue)
-    }, [selectValue]);
 
    // Gestion de la modal de mise au panier
    const [isModalVisible, setIsModalVisible] = useState(false);
@@ -269,9 +264,8 @@ function SalePage(props) {
 
                         <div style={{display : 'flex', flexDirection : 'column'}}>
                             <p>{modalName}</p>
-                            <p style={{marginBottom: 0}}>TAILLE :</p>
-                            <Select defaultValue={selectValue} style={filter}
-                                    onChange={(e) => setSelectValue(e)}>
+                            <Select defaultValue={'TAILLE'} style={filter}
+                                    onChange={(e) => props.modifyLastArticleSize(e)}>
                                 <Option value="XS">XS</Option>
                                 <Option value="S">S</Option>
                                 <Option value="M">M</Option>
@@ -315,10 +309,9 @@ function mapDispatchToProps(dispatch) {
             reducedPrice: reducedPrice,
          });
       },
-       modifyLastArticleSize: function (name, size) {
+       modifyLastArticleSize: function (size) {
            dispatch({
                type: 'modifyLastArticleSize',
-               name: name,
                size: size,
            });
        }

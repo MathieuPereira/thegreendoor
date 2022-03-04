@@ -18,7 +18,7 @@ export default function (basket = [], action) {
          });
          return basketCopy;
       case 'deleteArticle' :
-         basketCopy = basketCopy.filter(e => e.name !== action.name);
+         basketCopy.splice(action.index, 1)
          return basketCopy;
       case 'modifyArticleQuantity' :
          for (let e of basketCopy) {
@@ -29,15 +29,7 @@ export default function (basket = [], action) {
          }
          return basketCopy;
       case 'modifyArticleSize' :
-         for (let e of basketCopy) {
-            if (e.name === action.name && e.size === action.size) {
-               e.quantity += 1;
-               return basketCopy;
-            } else if (e.name === action.name && e.size !== action.size) {
-               e.size = action.size;
-               return basketCopy;
-            }
-         }
+         basketCopy[action.index].size = action.size;
          return basketCopy;
       case 'modifyLastArticleSize' :
          if (basketCopy.length > 0) {
