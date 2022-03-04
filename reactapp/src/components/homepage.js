@@ -22,6 +22,7 @@ function Home(props) {
 
     // Paramètre dynamique passé dans la route pour afficher durant toute la navigation les ventes par caté
     useEffect(() => {
+        window.scrollTo(0, 0);
        props.addCategory(category);
         async function loadData() {
         var rawResponse = await fetch(`/home?categories=${category}`);

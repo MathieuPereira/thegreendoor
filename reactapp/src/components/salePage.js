@@ -21,6 +21,7 @@ function SalePage(props) {
    const [productsList, setProductsList] = useState([]);
 
    useEffect(() => {
+       window.scrollTo(0, 290);
       async function loadData() {
          var rawResponse = await fetch(`/show-sale?brandName=${brand}`);
          var response = await rawResponse.json();

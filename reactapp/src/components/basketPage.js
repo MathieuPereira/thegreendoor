@@ -20,6 +20,7 @@ function SalePage(props) {
     let basketArticles;
 
     useEffect(() => {
+        window.scrollTo(0, 290);
         let discount = 0;
         let price = 0;
         for (let e of props.basket) {
