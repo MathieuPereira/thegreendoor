@@ -130,9 +130,9 @@ function SignModal(props) {
                   </form>
                   <button className="signButton mt buttonHover" onClick={() => handleSignin()}>Se connecter</button>
                   <Link to="/"><p className="forgetPassword">mot de passe oublié ? c’est par ici 👇</p></Link>
-                  <h5 className="signTitle mt">Ou connectez-vous via : </h5>
-                  <img style={{width: "270px", height: "50px"}} alt="google auth picture"
-                       src="./googleauthpicture.png"/>
+                  <h5 className="signTitle mt" style={{marginBottom : 15}}>Ou connectez-vous via : </h5>
+                  <img style={{width: "270px", height: "50px", cursor : 'pointer'}} alt="google auth picture"
+                       src="/assets/sign_google.png"/>
                </div>
                <span className="divider"/>
                <div className="signSection">
