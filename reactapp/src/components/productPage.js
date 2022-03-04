@@ -60,16 +60,20 @@ function ProductPage(props) {
       breadCrumb =
          <Breadcrumb separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
             <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
-            <Breadcrumb.Item><Link
-               to={`/home/${props.navigation.category}`}>{props.navigation.category}</Link></Breadcrumb.Item>
-            <Breadcrumb.Item>{brand}</Breadcrumb.Item>
+            <Breadcrumb.Item>
+               <Link to={`/home/${props.navigation.category}`}>{props.navigation.category}</Link>
+            </Breadcrumb.Item>
+            <Breadcrumb.Item>
+               <Link to={`/sale/${brand}`}>{brand}</Link>
+            </Breadcrumb.Item>
             <Breadcrumb.Item>{product}</Breadcrumb.Item>
          </Breadcrumb>;
    } else {
       breadCrumb =
          <Breadcrumb separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
             <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
-            <Breadcrumb.Item><Link to="/">{brand}</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>
+               <Link to={`/sale/${brand}`}>{brand}</Link></Breadcrumb.Item>
             <Breadcrumb.Item>{product}</Breadcrumb.Item>
          </Breadcrumb>;
    }
@@ -262,11 +266,11 @@ function ProductPage(props) {
                     
                 footer={[
                     <div style={{display : 'flex', flexDirection : 'row', justifyContent : 'space-between'}}>
-                        <Button key="Continue" ><Link to="/">Continuer mes achats</Link></Button>
+                        <Button key="Continue" ><Link to={`/sale/${brand}`}>Continuer mes achats</Link></Button>
     
                         <Button key="submit" style={{backgroundColor: '#207872', borderRadius: 40, border: 0}}
-                                type="primary" onClick={() => console.log("Kikou")}>
-                            Voir mon panier
+                                type="primary">
+                            <Link to="/basket">Voir mon panier</Link>
                         </Button>
                     </div>
                 ]}
