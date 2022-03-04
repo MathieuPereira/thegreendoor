@@ -3,7 +3,7 @@ export default function (basket = [], action) {
    switch (action.type) {
       case 'addArticle' :
          for (let e of basketCopy) {
-            if (e.name === action.name) {
+            if (e.name === action.name && e.size === action.size) {
                e.quantity += 1;
                return basketCopy;
             }
@@ -30,10 +30,18 @@ export default function (basket = [], action) {
          return basketCopy;
       case 'modifyArticleSize' :
          for (let e of basketCopy) {
-            if (e.name === action.name) {
+            if (e.name === action.name && e.size === action.size) {
+               e.quantity += 1;
+               return basketCopy;
+            } else if (e.name === action.name && e.size !== action.size) {
                e.size = action.size;
                return basketCopy;
             }
+         }
+         return basketCopy;
+      case 'modifyLastArticleSize' :
+         if (basketCopy.length > 0) {
+            basketCopy[basketCopy.length - 1].size = action.size
          }
          return basketCopy;
       default :

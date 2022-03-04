@@ -19,6 +19,7 @@ function SalePage(props) {
    const [saleImg, setSaleImg] = useState('');
    const [saleEnding, setSaleEnding] = useState(new Date);
    const [productsList, setProductsList] = useState([]);
+   const [selectValue, setSelectValue] = useState('TAILLE');
 
    useEffect(() => {
       async function loadData() {
@@ -29,14 +30,26 @@ function SalePage(props) {
          setSaleImg(response.saleImg);
          setSaleEnding(new Date(response.saleEnding));
       }
-
       loadData();
    }, []);
 
+    useEffect(() => {
+        props.modifyLastArticleSize(modalName, selectValue)
+    }, [selectValue]);
+
    // Gestion de la modal de mise au panier
    const [isModalVisible, setIsModalVisible] = useState(false);
+   const [modalName, setModalName] = useState('');
+   const [modalImg, setModalImg] = useState('');
+   const [modalNormalPrice, setModalNormalPrice] = useState('');
+   const [modalReducedPrice, setModalReducedPrice] = useState('');
 
-   function onButtonClick() {
+
+   function onButtonClick(name, img, normalPrice, reducedPrice) {
+       setModalName(name)
+       setModalImg(img)
+       setModalNormalPrice(normalPrice)
+       setModalReducedPrice(reducedPrice)
       setIsModalVisible(true);
    }
 
@@ -104,7 +117,9 @@ function SalePage(props) {
                   style={{fontSize: 15, fontWeight: 500, cursor: "pointer", marginBottom: 0, marginLeft : 5}}>Voir le
                   produit</p></Link>
                <button className="buttonHover"
-                       onClick={() => {props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice); onButtonClick()}}
+                       onClick={() => {
+                           props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice);
+                           onButtonClick(product.name, product.img, product.normalPrice, product.reducedPrice)}}
                        style={express}>Achat Express
                </button>
             </div>
@@ -194,12 +209,12 @@ function SalePage(props) {
                               <Option value="women">Enfant</Option>
                            </Select>
                            <Select defaultValue="Taille" style={filter} onChange={handleChange}>
-                              <Option value="xs">XS</Option>
-                              <Option value="s">S</Option>
-                              <Option value="m">M</Option>
-                              <Option value="l">L</Option>
-                              <Option value="xl">XL</Option>
-                              <Option value="xxl">XXL</Option>
+                              <Option value="XS">XS</Option>
+                              <Option value="S">S</Option>
+                              <Option value="M">M</Option>
+                              <Option value="L">L</Option>
+                              <Option value="XL">XL</Option>
+                              <Option value="XXL">XXL</Option>
                            </Select>
                         </div>
                      </div>
@@ -247,19 +262,28 @@ function SalePage(props) {
                 <div style={{display : 'flex', alignItems : 'center'}}>
 
                     <div>
-                        <img style={{width: 120, height: 150, marginRight : 20}} src={`/assets/Produits/picture_1.jpeg`} alt=""/>
+                        <img style={{width: 120, height: 150, marginRight : 20}} src={`/assets/Produits/${modalImg}.jpeg`} alt=""/>
                     </div>
 
                     <div style={{display : 'flex', justifyContent : 'space-between', fontSize : 16, fontFamily : 'Montserrat', width : '100%'}}>
 
                         <div style={{display : 'flex', flexDirection : 'column'}}>
-                            <p>NOM DU PRODUIT</p>
-                            <p>TAILLE : <span style={{color : '#207872', fontWeight: 'bold'}}>M</span></p>
+                            <p>{modalName}</p>
+                            <p style={{marginBottom: 0}}>TAILLE :</p>
+                            <Select defaultValue={selectValue} style={filter}
+                                    onChange={(e) => setSelectValue(e)}>
+                                <Option value="XS">XS</Option>
+                                <Option value="S">S</Option>
+                                <Option value="M">M</Option>
+                                <Option value="L">L</Option>
+                                <Option value="XL">XL</Option>
+                                <Option value="XXL">XXL</Option>
+                            </Select>
                         </div>
 
                         <div style={{display : 'flex', flexDirection : 'column', textAlign : 'right'}}>
-                            <p style={{marginBottom : 5}}>Prix : <span style={{color : '#207872', fontWeight: 'bold'}}>264,00 €</span></p>
-                            <p style={{fontSize: 15, textDecoration: "line-through"}}> 330,00 €</p>
+                            <p style={{marginBottom : 5}}>Prix : <span style={{color : '#207872', fontWeight: 'bold'}}>{modalReducedPrice},00 €</span></p>
+                            <p style={{fontSize: 15, textDecoration: "line-through"}}> {modalNormalPrice},00 €</p>
                         </div>
 
                     </div>
@@ -286,11 +310,18 @@ function mapDispatchToProps(dispatch) {
             type: 'addArticle',
             name: name,
             img: img,
-            size: 'M',
+            size: 'Taille',
             normalPrice: normalPrice,
             reducedPrice: reducedPrice,
          });
       },
+       modifyLastArticleSize: function (name, size) {
+           dispatch({
+               type: 'modifyLastArticleSize',
+               name: name,
+               size: size,
+           });
+       }
    };
 }
 
