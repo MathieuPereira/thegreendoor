@@ -144,7 +144,7 @@ function SalePage(props) {
                {breadCrumb}
                <div className="displayProducts">
                   <div style={{height: "100%"}} className="rightInfosProductPage">
-                     <div style={{width: "100%", height: 250, position: 'relative'}}>
+                     <div style={{width: 250, height: 250, position: 'relative'}}>
                         <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/${saleImg}.jpeg`}
                              alt="picture"/>
                         <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
@@ -168,7 +168,7 @@ function SalePage(props) {
                            }}>Trier
                               par</p>
                            <Select defaultValue="popularite"
-                                   style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                                   style={{width: "90%",  textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
                               <Option value="popularite">Popularité</Option>
                               <Option value="prix">Prix</Option>
@@ -190,14 +190,14 @@ function SalePage(props) {
                               fontSize: 16,
                            }}>Affiner votre recherche</p>
                            <Select defaultValue="Type de produits"
-                                   style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                                   style={{width: "90%", textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
                               <Option value="Chaussures">Chaussures</Option>
                               <Option value="Vêtements">Vêtements</Option>
                               <Option value="Accessoires">Accessoires</Option>
                            </Select>
                            <Select defaultValue="Genre"
-                                   style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                                   style={{width: "90%", textTransform: "uppercase", marginTop: 10}}
                                    onChange={handleChange}>
                               <Option value="men">Homme</Option>
                               <Option value="women">Femme</Option>
@@ -264,7 +264,7 @@ function SalePage(props) {
 
                         <div style={{display : 'flex', flexDirection : 'column'}}>
                             <p>{modalName}</p>
-                            <Select defaultValue={'TAILLE'} style={filter}
+                            <Select defaultValue={'TAILLE'} style={{width: 100}}
                                     onChange={(e) => props.modifyLastArticleSize(e)}>
                                 <Option value="XS">XS</Option>
                                 <Option value="S">S</Option>
@@ -367,9 +367,7 @@ const express = {
 }
 
 const filter = {
-   width: "90%",
-   marginLeft: "5%",
+   width: '90%',
    textTransform: "uppercase",
-   paddingBottom: 15,
    marginTop: 10
 }

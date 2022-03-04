@@ -180,7 +180,9 @@ function SalePage(props) {
                                 <p style={{fontSize: 14}}>{totalPrice + deliveryPrice}€</p>
                             </div>
                             <div style={{display: 'flex', justifyContent: 'flex-end'}}>
-
+                                <form action="/create-checkout-session" method="POST">
+                                    <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type="submit">Passer au paiement 💳 </button>
+                                </form>
                             </div>
                         </Col>
                     </div>
