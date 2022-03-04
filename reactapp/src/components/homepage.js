@@ -100,11 +100,18 @@ function Home(props) {
 
    // Sign Modal
    const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
+   const [goToSell, setGoToSell] = useState("")
    console.log(isModalSignVisible);
 
    var handleModalChangeVisibility = (currentState) => {
       setIsModalSignVisible(currentState);
    };
+
+   // Gestion de l'affichage du texte du bouton de la brandModal
+   var buttonBrandModal = 'Se connecter pour accéder à la vente'
+   if (props.token) {
+    buttonBrandModal = 'Accéder à la vente'
+    } 
 
   return (
 
@@ -136,7 +143,7 @@ function Home(props) {
 
                     <Button key="submit" style={{backgroundColor: '#207872', borderRadius: 40, border: 0}}
                             type="primary" onClick={() => handleModalChangeVisibility("visible")}>
-                        Se connecter pour accéder à la vente
+                        {buttonBrandModal}
                     </Button>
                     </div>,
                 ]}
@@ -167,7 +174,13 @@ function mapDispatchToProps(dispatch) {
    };
 }
 
+function mapStateToProps(state) {
+    return {
+       token: state.token,
+    };
+ }
+
 export default connect(
-   null,
+    mapStateToProps,
    mapDispatchToProps,
 )(Home);
