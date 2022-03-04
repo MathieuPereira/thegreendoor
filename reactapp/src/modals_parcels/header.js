@@ -3,11 +3,29 @@ import {Menu, Badge, Carousel, Popover, Divider} from 'antd';
 import {Link, Redirect} from "react-router-dom";
 
 import {connect} from 'react-redux';
+import SignModal from '../modals_parcels/signModal';
 
 function Header(props) {
 
-   // Dynamisation du compteur Panier
    const [basketCount, setBasketCount] = useState(0);
+   const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
+
+   function onSignClick() {
+      setIsModalSignVisible(true);
+   } 
+
+   var handleModalChangeVisibility = (currentState) => {
+      setIsModalSignVisible(currentState);
+   };
+
+   // Pop-up "Panier"
+   const contentBasket = (
+      <>
+         <div style={{height: 20}}>
+            <p><Link style={menuHeader} to="/basket">Voir mon panier  🛒 </Link></p>
+         </div>
+      </>
+   );
 
    // Carousel
    var imgMontagne = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
@@ -30,17 +48,12 @@ function Header(props) {
    // Sous-menu "Mon compte"
    const content = (
       <>
-         <div style={{height: 75}}>
+         <div style={{height: 130}}>
             <p><Link style={menuHeader} to="/">Mes commandes passées 📦 </Link></p>
-            <Divider style={{
-               marginLeft: 2,
-               marginTop: 3,
-               marginBottom: 15,
-               width: '50%',
-               alignSelf: "start",
-               border: "0.5px #AEA9A9 solid",
-            }}/>
+            <Divider style={divider}/>
             <p><Link style={menuHeader} to="/">Mes informations personnelles 📬 </Link></p>
+            <Divider style={divider}/>
+            <p><Link style={menuHeader} to="/">Déconnexion 👋 </Link></p>
          </div>
       </>
    );
@@ -64,8 +77,8 @@ function Header(props) {
 
                <div style={textHeader}>
 
-                  <p style={{marginBottom: 0, marginRight: 70}}>Qui sommes-nous ?</p>
-                  <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0}}>Se connecter</p>
+                  <p style={{marginBottom: 0, marginRight: 70, cursor : 'pointer'}}>Qui sommes-nous ?</p>
+                  <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor : 'pointer'}} onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
 
                   <div style={{marginLeft: 50, marginRight: 30}}>
                      <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
@@ -108,7 +121,7 @@ function Header(props) {
                </Menu.Item>
 
             </Menu>
-
+            <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
          </div>
 
       );
@@ -131,12 +144,13 @@ function Header(props) {
                      <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor: 'pointer'}}>Mon compte</p>
                   </Popover>
 
-                  <div style={{marginLeft: 50, marginRight: 30}}>
-                     <Link to={'/basket'}><Badge style={{backgroundColor: '#207872'}} count={props.basket.length}
-                                                 showZero>
+                  <Popover placement="bottom" content={contentBasket} trigger="click">
+                  <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
+                     <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
                         <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
-                     </Badge></Link>
+                     </Badge>
                   </div>
+                  </Popover>
                </div>
 
             </div>
@@ -225,3 +239,12 @@ const menuNavBar = {
    fontSize: 16,
    padding: 5,
 };
+
+const divider = {
+   marginLeft: 2,
+   marginTop: 3,
+   marginBottom: 15,
+   width: '50%',
+   alignSelf: "start",
+   border: "0.5px #AEA9A9 solid"
+}
