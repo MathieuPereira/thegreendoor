@@ -121,7 +121,7 @@ function SalePage(props) {
                   produit</p></Link>
                <button className="buttonHover"
                        onClick={() => {
-                           props.addArticle(product.name, product.img, product.normalPrice, product.reducedPrice);
+                           props.addArticle(product.name, brand, product.img, product.normalPrice, product.reducedPrice);
                            onButtonClick(product.name, product.img, product.normalPrice, product.reducedPrice)}}
                        style={express}>Achat Express
                </button>
@@ -140,10 +140,10 @@ function SalePage(props) {
       labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={label}/>);
    }
 
-   if (props.token == null) {
-      return <Redirect to="/"/>;
-   } else {
-      return (
+    if (props.token == null) {
+        return <Redirect to="/"/>;
+    } else {
+        return (
 
          <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
             <Header/>
@@ -310,29 +310,30 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-   return {
-      addArticle: function (name, img, normalPrice, reducedPrice) {
-         dispatch({
-            type: 'addArticle',
-            name: name,
-            img: img,
-            size: 'Taille',
-            normalPrice: normalPrice,
-            reducedPrice: reducedPrice,
-         });
-      },
-       modifyLastArticleSize: function (size) {
-           dispatch({
-               type: 'modifyLastArticleSize',
-               size: size,
-           });
-       }
-   };
+    return {
+        addArticle: function (name, brand, img, normalPrice, reducedPrice) {
+            dispatch({
+                type: 'addArticle',
+                name: name,
+                brand: brand,
+                img: img,
+                size: 'Taille',
+                normalPrice: normalPrice,
+                reducedPrice: reducedPrice,
+            });
+        },
+        modifyLastArticleSize: function (size) {
+            dispatch({
+                type: 'modifyLastArticleSize',
+                size: size,
+            });
+        },
+    };
 }
 
 export default connect(
-   mapStateToProps,
-   mapDispatchToProps,
+    mapStateToProps,
+    mapDispatchToProps,
 )(SalePage);
 
 const label = {

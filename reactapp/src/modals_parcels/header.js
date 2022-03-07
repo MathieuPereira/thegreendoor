@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Menu, Badge, Carousel, Popover, Divider} from 'antd';
 import {Link, Redirect} from "react-router-dom";
 
@@ -7,76 +7,94 @@ import SignModal from '../modals_parcels/signModal';
 
 function Header(props) {
 
-   const [basketCount, setBasketCount] = useState(0);
-   const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
+    const [basketCount, setBasketCount] = useState(0);
+    const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
+    const [isLogged, setIsLogged] = useState(false);
 
-   // Pop-up "Sign"
-   function onSignClick() {
-      setIsModalSignVisible(true);
-   } 
+    useEffect(() => {
+        props.refreshBasket();
+        props.refreshToken();
+        if (props.token != null) {
+            setIsLogged(true);
+        } else {
+            setIsLogged(false);
+        }
+    }, [props.token]);
 
-   var handleModalChangeVisibility = (currentState) => {
-      setIsModalSignVisible(currentState);
-   };
+    var disconnect = () => {
+        props.removeToken();
+        props.removeBasket();
+        localStorage.removeItem('basket');
+        setIsLogged(false);
+    };
 
-   // Pop-up "Panier"
-   const contentBasket = (
-      <>
-         <div style={{height: 20}}>
-            <p><Link style={menuHeader} to="/basket">Voir mon panier  🛒 </Link></p>
-         </div>
-      </>
-   );
+    function onSignClick() {
+        setIsModalSignVisible(true);
+    }
+
+    var handleModalChangeVisibility = (currentState) => {
+        setIsModalSignVisible(currentState);
+    };
+
+    // Pop-up "Panier"
+    const contentBasket = (
+        <>
+            <div style={{height: 20}}>
+                <p><Link style={menuHeader} to="/basket">Voir mon panier 🛒 </Link></p>
+            </div>
+        </>
+    );
 
    // Carousel
    var imgMontagne = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
    var imgNature = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg';
    var imgMer = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_500,w_1700/v1646652566/thegreendoor/background/surf_ieqxyt.jpg'
 
-   function onChange(a, b, c) {
-      console.log(a, b, c);
-   }
+    function onChange(a, b, c) {
+        console.log(a, b, c);
+    }
 
-   const settings = {
-      dots: true,
-      infinite: true,
-      speed: 1800,
-      slidesToShow: 1,
-      autoplay: true,
-      autoplaySpeed: 8000,
-   };
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 1800,
+        slidesToShow: 1,
+        autoplay: true,
+        autoplaySpeed: 8000,
+    };
 
-   // Sous-menu "Mon compte"
-   const content = (
-      <>
-         <div style={{height: 130}}>
+    // Sous-menu "Mon compte"
+    const content = (
+        <>
+        <div style={{height: 130}}>
             <p><Link style={menuHeader} to="/">Mes commandes passées 📦 </Link></p>
             <Divider style={divider}/>
             <p><Link style={menuHeader} to="/">Mes informations personnelles 📬 </Link></p>
             <Divider style={divider}/>
-            <p><Link style={menuHeader} to="/">Déconnexion 👋 </Link></p>
-         </div>
-      </>
-   );
+            <p style={menuHeader} onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
+        </div>
+</>
+)
+    ;
 
-   // Redirection au clic sur Logo
-   const onLogoClick = () => {
-      props.addCategory("");
-      return <Redirect to="/home"/>;
-   };
+    // Redirection au clic sur Logo
+    const onLogoClick = () => {
+        props.addCategory("");
+        return <Redirect to="/home"/>;
+    };
 
-   // Gestion de l'affichage du Header en fonction de la connexion ou non de l'utilisateur
-   if (props.token == null) {
+    // Gestion de l'affichage du Header en fonction de la connexion ou non de l'utilisateur
+    if (!isLogged) {
 
-      return (
+        return (
 
-         <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
+            <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
 
-            <div span={{xs: 24}} style={header}>
+                <div span={{xs: 24}} style={header}>
 
                <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
 
-               <div style={textHeader}>
+                    <div style={textHeader}>
 
                   <p style={{marginBottom: 0, marginRight: 70, cursor : 'pointer'}}>Qui sommes-nous ?</p>
                   <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor : 'pointer'}} onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
@@ -141,9 +159,10 @@ function Header(props) {
 
                   <p style={{marginBottom: 0, marginRight: 70, cursor: 'pointer'}}>Qui sommes-nous ?</p>
 
-                  <Popover placement="bottom" content={content} trigger="click">
-                     <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor: 'pointer'}}>Mon compte</p>
-                  </Popover>
+                        <Popover placement="bottom" content={content} trigger="click">
+                            <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor: 'pointer'}}>Mon
+                                compte</p>
+                        </Popover>
 
                   <Popover placement="bottom" content={contentBasket} trigger="click">
                   <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
@@ -196,15 +215,40 @@ function Header(props) {
 }
 
 function mapStateToProps(state) {
-   return {
-      token: state.token,
-      basket: state.basket,
-   };
+    return {
+        token: state.token,
+        basket: state.basket,
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        refreshBasket: function () {
+            dispatch({
+                type: 'refreshBasket',
+            });
+        },
+        refreshToken: function () {
+            dispatch({
+                type: 'refreshToken',
+            });
+        },
+        removeToken: function () {
+            dispatch({
+                type: 'removeToken',
+            });
+        },
+        removeBasket: function () {
+            dispatch({
+                type: 'removeBasket',
+            });
+        }
+    };
 }
 
 export default connect(
-   mapStateToProps,
-   null,
+    mapStateToProps,
+    mapDispatchToProps,
 )(Header);
 
 const header = {

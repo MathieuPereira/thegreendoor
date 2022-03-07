@@ -66,7 +66,7 @@ function BasketPage(props) {
                         </div>
                         <div style={{marginTop: 35}}>
                             <p style={{fontSize: 18}}>Quantité :</p>
-                            <Input style={{width: 80, height: 40}} placeholder={`${product.quantity}`}
+                            <Input style={{width: 80, height: 40}} type="number" placeholder={`${product.quantity}`}
                                    onChange={(e) => props.modifyArticleQuantity(`${product.name}`, `${e.target.value}`)}/>
                         </div>
                         <div style={{marginTop: 35, marginRight: 10}}>
