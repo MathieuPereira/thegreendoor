@@ -13,13 +13,15 @@ import {connect} from "react-redux";
 const {Option} = Select;
 
 function ProductPage(props) {
+    var {brand} = useParams();
+    var {product} = useParams();
 
    // Gestion de la modal de mise au panier
    const [isModalVisible, setIsModalVisible] = useState(false);
    const [size, setSize] = useState('')
 
    function onButtonClick() {
-       props.addArticle(productConsulted.name, productConsulted.img, size, productConsulted.normalPrice, productConsulted.reducedPrice)
+       props.addArticle(productConsulted.name, brand, productConsulted.img, size, productConsulted.normalPrice, productConsulted.reducedPrice)
        setIsModalVisible(true);
     }
 
@@ -28,8 +30,7 @@ function ProductPage(props) {
     };
 
 
-   var {brand} = useParams();
-   var {product} = useParams();
+
    const [productConsulted, setProductConsulted] = useState([]);
    const [saleLabels, setSaleLabels] = useState([]);
    const [saleImg, setSaleImg] = useState('');
@@ -316,10 +317,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        addArticle: function (name, img, size, normalPrice, reducedPrice) {
+        addArticle: function (name, brand, img, size, normalPrice, reducedPrice) {
             dispatch({
                 type: 'addArticle',
                 name: name,
+                brand: brand,
                 img: img,
                 size: size,
                 normalPrice: normalPrice,

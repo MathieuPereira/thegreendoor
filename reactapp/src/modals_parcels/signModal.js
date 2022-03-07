@@ -69,10 +69,11 @@ function SignModal(props) {
          let data = await fetch('/users/sign-up', {
             method: 'POST',
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: `firstName=${firstName}&lastName=${lastName}&email=${registerEmailAdress}&password=${registerPassword}`,
-         });
+         body: `firstName=${firstName}&lastName=${lastName}&email=${registerEmailAdress}&password=${registerPassword}`,
+      });
          data = await data.json();
          if (data.token) {
+            localStorage.setItem('token', data.token)
             props.addToken(data.token);
             setIsLogged(true);
          } else {
@@ -92,6 +93,7 @@ function SignModal(props) {
       });
       data = await data.json();
       if (data.token) {
+         localStorage.setItem('token', data.token);
          props.addToken(data.token);
          setIsLogged(true);
       } else {
@@ -99,7 +101,7 @@ function SignModal(props) {
       }
    };
 
-   if (isLogged || props.token != null && props.state === 'visible') {
+   if (isLogged || localStorage.getItem('token') != null && props.state === 'visible') {
       if (props.navigation.brand != undefined) {
          return <Redirect to={`/sale/${props.navigation.brand}`}/>;
       } else {

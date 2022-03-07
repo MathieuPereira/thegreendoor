@@ -110,7 +110,7 @@ function Home(props) {
 
    // Gestion de l'affichage du texte du bouton de la brandModal
    var buttonBrandModal = 'Se connecter pour accéder à la vente'
-   if (props.token) {
+   if (props.token != null) {
     buttonBrandModal = 'Accéder à la vente'
     } 
 
