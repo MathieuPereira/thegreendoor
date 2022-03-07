@@ -7,10 +7,11 @@ import Label from '../modals_parcels/labelBar';
 import Footer from '../modals_parcels/footer';
 
 // Import antd & style
-import {Breadcrumb, Select, Modal, Button} from "antd";
+import {Breadcrumb, Select, Modal, Button, Statistic, Tag} from "antd";
 import {connect} from "react-redux";
 import '../stylesheets/salePage.css';
 
+const { Countdown } = Statistic;
 const {Option} = Select;
 
 function SalePage(props) {
@@ -19,6 +20,12 @@ function SalePage(props) {
    const [saleImg, setSaleImg] = useState('');
    const [saleEnding, setSaleEnding] = useState(new Date);
    const [productsList, setProductsList] = useState([]);
+
+   const deadline = new Date(saleEnding) 
+   const format = "[⏳ Plus que] D [jours] HH[h] : mm : ss";
+   const counterStyle = {
+      color : 'red'
+   }
 
    useEffect(() => {
        window.scrollTo(0, 290);
@@ -146,7 +153,7 @@ function SalePage(props) {
                <div className="displayProducts">
                   <div style={{height: "100%"}} className="rightInfosProductPage">
                      <div style={{width: 250, height: 250, position: 'relative'}}>
-                        <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/${saleImg}.jpeg`}
+                        <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/${saleImg}_sale.jpeg`}
                              alt="picture"/>
                         <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
                            {labelList}
@@ -216,8 +223,12 @@ function SalePage(props) {
                      </div>
                   </div>
                   <div style={{marginLeft: 25}}>
-                     <p style={{fontSize: 16, color: '#207872', marginBottom: 0}}>⏰ Fin
-                        le {saleEnding.toLocaleDateString('fr-FR')}</p>
+                     <div style={{display : 'flex'}}>
+                        <p style={{fontSize: 18, color: '#207872', marginBottom: 0}}>
+                           ⏰ Fin le {saleEnding.toLocaleDateString('fr-FR')}      
+                        <span><Tag color="black" style={{marginLeft : 10, height : 30, borderRadius : 40, textAlign : 'center'}}> <Countdown  value={deadline} format ={format} valueStyle={{color : 'white', fontSize : 16, fontFamily : 'Montserrat'}}/> </Tag></span>
+                        </p>
+                     </div>
                      <div
                         style={{
                            display: "flex",

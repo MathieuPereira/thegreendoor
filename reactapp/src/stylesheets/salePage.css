@@ -24,6 +24,10 @@
     width: 320px
 }
 
+.ant-statistic-content-value {
+    color : 'red'
+}
+
 @media only screen and (max-width: 1350px) {
     .showProduct {
         width: 80%;
@@ -61,3 +65,4 @@
     }
 
 }
+
