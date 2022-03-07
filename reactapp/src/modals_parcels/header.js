@@ -227,6 +227,7 @@ const textHeader = {
 const menuHeader = {
    color: 'black',
    fontFamily: 'Montserrat',
+   cursor: 'pointer',
 };
 
 const menuNavBar = {
