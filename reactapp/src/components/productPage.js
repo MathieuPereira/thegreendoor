@@ -97,7 +97,7 @@ function ProductPage(props) {
 
                    {/* Concerne l'image de la marque*/}
                   <div style={{width: 250, height: 250, position: 'relative', marginBottom : 10}}>
-                     <img style={{width: "250px", height: "250px"}} src={`/assets/${saleImg}.jpeg`}
+                     <img style={{width: "250px", height: "250px"}} src={`/assets/${saleImg}_sale.jpeg`}
                           alt="picture"/>
 
                      <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
