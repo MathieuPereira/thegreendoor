@@ -48,6 +48,8 @@ export default function (basket = [], action) {
          }
          localStorage.setItem('basket', JSON.stringify(basketCopy))
          return basketCopy;
+      case 'removeBasket' :
+         return [];
       case 'refreshBasket' :
          basketCopy = JSON.parse(localStorage.getItem('basket')) != null ? JSON.parse(localStorage.getItem('basket')) : [...basket];
          return basketCopy;
