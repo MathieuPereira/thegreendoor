@@ -12,7 +12,7 @@ import {Col, Input, Row, Select, Radio, Space} from "antd";
 
 const {Option} = Select;
 
-function SalePage(props) {
+function BasketPage(props) {
     const [delivery, setDelivery] = useState(1);
     const [totalDiscount, setTotalDiscount] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0)
@@ -31,8 +31,6 @@ function SalePage(props) {
         setTotalPrice(price);
     }, [props.basket]);
 
-
-
     basketArticles = props.basket.map((product, i) => {
 
         return (
@@ -44,6 +42,7 @@ function SalePage(props) {
                      padding: 5,
                      backgroundColor: '#FFFFFF',
                      marginBottom: 15,
+                     borderRadius : 15
                  }}>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                     <img style={{width: 150, height: 200}} src={`/assets/Produits/${product.img}.jpeg`}
@@ -80,7 +79,7 @@ function SalePage(props) {
                                 textDecoration: "line-through",
                                 fontSize: 12,
                             }}>{product.normalPrice * product.quantity},00 €</p>
-                            <Row style={{marginTop: 35, display: "flex", alignItems: "center", cursor: "pointer"}}
+                            <Row style={{marginTop: 60, display: "flex", alignItems: "center", cursor: "pointer"}}
                                  onClick={() => props.deleteArticle(i)}>
                                 <CloseOutlined style={{fontSize: 16, marginRight: 2}}/>
                                 <p style={{marginBottom: 0, fontSize: 16}}>Supprimer</p>
@@ -109,7 +108,7 @@ function SalePage(props) {
                 <div style={{width: '70%', margin: 'auto'}}>
                     <Row>
                         <Link to={'/'}><p style={{fontSize: 18, margin: 15}}><ArrowLeftOutlined/>Retour</p></Link>
-                        <h4 style={{fontSize: 26, margin: 7}}>Votre Panier</h4>
+                        <h4 style={{fontSize: 26, margin: 7}}>Votre Panier 🤩 </h4>
                     </Row>
                     <div style={{display: "flex", flexDIrection: 'row', justifyContent: 'space-between'}}>
                         <Col style={{width: '65%'}}>
@@ -121,6 +120,8 @@ function SalePage(props) {
                             fontSize: 16,
                             fontWeight: 550,
                             padding: 25,
+                            borderRadius : 15,
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)'
                         }}>
                             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                                 <p>AJOUTER UN CODE PROMO</p>
@@ -177,12 +178,14 @@ function SalePage(props) {
                                 <p style={{fontSize: 14}}>-{totalDiscount},00€</p>
                             </div>
                             <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
-                                <p style={{fontWeight: 450}}>TOTAL COMMANDE</p>
-                                <p style={{fontSize: 14}}>{totalPrice + deliveryPrice}€</p>
+                                <p style={{fontWeight: 'bold'}}>TOTAL COMMANDE</p>
+                                <p style={{fontSize: 16, fontWeight: 'bold'}}>{totalPrice + deliveryPrice}€</p>
                             </div>
-                            <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                            <div style={{display: 'flex', justifyContent: 'center'}}>
                                 <form action="/create-checkout-session" method="POST">
-                                    <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type="submit">Passer au paiement 💳 </button>
+                                    <input name="basket" type='hidden' value={JSON.stringify(props.basket)}/>
+                                    <input name="delivery" type='hidden' value={deliveryPrice}/>
+                                    <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type='submit'>Passer au paiement 💳 </button>
                                 </form>
                             </div>
                         </Col>
@@ -229,4 +232,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
     mapStateToProps,
     mapDispatchToProps,
-)(SalePage);
+)(BasketPage);

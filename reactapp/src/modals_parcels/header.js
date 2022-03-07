@@ -30,7 +30,8 @@ function Header(props) {
    // Carousel
    var imgMontagne = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
    var imgNature = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg';
-   var imgMer = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_2500,w_9000/v1646217637/thegreendoor/background/pexels-pixabay-416726_a7pgae.jpg';
+   var imgMer = '/assets/surf.jpg';
+   var imgSurf = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_500,w_1700/v1646652566/thegreendoor/background/surf_ieqxyt.jpg'
 
    function onChange(a, b, c) {
       console.log(a, b, c);
@@ -98,7 +99,7 @@ function Header(props) {
                   <img src={imgNature} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
                </div>
                <div>
-                  <img src={imgMer} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                  <img src={imgSurf} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
                </div>
 
             </Carousel>

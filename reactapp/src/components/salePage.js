@@ -153,7 +153,7 @@ function SalePage(props) {
                <div className="displayProducts">
                   <div style={{height: "100%"}} className="rightInfosProductPage">
                      <div style={{width: 250, height: 250, position: 'relative'}}>
-                        <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/${saleImg}_sale.jpeg`}
+                        <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/Resized/${saleImg}_sale.jpeg`}
                              alt="picture"/>
                         <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
                            {labelList}

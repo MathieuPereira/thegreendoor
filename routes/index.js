@@ -31,6 +31,7 @@ router.get('/home', async function (req, res, next) {
 
 // Show sale or product depends of the query elements
 router.get('/show-sale', async function (req, res, next) {
+
    let brandName = req.query.brandName.replace('%20', ' ');
    let today = new Date;
    let sale = await saleModel.findOne({
@@ -68,36 +69,60 @@ router.get('/show-sale', async function (req, res, next) {
 // Gestion du module Stripe
 router.post('/create-checkout-session', async (req, res) => {
 
+   var basket = JSON.parse(req.body.basket)
+   console.log(basket)
+   var deliveryPrice = req.body.delivery;
+
+   // Gestion des images produit dans le module Stripe
+   let imageProduit;
+   var picture_1 = 'https://res.cloudinary.com/dknmaiec0/image/upload/v1645712618/thegreendoor/Produits/picture1_yrwb43.webp'
+   var picture_2 = 'https://res.cloudinary.com/dknmaiec0/image/upload/v1645712618/thegreendoor/Produits/picture2_xisgmj.webp'
+   var picture_3 = 'https://res.cloudinary.com/dknmaiec0/image/upload/v1645712618/thegreendoor/Produits/picture3_jszlct.webp'
+   var picture_4 = 'https://res.cloudinary.com/dknmaiec0/image/upload/v1645712618/thegreendoor/Produits/picture4_wqtxdo.webp'
+
    var stripeItems = [];
-   var fraisPort = 0;
-   var totalCmd = 0;
 
-   stripeItems.push({
-      price_data: {
-        currency: 'eur',
-        product_data: {
-          name: 'Article',
+   for (var i = 0; i < basket.length; i++) {
+
+      if(basket[i].img == 'picture_1'){
+         imageProduit = picture_1;
+      } if (basket[i].img == 'picture_2'){
+         imageProduit = picture_2;
+      } if (basket[i].img == 'picture_3'){
+         imageProduit = picture_3;
+      } if (basket[i].img == 'picture_4'){
+         imageProduit = picture_4;
+      }
+
+      stripeItems.push({
+        price_data: {
+          currency: 'eur',
+          product_data: {
+            name: basket[i].name,
+            description : `Taille ${basket[i].size}`,
+            images : [imageProduit]
+          },
+          unit_amount: basket[i].reducedPrice * 100,
         },
-        unit_amount: 100 * 100,
-      },
-      quantity: 1,
-    });
+        quantity: basket[i].quantity,
+      });
+    }
 
-   if (fraisPort > 0) {
       stripeItems.push({
         price_data: {
           currency: 'eur',
           product_data: {
             name: 'Frais de livraison',
+            images : ['https://res.cloudinary.com/dknmaiec0/image/upload/v1645712313/thegreendoor/icons/green_delivery_m3rffr.png']
           },
-          unit_amount: fraisPort * 100,
+          unit_amount: deliveryPrice * 100,
         },
         quantity: 1,
       });
-    }
 
    const session = await stripe.checkout.sessions.create({
-      customer_email: 'customer@example.com',
+      payment_method_types: ["card"],
+      // customer_email: 'customer@example.com',
       billing_address_collection: 'auto',
       shipping_address_collection: { allowed_countries: ['FR']},
       line_items: stripeItems,
