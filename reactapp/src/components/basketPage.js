@@ -6,7 +6,7 @@ import Header from '../modals_parcels/header';
 import Footer from '../modals_parcels/footer';
 
 // Import antd & style
-import {ArrowLeftOutlined, CloseOutlined} from "@ant-design/icons";
+import {ArrowLeftOutlined, DeleteOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
 import {Col, Input, Row, Select, Radio, Space} from "antd";
 
@@ -81,8 +81,8 @@ function BasketPage(props) {
                             }}>{product.normalPrice * product.quantity},00 €</p>
                             <Row style={{marginTop: 60, display: "flex", alignItems: "center", cursor: "pointer"}}
                                  onClick={() => props.deleteArticle(i)}>
-                                <CloseOutlined style={{fontSize: 16, marginRight: 2}}/>
-                                <p style={{marginBottom: 0, fontSize: 16}}>Supprimer</p>
+                                <DeleteOutlined style={{marginRight : 5}}/>
+                                <p style={{marginBottom: 0, fontSize: 14}}> Supprimer</p>
                             </Row>
                         </div>
                     </div>
@@ -107,8 +107,8 @@ function BasketPage(props) {
                 <Header/>
                 <div style={{width: '70%', margin: 'auto'}}>
                     <Row>
-                        <Link to={'/'}><p style={{fontSize: 18, margin: 15}}><ArrowLeftOutlined/>Retour</p></Link>
-                        <h4 style={{fontSize: 26, margin: 7}}>Votre Panier 🤩 </h4>
+                        <Link to={'/'}><p style={{fontSize: 16, margin: 15}}><ArrowLeftOutlined/> Retour</p></Link>
+                        <h4 style={{fontSize: 24, margin: 7}}>Votre Panier 🤩 </h4>
                     </Row>
                     <div style={{display: "flex", flexDIrection: 'row', justifyContent: 'space-between'}}>
                         <Col style={{width: '65%'}}>
@@ -116,7 +116,7 @@ function BasketPage(props) {
                         </Col>
                         <Col style={{
                             width: '30%',
-                            border: '1px solid gray',
+                            border: '0px',
                             fontSize: 16,
                             fontWeight: 550,
                             padding: 25,
