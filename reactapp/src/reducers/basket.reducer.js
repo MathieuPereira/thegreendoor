@@ -26,6 +26,9 @@ export default function (basket = [], action) {
          localStorage.setItem('basket', JSON.stringify(basketCopy))
          return basketCopy;
       case 'modifyArticleQuantity' :
+         if(action.quantity < 1) {
+            return basketCopy
+         }
          localStorage.removeItem('basket');
          for (let e of basketCopy) {
             if (e.name === action.name) {

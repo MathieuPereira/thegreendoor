@@ -29,7 +29,7 @@ function App() {
                   <Route component={SalePage} path="/sale/:brand" exact />
                   <Route component={ProductPage} path="/sale/:brand/:product"/>
                   <Route component={BasketPage} path="/basket"/>
-                  <Route component={ValidationPage} path="/orderValidated"/>
+                  <Route component={ValidationPage} path="/order-validated"/>
 
                </Switch>
             </Router>
