@@ -1,27 +1,34 @@
 var mongoose = require('mongoose');
 
 var addressSchema = mongoose.Schema({
-    country : String,
-    city : String,
-    zipCode : String,
-    address : String
+    country: String,
+    city: String,
+    zipCode: String,
+    address: String,
+});
+
+var articleSchema = mongoose.Schema({
+    price: Number,
+    quantity: Number,
+    size: String,
+    product: {type: mongoose.Schema.Types.ObjectId, ref: 'articles'},
 });
 
 var orderSchema = mongoose.Schema({
-    price : Number,
+    price: Number,
     deliveryService: String,
-    orderDate : {type: Date, default: Date.now},
-    articles : [{type: mongoose.Schema.Types.ObjectId, ref: 'articles'}]
+    orderDate: {type: Date, default: Date.now},
+    articles: [articleSchema],
 });
 
 var userSchema = mongoose.Schema({
-    token : String,
-    firstName : String,
-    lastName : String,
-    email : String,
-    password : String,
-    addresses : [addressSchema],
-    orders : [orderSchema]
+    token: String,
+    firstName: String,
+    lastName: String,
+    email: String,
+    password: String,
+    addresses: [addressSchema],
+    orders: [orderSchema],
 });
 
-module.exports = mongoose.model('users', userSchema)
+module.exports = mongoose.model('users', userSchema);
