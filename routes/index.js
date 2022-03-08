@@ -1,10 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var saleModel = require('../models/sales');
+var userModel = require('../models/users');
 var request = require('sync-request');
 
 const Stripe = require('stripe');
-const stripe = Stripe('sk_test_4eC39HqLyjWDarjtT1zdp7dc');
+const stripe = Stripe('sk_test_51KHnRjFcTa07fhQCsT77a7dMNM1tmeXihc8agkLpki93jx18R4BzhRP16vhZCdEQvGceLtreRQnLTbu7UqkWe4sH00KMMJTEfq');
 
 /*
  GET home page.
@@ -75,7 +76,6 @@ router.get('/show-sale', async function (req, res, next) {
 router.post('/create-checkout-session', async (req, res) => {
 
     var basket = JSON.parse(req.body.basket);
-    console.log(basket);
     var deliveryPrice = req.body.delivery;
 
     // Gestion des images produit dans le module Stripe
@@ -128,21 +128,24 @@ router.post('/create-checkout-session', async (req, res) => {
         quantity: 1,
     });
 
+    let user = await userModel.findOne({token: req.body.token});
+
     const session = await stripe.checkout.sessions.create({
         payment_method_types: ["card"],
-        // customer_email: 'customer@example.com',
+        customer_email: user.email,
         billing_address_collection: 'auto',
         shipping_address_collection: {allowed_countries: ['FR']},
         line_items: stripeItems,
         mode: 'payment',
-        success_url: 'https://localhost:3000/success',
-        cancel_url: 'https://localhost:3000/cancel',
+        success_url: 'http://localhost:3001/order-validated',
+        cancel_url: 'http://localhost:3000/order-canceled',
     });
 
     res.redirect(303, session.url);
 });
 
 router.get('/success', function (req, res, next) {
+
     res.json('confirm');
 });
 

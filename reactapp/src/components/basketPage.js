@@ -66,7 +66,7 @@ function BasketPage(props) {
                         </div>
                         <div style={{marginTop: 35}}>
                             <p style={{fontSize: 18}}>Quantité :</p>
-                            <Input style={{width: 80, height: 40}} type="number" placeholder={`${product.quantity}`}
+                            <Input style={{width: 80, height: 40}} type="number" placeholder={`${product.quantity}`} value={product.quantity}
                                    onChange={(e) => props.modifyArticleQuantity(`${product.name}`, `${e.target.value}`)}/>
                         </div>
                         <div style={{marginTop: 35, marginRight: 10}}>
@@ -185,6 +185,7 @@ function BasketPage(props) {
                                 <form action="/create-checkout-session" method="POST">
                                     <input name="basket" type='hidden' value={JSON.stringify(props.basket)}/>
                                     <input name="delivery" type='hidden' value={deliveryPrice}/>
+                                    <input name="token" type='hidden' value={props.token}/>
                                     <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type='submit'>Passer au paiement 💳 </button>
                                 </form>
                             </div>
