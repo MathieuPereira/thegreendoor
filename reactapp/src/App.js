@@ -25,7 +25,8 @@ function App() {
             <Router>
                <Switch>
                   <Route component={Home} path="/" exact />  
-                  <Route component={Home} path="/home/:category" />
+                  <Route component={Home} path="/home/:category" exact/>
+                  <Route component={Home} path="/home/:category/:date" />
                   <Route component={SalePage} path="/sale/:brand" exact />
                   <Route component={ProductPage} path="/sale/:brand/:product"/>
                   <Route component={BasketPage} path="/basket"/>
