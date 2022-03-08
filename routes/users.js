@@ -89,7 +89,7 @@ router.post('/add-adress', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
 
     if (!user)
-        res.json({result: false, comment: 'User not found'});
+        res.status(404).json({comment: 'User not found'});
 
     user.addresses.push({
         country: req.body.country,
@@ -113,15 +113,15 @@ router.post('/add-order', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
 
     if (!user)
-        res.json({result: false, comment: 'User not found'});
+        res.status(404).json({comment: 'User not found'});
 
     let articles = [];
-    for (let e of req.body.article) {
-        let brand = await saleModel.findOne({brandName: e.brandName})
-        let products = brand.articles
-        for (let f of products) {
-            if (e.name === f.name) {
-                articles.push(f._id)
+    let orders
+    for (let e of JSON.parse(req.body.articles)) {
+        let brand = await saleModel.findOne({brandName: e.brand})
+        for (let i of brand.articles) {
+            if (i.name === e.name) {
+                articles.push({price: e.reducedPrice, quantity: e.quantity, size: e.size, product:  i._id});
             }
         }
     }
