@@ -6,7 +6,6 @@ var request = require('sync-request');
 
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51KHnRjFcTa07fhQCsT77a7dMNM1tmeXihc8agkLpki93jx18R4BzhRP16vhZCdEQvGceLtreRQnLTbu7UqkWe4sH00KMMJTEfq');
-const bodyParser = require('body-parser');
 
 /*
  GET home page.
@@ -139,7 +138,7 @@ router.post('/create-checkout-session', async (req, res) => {
         line_items: stripeItems,
         mode: 'payment',
         success_url: 'http://localhost:3001/order-validated',
-        cancel_url: 'http://localhost:3000/order-canceled',
+        cancel_url: 'http://localhost:3001/basket',
     });
 
     res.redirect(303, session.url);
