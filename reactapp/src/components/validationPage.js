@@ -12,7 +12,6 @@ function Validation(props) {
     
     let totalCmd = 0;
     let normalPrice = 0;
-    let deliveryPrice = 0;
 
     for (let e of props.basket) {
         totalCmd += e.reducedPrice * e.quantity;
@@ -21,7 +20,6 @@ function Validation(props) {
 
     let totalDiscount = normalPrice - totalCmd
 
-    console.log(totalDiscount)
     let order;
 
     order = props.basket.map((product, i) => {
@@ -40,7 +38,7 @@ function Validation(props) {
                         <div style={{marginLeft: 25}}>
                             <p style={{marginBottom: 0, fontSize: 18, width : 200}}>{product.name}</p>
                             <div style={{marginTop: '10%'}}>
-                                <p style={{marginBottom: 0, fontSize: 16}}>Taille : {product.size}</p>
+                                <p style={{marginBottom: 0, fontSize: 16}}>Taille : {product.size}{product.deliveryPrice}</p>
                             </div>
                         </div>
 
@@ -103,7 +101,7 @@ function Validation(props) {
 
                     <div style={{display: 'flex', fontSize : 14, justifyContent : 'flex-end', marginRight : '9%', marginBottom : 0}}>
                         <p >Frais de livraison : </p>
-                        <p style={{marginLeft : 15}}>{deliveryPrice},00€</p>
+                        <p style={{marginLeft : 15}}>{props.fdp}€</p>
                     </div>
 
                     <div style={{display: 'flex', fontSize : 16, justifyContent : 'flex-end', marginRight : '9%', marginBottom : 0}}>
@@ -130,6 +128,7 @@ function mapStateToProps(state) {
     return {
         token: state.token,
         basket: state.basket,
+        fdp : state.deliveryPrice
     };
 }
 

@@ -6,6 +6,7 @@ var request = require('sync-request');
 
 const Stripe = require('stripe');
 const stripe = Stripe('sk_test_51KHnRjFcTa07fhQCsT77a7dMNM1tmeXihc8agkLpki93jx18R4BzhRP16vhZCdEQvGceLtreRQnLTbu7UqkWe4sH00KMMJTEfq');
+const bodyParser = require('body-parser');
 
 /*
 GET home page.
@@ -136,16 +137,5 @@ router.post('/create-checkout-session', async (req, res) => {
 
     res.redirect(303, session.url);
   });
-
-  router.get('/success', function (req, res, next) {
-
-
-   
-   res.json('confirm');
- })
-
- router.get('/cancel', function (req, res, next) {
-   res.json('cancel');
- })
 
 module.exports = router;

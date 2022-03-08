@@ -8,6 +8,7 @@ import Footer from '../modals_parcels/footer';
 // import BasketModal from '../modals_parcels/basketModal';
 
 import {Select, Breadcrumb, Divider, Modal, Button} from "antd";
+import {ArrowLeftOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
 
 const {Option} = Select;
@@ -245,6 +246,29 @@ function ProductPage(props) {
                         
                         <p style={{fontSize : 12, marginRight : 10}}>{productConsulted.fastDesc}</p>
 
+                        <div style={{display : 'flex', justifyContent : 'space-around', marginTop : 20}}>
+
+                           <div style={{ display : 'flex', flexDirection : 'column', alignItems : 'center'}} > 
+                              <img src='/assets/Icones/waterproof.png' alt="Imperméabilité" style={{width : 50, height : 50, marginBottom : 10}}/>
+                              <p style={{fontWeight : 'bold', marginBottom : 5}}>Imperméabilité : </p>
+                              <p>20.000 schmerber</p>
+                           </div>
+
+                          <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}}>
+                             <img src='/assets/Icones/wind.png' alt="Respirabilité" style={{width : 50, height : 50, marginBottom : 10}}/> 
+                              <p style={{fontWeight : 'bold', marginBottom : 5}}>Respirabilité : </p>
+                              <p>20.000 schmerber</p>
+                           </div>
+
+                           <div style={{display : 'flex', flexDirection : 'column', alignItems : 'center'}}>
+                              <img src='/assets/Icones/temperature.png' alt="Indice de chaleur" style={{width : 50, height : 50, marginBottom : 10}}/>  
+                              <p style={{fontWeight : 'bold', marginBottom : 5}}>Indice de chaleur : </p>
+                              <p>5/10</p>
+                           </div>
+                           
+ 
+                        </div>
+
                      </div>
 
                   </div>
@@ -384,4 +408,8 @@ const filter = {
    textTransform: "uppercase",
    marginTop: 10,
    marginBottom : 10
+}
+
+const iconDiv = {
+  
 }

@@ -140,7 +140,8 @@ function BasketPage(props) {
                             }}/>
                             <div>
                                 <p>CHOISIR UNE LIVRAISON</p>
-                                <Radio.Group style={{marginLeft: 10}} defaultValue={1} onChange={(e) => setDelivery(e.target.value)}>
+                                <Radio.Group style={{marginLeft: 10}} onChange={(e) => {
+                                    setDelivery(e.target.value)}} >
                                     <Space direction="vertical">
                                         <Radio value={1}>Standard France (3 à 5 jours)</Radio>
                                         <Radio value={2}>Repack France, l'emballage réutilisable</Radio>
@@ -160,7 +161,7 @@ function BasketPage(props) {
                             }}/>
                             <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
                                 <p style={{fontWeight: 450, marginBottom: 0}}>FRAIS DE PORT</p>
-                                <p style={{fontSize: 14, marginBottom: 0}}>{deliveryPrice.toString()}€</p>
+                                <p style={{fontSize: 14, marginBottom: 0}} >{deliveryPrice}€</p>
                             </div>
                             <span style={{
                                 marginTop: 10,
@@ -186,7 +187,7 @@ function BasketPage(props) {
                                     <input name="basket" type='hidden' value={JSON.stringify(props.basket)}/>
                                     <input name="delivery" type='hidden' value={deliveryPrice}/>
                                     <input name="token" type='hidden' value={props.token}/>
-                                    <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type='submit'>Passer au paiement 💳 </button>
+                                    <button onClick={() => {props.changeDeliveryPrice(deliveryPrice)}} style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type='submit' >Passer au paiement 💳 </button>
                                 </form>
                             </div>
                         </Col>
@@ -227,6 +228,12 @@ function mapDispatchToProps(dispatch) {
                 size: value,
             });
         },
+        changeDeliveryPrice : function (value){
+            dispatch({
+                type : 'changeDeliveryPrice',
+                price : value
+            })
+        }
     };
 }
 

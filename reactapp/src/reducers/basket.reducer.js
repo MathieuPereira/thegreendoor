@@ -16,7 +16,7 @@ export default function (basket = [], action) {
             quantity: 1,
             size: action.size,
             normalPrice: action.normalPrice,
-            reducedPrice: action.reducedPrice,
+            reducedPrice: action.reducedPrice
          });
          localStorage.setItem('basket', JSON.stringify(basketCopy))
          return basketCopy;

@@ -5,7 +5,7 @@ export default function Label() {
 
   return (
       
-        <div style={{display : 'flex', flexDirection : 'column', justifyContent: 'center', paddingTop : 10, paddingBottom : 'auto', marginLeft : '95%', width : 53, position : 'fixed', borderRadius : 50, backgroundColor : 'white', border: '3px solid #207872'}}>
+        <div style={{display : 'flex', flexDirection : 'column', justifyContent: 'center', paddingTop : 10, paddingBottom : 'auto', right : '5%', width : 53, position : 'fixed', borderRadius : 50, backgroundColor : 'white', border: '3px solid #207872'}}>
             <Tooltip placement="left" title="Made in France" >
                 <img src='/assets/Icones/french_flag.png' alt="Logo" style={{height: 30, margin : 7}}/>
             </Tooltip>
