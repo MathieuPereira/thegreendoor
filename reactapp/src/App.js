@@ -5,6 +5,7 @@ import Home from './components/homepage';
 import SalePage from "./components/salePage";
 import ProductPage from "./components/productPage";
 import BasketPage from "./components/basketPage";
+import ValidationPage from "./components/validationPage";
 
 // REDUX
 import {Provider} from 'react-redux';
@@ -28,6 +29,8 @@ function App() {
                   <Route component={SalePage} path="/sale/:brand" exact />
                   <Route component={ProductPage} path="/sale/:brand/:product"/>
                   <Route component={BasketPage} path="/basket"/>
+                  <Route component={ValidationPage} path="/orderValidated"/>
+
                </Switch>
             </Router>
        
