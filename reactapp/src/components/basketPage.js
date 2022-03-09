@@ -31,6 +31,10 @@ function BasketPage(props) {
         setTotalPrice(price);
     }, [props.basket]);
 
+    useEffect(() => {
+        props.changeDeliveryService(delivery)
+    }, [delivery]);
+
     basketArticles = props.basket.map((product, i) => {
 
         return (
@@ -228,10 +232,10 @@ function mapDispatchToProps(dispatch) {
                 size: value,
             });
         },
-        changeDeliveryPrice : function (value){
+        changeDeliveryService : function (value){
             dispatch({
-                type : 'changeDeliveryPrice',
-                price : value
+                type : 'changeDeliveryService',
+                delivery : value
             })
         }
     };
