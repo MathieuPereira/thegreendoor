@@ -1,9 +1,13 @@
 import React, {useEffect, useState} from 'react';
-import {Menu, Badge, Carousel, Popover, Divider} from 'antd';
 import {Link, Redirect} from "react-router-dom";
-
 import {connect} from 'react-redux';
+
+// Import de NOS composants
 import SignModal from '../modals_parcels/signModal';
+
+// Imports antd & CSS
+import {Menu, Badge, Carousel, Popover, Divider} from 'antd';
+import '../stylesheets/header.css';
 
 function Header(props) {
 
@@ -11,6 +15,7 @@ function Header(props) {
     const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
     const [isLogged, setIsLogged] = useState(false);
 
+    // Affichage du panier en fonction de la connexion (via Token)
     useEffect(() => {
         props.refreshBasket();
         props.refreshToken();
@@ -65,19 +70,18 @@ function Header(props) {
         autoplaySpeed: 8000,
     };
 
-    // Sous-menu "Mon compte"
-    const content = (
-        <>
+   // Sous-menu "Mon compte"
+   const content = (
+      <>
         <div style={{height: 130}}>
-            <p><Link style={menuHeader} to="/">Mes commandes passées 📦 </Link></p>
+            <p><Link className='menuHeader' to="/my-orders">Mes commandes passées 📦 </Link></p>
             <Divider style={divider}/>
-            <p><Link style={menuHeader} to="/">Mes informations personnelles 📬 </Link></p>
+            <p><Link className='menuHeader' to="/">Mes informations personnelles 📬 </Link></p>
             <Divider style={divider}/>
-            <p style={menuHeader} onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
+            <p className='menuHeader' onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
         </div>
-</>
-)
-    ;
+      </>
+   );
 
     // Redirection au clic sur Logo
     const onLogoClick = () => {
@@ -90,130 +94,133 @@ function Header(props) {
 
         return (
 
-            <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
+            <div span={{xs: 24}} style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
 
-                <div span={{xs: 24}} style={header}>
+               <div style={header}>
 
-               <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
+                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick}/></Link>
 
-                    <div style={textHeader}>
+                  <div style={textHeader}>
 
-                  <p style={{marginBottom: 0, marginRight: 70, cursor : 'pointer'}}>Qui sommes-nous ?</p>
-                  <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor : 'pointer'}} onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
+                     <p className="headerText" >Qui sommes-nous ?</p>
+                     <p className="headerText" onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
 
-                  <div style={{marginLeft: 50, marginRight: 30}}>
-                     <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
-                        <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
-                     </Badge>
+                     <div style={{marginLeft: 50, marginRight: 30}}>
+                        <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
+                           <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
+                        </Badge>
+                     </div>
                   </div>
+
                </div>
+
+               <Carousel {...settings} className='carousel'>
+
+                  <div>
+                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
+                  </div>
+                  <div>
+                     <img src={imgNature} alt="Outdoor background" className="imgCarousel" />
+                  </div>
+                  <div>
+                     <img src={imgMer} alt="Outdoor background" className="imgCarousel" />
+                  </div>
+
+               </Carousel>
+
+               <p className="baseline" >
+                  Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables
+               </p>
+
+               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
+
+                  <Menu.Item className="catMenu">
+                     <Link to="/home/Mer">Mer</Link>
+                  </Menu.Item>
+
+                  <Menu.Item className="catMenu">
+                     <Link to="/home/Montagne">Montagne</Link>
+                  </Menu.Item>
+
+                  <Menu.Item className="catMenu">
+                     <Link to="/home/Nature">Nature</Link>
+                  </Menu.Item>
+
+               </Menu>
+
+               <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
+            </div>
+
+         );
+
+      } else {
+
+         return (
+
+            <div span={{xs: 24}} style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
+
+               <div style={header}>
+
+                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick} /></Link>
+
+                  <div style={textHeader}>
+
+                     <p className="headerText">Qui sommes-nous ?</p>
+
+                     <Popover placement="bottom" content={content} trigger="click">
+                        <p className="headerText">
+                           Mon compte
+                        </p>
+                     </Popover>
+
+                     <Popover placement="bottom" content={contentBasket} trigger="click">
+                        <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
+                           <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
+                              <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
+                           </Badge>
+                        </div>
+                     </Popover>
+                  </div>
+
+               </div>
+
+               <Carousel {...settings} className='carousel'>
+
+                  <div>
+                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
+                  </div>
+                  <div>
+                     <img src={imgNature} alt="Outdoor background" className="imgCarousel"/>
+                  </div>
+                  <div>
+                     <img src={imgMer} alt="Outdoor background" className="imgCarousel"/>
+                  </div>
+
+               </Carousel>
+
+               <p className="baseline">
+                  Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
+
+               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
+
+                  <Menu.Item  className="catMenu">
+                     <Link to="/home/Mer">Mer</Link>
+                  </Menu.Item>
+
+                  <Menu.Item className="catMenu">
+                     <Link to="/home/Montagne">Montagne</Link>
+                  </Menu.Item>
+
+                  <Menu.Item className="catMenu">
+                     <Link to="/home/Nature">Nature</Link>
+                  </Menu.Item>
+
+               </Menu>
 
             </div>
 
-            <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
-
-               <div>
-                  <img src={imgMontagne} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-               <div>
-                  <img src={imgNature} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-               <div>
-                  <img src={imgMer} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-
-            </Carousel>
-
-            <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
-               Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
-
-            <Menu span={{xs: 24}} style={menuNavBar} mode="horizontal">
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Mer">Mer</Link>
-               </Menu.Item>
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Montagne">Montagne</Link>
-               </Menu.Item>
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Nature">Nature</Link>
-               </Menu.Item>
-
-            </Menu>
-            <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
-         </div>
-
-      );
-
-   } else {
-
-      return (
-
-         <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
-
-            <div span={{xs: 24}} style={header}>
-
-               <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
-
-               <div style={textHeader}>
-
-                  <p style={{marginBottom: 0, marginRight: 70, cursor: 'pointer'}}>Qui sommes-nous ?</p>
-
-                        <Popover placement="bottom" content={content} trigger="click">
-                            <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor: 'pointer'}}>Mon
-                                compte</p>
-                        </Popover>
-
-                  <Popover placement="bottom" content={contentBasket} trigger="click">
-                  <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
-                     <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
-                        <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
-                     </Badge>
-                  </div>
-                  </Popover>
-               </div>
-
-            </div>
-
-            <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
-
-               <div>
-                  <img src={imgMontagne} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-               <div>
-                  <img src={imgNature} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-               <div>
-                  <img src={imgMer} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
-               </div>
-
-            </Carousel>
-
-            <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
-               Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
-
-            <Menu span={{xs: 24}} style={menuNavBar} mode="horizontal">
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Mer">Mer</Link>
-               </Menu.Item>
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Montagne">Montagne</Link>
-               </Menu.Item>
-
-               <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
-                  <Link to="/home/Nature">Nature</Link>
-               </Menu.Item>
-
-            </Menu>
-
-         </div>
-
-      );
-   }
+         );
+      }
 }
 
 function mapStateToProps(state) {
@@ -279,17 +286,6 @@ const menuHeader = {
    color: 'black',
    fontFamily: 'Montserrat',
    cursor: 'pointer',
-};
-
-const menuNavBar = {
-   backgroundColor: "#FCF5EE",
-   margin: 'auto',
-   fontWeight: "bold",
-   justifyContent: 'center',
-   width: '70%',
-   borderColor: 'black',
-   fontSize: 16,
-   padding: 5,
 };
 
 const divider = {

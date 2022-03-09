@@ -1,0 +1,160 @@
+
+.logo{
+    height : 50px;
+}
+
+.headerText {
+    margin-bottom: 0px;
+    margin-left: 20px;
+    margin-right: 70px;
+    cursor: pointer;
+}
+
+.carousel {
+    margin-top: 0px;
+    position: relative
+}
+
+.imgCarousel {
+    height: 230px; 
+    width: 100%
+}
+
+.baseline {
+    position: absolute;
+    top: 60px; 
+    left: 170px; 
+    font-weight: bold; 
+    font-size: 20px
+}
+
+.catMenu {
+    width: 130px;
+    text-align : center;
+}
+
+.backpack {
+    height: 25px; 
+    margin-bottom: 0px;
+}
+
+.menuNavBar {
+    background-color: #FCF5EE;
+    margin: auto;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    border-color: black;
+    font-size: 16px;
+    padding: 5px;
+ }
+
+ .menuHeader {
+    color: black;
+    font-family: 'Montserrat';
+    cursor: pointer;
+ }
+
+
+@media screen and (max-width: 1000px)
+{
+
+    .logo{
+        height : 40px;
+        justify-content: center;
+    }
+
+    .headerText {
+        font-size: 14px;
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+
+    .carousel {
+        margin-top: 0px;
+        position: relative
+    }
+
+    .imgCarousel {
+        height: 180px; 
+        width: 100%
+    }
+
+    .baseline {
+        position: absolute;
+        top: 50px; 
+        left: 170px; 
+        font-weight: bold; 
+        font-size: 16px
+    }
+
+    .catMenu {
+        width: 130px;
+        text-align : center;
+        font-size: 15px;
+    }
+
+    .backpack {
+        height: 20px; 
+    }
+
+    .menuHeader {
+        color: black;
+        font-family: 'Montserrat';
+        cursor: pointer;
+        font-size: 13px;
+     }
+        
+}
+
+@media screen and (max-width: 765px)
+{
+
+    .logo{
+        height : 30px;
+        justify-content: center;
+    }
+
+    .headerText {
+        font-size: 12px;
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    .carousel {
+        margin-top: 0px;
+        position: relative
+    }
+
+    .imgCarousel {
+        height: 100px; 
+        width: 100%
+    }
+
+    .baseline {
+        position: absolute;
+        top: 40px; 
+        left: 170px; 
+        font-weight: bold; 
+        font-size: 14px
+    }
+
+    .catMenu {
+        width: 100px;
+        text-align : center;
+        font-size: 13px;
+    }
+
+    .backpack {
+        height: 15px; 
+    }
+
+    .menuHeader {
+        color: black;
+        font-family: 'Montserrat';
+        cursor: pointer;
+        font-size: 11px;
+     }
+        
+}

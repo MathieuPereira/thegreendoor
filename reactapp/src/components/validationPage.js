@@ -18,12 +18,6 @@ function Validation(props) {
     let totalDiscount = 0;
     let data;
 
-     for (let e of props.basket) {
-     totalCmd += e.reducedPrice * e.quantity;
-     normalPrice += e.normalPrice * e.quantity;
-     }
-     totalDiscount = normalPrice - totalCmd;
-
     useEffect(() => {
         async function loadData() {
             await props.refreshBasket();
@@ -57,6 +51,8 @@ function Validation(props) {
 
         loadData();
     }, []);
+
+    console.log();
 
     if (!loader) {
         return (
@@ -123,6 +119,14 @@ function Validation(props) {
         });
 
         let deliveryPrice = props.deliveryService == 1 ? 3.90 : 5.40;
+
+        for (let e of props.basket) {
+            totalCmd += e.reducedPrice * e.quantity;
+            normalPrice += e.normalPrice * e.quantity;
+        }
+        totalDiscount = normalPrice - totalCmd;
+
+        totalCmd = totalCmd + deliveryPrice;
 
         return (
 

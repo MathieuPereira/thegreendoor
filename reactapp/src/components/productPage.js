@@ -5,7 +5,6 @@ import {Link, Redirect, useParams} from "react-router-dom";
 import Header from '../modals_parcels/header';
 import Label from '../modals_parcels/labelBar';
 import Footer from '../modals_parcels/footer';
-// import BasketModal from '../modals_parcels/basketModal';
 
 import {Select, Breadcrumb, Divider, Modal, Button} from "antd";
 import {ArrowLeftOutlined} from "@ant-design/icons";
@@ -63,7 +62,7 @@ function ProductPage(props) {
    var breadCrumb;
    if (props.navigation.category != null) {
       breadCrumb =
-         <Breadcrumb separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
+         <Breadcrumb span={24} separator=">" style={{fontSize: "16px", fontWeight: "500", width: "100%", marginBottom: 10}}>
             <Breadcrumb.Item><Link to="/">Home</Link></Breadcrumb.Item>
             <Breadcrumb.Item>
                <Link to={`/home/${props.navigation.category}`}>{props.navigation.category}</Link>
@@ -92,73 +91,87 @@ function ProductPage(props) {
       <div style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
          <Header/>
          <Label/>
+
          <div style={{width: '70%', margin: 'auto', marginTop: 10}}>
             {breadCrumb}
             <div style={{display: 'flex', justifyContent: 'flex-start', flexDirection: "row", flexWrap: 'nowrap'}}>
-               <div style={{width: '250px', height: "100%"}}>
+               
+            <div style={{width: '250px', height: "100%"}}>
 
                    {/* Concerne l'image de la marque*/}
-                  <div style={{width: 250, height: 250, position: 'relative', marginBottom : 10}}>
-                     <img style={{width: "250px", height: "250px"}} src={`/assets/Resized/${saleImg}_sale.jpeg`}
-                          alt="picture"/>
+            <div style={{width: 250, height: 250, position: 'relative', marginBottom : 10}}>
+                <img style={{width: "250px", height: "250px"}} src={`/assets/Resized/${saleImg}_sale.jpeg`} alt="picture"/>
 
-                     <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
+                <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
 
-                        {labelList}
+                    {labelList}
 
-                     </div>
+                </div>
 
-                  </div>
+            </div>
 
                     {/* Concerne la filterBar*/}
-                  <div style={{backgroundColor: '#FFFFFF', width: "100%", marginTop: 10}}>
-                     <p style={{
-                        marginLeft: "5%",
-                        paddingTop: 15,
-                        marginBottom: 0,
-                        fontWeight: 550,
-                        fontSize: 18,
-                     }}>Trier
-                        par</p>
-                     <Select defaultValue="popularite"
-                             style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
-                             onChange={handleChange}>
-                        <Option value="popularite">Popularité</Option>
-                        <Option value="prix">Prix</Option>
-                     </Select>
-                     <p style={{
-                        marginLeft: "5%",
-                        paddingTop: 15,
-                        marginBottom: 0,
-                        fontWeight: 500,
-                        fontSize: 16,
-                     }}>Affiner votre recherche</p>
-                     <Select defaultValue="Type de produits"
-                             style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
-                             onChange={handleChange}>
-                        <Option value="Chaussures">Chaussures</Option>
-                        <Option value="Vêtements">Vêtements</Option>
-                        <Option value="Accessoires">Accessoires</Option>
-                     </Select>
-                     <Select defaultValue="Genre"
-                             style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
-                             onChange={handleChange}>
-                        <Option value="men">Homme</Option>
-                        <Option value="women">Femme</Option>
-                        <Option value="children">Enfant</Option>
-                     </Select>
-                     <Select defaultValue="Taille" style={filter} onChange={handleChange}>
-                        <Option value="xs">XS</Option>
-                        <Option value="s">S</Option>
-                        <Option value="m">M</Option>
-                        <Option value="l">L</Option>
-                        <Option value="xl">XL</Option>
-                        <Option value="xxl">XXL</Option>
-                     </Select>
-                  </div>
+            <div style={{backgroundColor: '#FFFFFF', width: "100%", marginTop: 10}}>
+                
+                <p style={{
+                    marginLeft: "5%",
+                    paddingTop: 15,
+                    marginBottom: 0,
+                    fontWeight: 550,
+                    fontSize: 18,
+                }}>
+                    Trier par
+                </p>
 
-               </div>
+                <Select defaultValue="popularite"
+                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                    onChange={handleChange}>
 
+                    <Option value="popularite">Popularité</Option>
+                    <Option value="prix">Prix</Option>
+                </Select>
+                
+                <p style={{
+                    marginLeft: "5%",
+                    paddingTop: 15,
+                    marginBottom: 0,
+                    fontWeight: 500,
+                    fontSize: 16,
+                }}>
+                    Affiner votre recherche
+                </p>
+                
+                <Select defaultValue="Type de produits"
+                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                    onChange={handleChange}>
+                    
+                    <Option value="Chaussures">Chaussures</Option>
+                    <Option value="Vêtements">Vêtements</Option>
+                    <Option value="Accessoires">Accessoires</Option>
+
+                </Select>
+                
+                <Select defaultValue="Genre"
+                    style={{width: "90%", marginLeft: "5%", textTransform: "uppercase", marginTop: 10}}
+                    onChange={handleChange}>
+                    
+                    <Option value="men">Homme</Option>
+                    <Option value="women">Femme</Option>
+                    <Option value="children">Enfant</Option>
+                
+                </Select>
+                
+                <Select defaultValue="Taille" style={filter} onChange={handleChange}>
+                    <Option value="xs">XS</Option>
+                    <Option value="s">S</Option>
+                    <Option value="m">M</Option>
+                    <Option value="l">L</Option>
+                    <Option value="xl">XL</Option>
+                    <Option value="xxl">XXL</Option>
+                </Select>
+            </div>
+
+        </div>
                {/* Concerne la ProductCard dans son ensemble */}
 
                <div style={{width : '100%', marginLeft : 20, display: "flex", flexDirection: "column"}}>
