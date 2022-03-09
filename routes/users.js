@@ -21,7 +21,7 @@ router.post('/sign-up', async function (req, res) {
         if (!/0-9]\s/.test(lastName) && lastName !== "undefined") {
             lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
             if (regexPattern.test(email)) {
-                regexPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\/]).{8,}$/
+                regexPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\/]).{8,}$/;
                 if (regexPattern.test(password)) {
                     let checkEmailUser = await userModel.findOne({email: req.body.email});
                     if (!checkEmailUser) {
@@ -94,13 +94,15 @@ router.post('/add-address', async function (req, res, next) {
 
     if (!user)
         res.status(404).json({comment: 'User not found'});
-
-    user.addresses.push({
-        country: 'France',
-        city: session.shipping.address.city,
-        zipCode: session.shipping.address.postal_code,
-        address: session.shipping.address.line1,
-    });
+    let addressAlreadyExists = user.addresses.filter((e) => e.address == session.shipping.address.line1)
+    if (addressAlreadyExists.length >= 1) {
+        user.addresses.push({
+            country: 'France',
+            city: session.shipping.address.city,
+            zipCode: session.shipping.address.postal_code,
+            address: session.shipping.address.line1,
+        });
+    }
 
     let savedUser = await user.save();
 
@@ -123,8 +125,16 @@ router.post('/add-order', async function (req, res, next) {
         let brand = await saleModel.findOne({brandName: e.brand});
         for (let i of brand.articles) {
             if (i.name === e.name) {
-                articles.push({price: e.reducedPrice, quantity: e.quantity, size: e.size, product: i._id});
-                price += i.reducedPrice;
+                articles.push({
+                    name : e.name,
+                    img : e.img,
+                    normalPrice : e.normalPrice,
+                    reducedPrice : e.reducedPrice,
+                    quantity: e.quantity,
+                    size: e.size,
+                    product: i
+                });
+                price += i.reducedPrice * e.quantity;
             }
         }
     }
@@ -160,15 +170,10 @@ router.post('/last-order', async function (req, res, next) {
         res.status(409).json({comment: 'No order found'});
 });
 
-router.post('/last-order', async function (req, res, next) {
-    let user = await userModel.findOne({token: req.body.token}).populate();
-    let lastorder = user.orders[user.orders.length - 1];
-    res.json(lastorder);
-});
-
 
 router.post('/past-orders', async function (req, res, next) {
-    let user = await userModel.findOne({token: req.body.token}).populate();
+    let user = await userModel.findOne({token: req.body.token});
+
     res.json(user.orders);
 });
 module.exports = router;

@@ -11,18 +11,17 @@ import deliveryService from "../reducers/delivery.reducer";
 
 function Validation(props) {
     const [loader, setLoader] = useState(false);
+    const [orderInfos, setOrderInfos] = useState([]);
     const {session} = useParams();
 
     let totalCmd = 0;
     let normalPrice = 0;
     let totalDiscount = 0;
-    let data;
+
 
     useEffect(() => {
+        let data;
         async function loadData() {
-            await props.refreshBasket();
-            await props.refreshToken();
-            await props.refreshDelivery();
 
             let rawData = await fetch('/users/add-order', {
                 method: 'POST',
@@ -38,12 +37,15 @@ function Validation(props) {
                 });
                 data = await rawData.json();
                 if (data.comment == 'Adress saved in db') {
-                    rawData = await fetch('/users/add-address', {
+                    rawData = await fetch('/users/last-order', {
                         method: 'POST',
                         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                        body: `token=${localStorage.getItem('token')}&stripeSession=${session}`,
+                        body: `token=${localStorage.getItem('token')}`,
                     });
                     data = await rawData.json();
+                    setOrderInfos(data.order)
+                    props.removeBasket();
+                    localStorage.removeItem('basket');
                     setLoader(true);
                 }
             }
@@ -52,7 +54,7 @@ function Validation(props) {
         loadData();
     }, []);
 
-    console.log();
+    console.log(orderInfos);
 
     if (!loader) {
         return (
@@ -65,7 +67,7 @@ function Validation(props) {
 
         let order;
 
-        order = props.basket.map((product, i) => {
+        order = orderInfos.articles.map((product, i) => {
 
             return (
 
@@ -118,9 +120,9 @@ function Validation(props) {
 
         });
 
-        let deliveryPrice = props.deliveryService == 1 ? 3.90 : 5.40;
+        let deliveryPrice = orderInfos.deliveryService == 1 ? 3.90 : 5.40;
 
-        for (let e of props.basket) {
+        for (let e of orderInfos.articles) {
             totalCmd += e.reducedPrice * e.quantity;
             normalPrice += e.normalPrice * e.quantity;
         }
@@ -196,7 +198,7 @@ function Validation(props) {
                             marginBottom: 0,
                         }}>
                             <p>Commande totale : </p>
-                            <p style={{fontWeight: 'bold', marginLeft: 15, color: '#207872'}}>{totalCmd},00€</p>
+                            <p style={{fontWeight: 'bold', marginLeft: 15, color: '#207872'}}>{totalCmd}€</p>
                         </div>
 
                     </div>
@@ -272,7 +274,7 @@ function mapDispatchToProps(dispatch) {
             dispatch({
                 type: 'refreshDelivery'
             })
-        }
+        },
     };
 }
 

@@ -8,7 +8,10 @@ var addressSchema = mongoose.Schema({
 });
 
 var articleSchema = mongoose.Schema({
-    price: Number,
+    name : String,
+    img : String,
+    normalPrice : Number,
+    reducedPrice : Number,
     quantity: Number,
     size: String,
     product: {type: mongoose.Schema.Types.ObjectId, ref: 'articles'},
