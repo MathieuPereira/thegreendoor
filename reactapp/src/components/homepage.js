@@ -10,6 +10,7 @@ import Footer from '../modals_parcels/footer';
 
 // Import composant antd
 import {Card, Col, Row, Modal, Button} from 'antd';
+import '../stylesheets/homepage.css';
 
 function Home(props) {
 
@@ -61,7 +62,7 @@ function Home(props) {
 
         return (
 
-            <Col span={{xs: 24, sm: 12}} style={{margin: 10}}>
+            <Col span={{xs: 24, sm: 12}} className="cards">
 
                 <Card
 
@@ -173,7 +174,7 @@ function Home(props) {
 
             <Header/>
             <Label/>
-            <Row span={{xs: 24}} style={{width: '100%', marginTop: 10, justifyContent: 'center'}}>
+            <Row style={{width: '100%', marginTop: 10, justifyContent: 'center'}}>
                 <Link to={`/home/${category}`}><h4 style={saleOngoingColor}>LES VENTES DU MOMENT</h4></Link>
                 <span style={{
                     width: "1px",
@@ -213,7 +214,7 @@ function Home(props) {
 
             </Modal>
 
-            <Row style={{width: '80%', margin: 'auto', marginTop: 2, justifyContent: 'center'}}>
+            <Row className="cardsContainer">
 
                 {cardsFromDB}
 

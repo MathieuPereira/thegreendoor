@@ -1,0 +1,40 @@
+.labelBar {
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    padding-top : 10px; 
+    padding-bottom : auto;
+    margin-bottom : 200px;
+    right : 5%;
+    width : 53px;
+    position : fixed;
+    border-radius : 50px;
+    background-color : white;
+    border: 3px solid #207872;
+}
+
+.label {
+    height : 30px;
+    margin : 7px;
+}
+
+@media screen and (max-width: 765px)
+{
+
+    .labelBar {
+        display : flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        padding-bottom: 10px;
+        width : 380px;
+        height: 50px;
+        margin-top: 55px;
+        right: 25%;
+        left : 25%;
+        border-radius : 50px;
+        background-color : white;
+        border: 3px solid #207872;
+    }
+        
+}

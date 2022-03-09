@@ -73,12 +73,12 @@ function Header(props) {
    // Sous-menu "Mon compte"
    const content = (
       <>
-        <div className="monCompte" style={{height: 130}}>
-            <p><Link style={menuHeader} to="/my-orders">Mes commandes passées 📦 </Link></p>
+        <div style={{height: 130}}>
+            <p><Link className='menuHeader' to="/my-orders">Mes commandes passées 📦 </Link></p>
             <Divider style={divider}/>
-            <p><Link style={menuHeader} to="/">Mes informations personnelles 📬 </Link></p>
+            <p><Link className='menuHeader' to="/">Mes informations personnelles 📬 </Link></p>
             <Divider style={divider}/>
-            <p style={menuHeader} onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
+            <p className='menuHeader' onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
         </div>
       </>
    );
@@ -102,47 +102,47 @@ function Header(props) {
 
                   <div style={textHeader}>
 
-                     <p style={{marginBottom: 0, marginRight: 70, cursor : 'pointer'}}>Qui sommes-nous ?</p>
-                     <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor : 'pointer'}} onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
+                     <p className="headerText" >Qui sommes-nous ?</p>
+                     <p className="headerText" onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
 
                      <div style={{marginLeft: 50, marginRight: 30}}>
                         <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
-                           <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
+                           <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
                         </Badge>
                      </div>
                   </div>
 
                </div>
 
-               <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
+               <Carousel {...settings} className='carousel'>
 
                   <div>
-                     <img src={imgMontagne} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
                   </div>
                   <div>
-                     <img src={imgNature} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgNature} alt="Outdoor background" className="imgCarousel" />
                   </div>
                   <div>
-                     <img src={imgMer} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgMer} alt="Outdoor background" className="imgCarousel" />
                   </div>
 
                </Carousel>
 
-               <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
+               <p className="baseline" >
                   Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables
                </p>
 
-               <Menu span={{xs: 24}} style={menuNavBar} mode="horizontal">
+               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item className="catMenu">
                      <Link to="/home/Mer">Mer</Link>
                   </Menu.Item>
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item className="catMenu">
                      <Link to="/home/Montagne">Montagne</Link>
                   </Menu.Item>
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item className="catMenu">
                      <Link to="/home/Nature">Nature</Link>
                   </Menu.Item>
 
@@ -165,10 +165,10 @@ function Header(props) {
 
                   <div style={textHeader}>
 
-                     <p style={{marginBottom: 0, marginRight: 70, cursor: 'pointer'}}>Qui sommes-nous ?</p>
+                     <p className="headerText">Qui sommes-nous ?</p>
 
                      <Popover placement="bottom" content={content} trigger="click">
-                        <p style={{marginLeft: 20, marginRight: 70, marginBottom: 0, cursor: 'pointer'}}>
+                        <p className="headerText">
                            Mon compte
                         </p>
                      </Popover>
@@ -176,7 +176,7 @@ function Header(props) {
                      <Popover placement="bottom" content={contentBasket} trigger="click">
                         <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
                            <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
-                              <img src="/assets/backpack.png" alt="Basket" style={{height: 25, marginBottom: 0}}/>
+                              <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
                            </Badge>
                         </div>
                      </Popover>
@@ -184,34 +184,34 @@ function Header(props) {
 
                </div>
 
-               <Carousel {...settings} style={{marginTop: 0, position: 'relative'}}>
+               <Carousel {...settings} className='carousel'>
 
                   <div>
-                     <img src={imgMontagne} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
                   </div>
                   <div>
-                     <img src={imgNature} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgNature} alt="Outdoor background" className="imgCarousel"/>
                   </div>
                   <div>
-                     <img src={imgMer} alt="Outdoor background" style={{height: 230, width: '100%'}}/>
+                     <img src={imgMer} alt="Outdoor background" className="imgCarousel"/>
                   </div>
 
                </Carousel>
 
-               <p style={{position: 'absolute', top: 60, left: 170, fontWeight: "bold", fontSize: 20}}>
+               <p className="baseline">
                   Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
 
-               <Menu span={{xs: 24}} style={menuNavBar} mode="horizontal">
+               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item  className="catMenu">
                      <Link to="/home/Mer">Mer</Link>
                   </Menu.Item>
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item className="catMenu">
                      <Link to="/home/Montagne">Montagne</Link>
                   </Menu.Item>
 
-                  <Menu.Item style={{width: 130, textAlign: 'center'}} className="ant-menu-item">
+                  <Menu.Item className="catMenu">
                      <Link to="/home/Nature">Nature</Link>
                   </Menu.Item>
 
@@ -286,17 +286,6 @@ const menuHeader = {
    color: 'black',
    fontFamily: 'Montserrat',
    cursor: 'pointer',
-};
-
-const menuNavBar = {
-   backgroundColor: "#FCF5EE",
-   margin: 'auto',
-   fontWeight: "bold",
-   justifyContent: 'center',
-   width: '70%',
-   borderColor: 'black',
-   fontSize: 16,
-   padding: 5,
 };
 
 const divider = {
