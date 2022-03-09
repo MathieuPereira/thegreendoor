@@ -140,7 +140,7 @@ function BasketPage(props) {
                             }}/>
                             <div>
                                 <p>CHOISIR UNE LIVRAISON</p>
-                                <Radio.Group style={{marginLeft: 10}} onChange={(e) => {
+                                <Radio.Group style={{marginLeft: 10}} defaultValue={1} onChange={(e) => {
                                     setDelivery(e.target.value)}} >
                                     <Space direction="vertical">
                                         <Radio value={1}>Standard France (3 à 5 jours)</Radio>
