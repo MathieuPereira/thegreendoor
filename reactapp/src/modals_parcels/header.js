@@ -5,8 +5,9 @@ import {connect} from 'react-redux';
 // Import de NOS composants
 import SignModal from '../modals_parcels/signModal';
 
-// Imports antd
+// Imports antd & CSS
 import {Menu, Badge, Carousel, Popover, Divider} from 'antd';
+import '../stylesheets/header.css';
 
 function Header(props) {
 
@@ -70,7 +71,7 @@ function Header(props) {
    // Sous-menu "Mon compte"
    const content = (
       <>
-        <div style={{height: 130}}>
+        <div className="monCompte" style={{height: 130}}>
             <p><Link style={menuHeader} to="/my-orders">Mes commandes passées 📦 </Link></p>
             <Divider style={divider}/>
             <p><Link style={menuHeader} to="/">Mes informations personnelles 📬 </Link></p>
@@ -95,7 +96,7 @@ function Header(props) {
 
                <div style={header}>
 
-                  <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
+                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick}/></Link>
 
                   <div style={textHeader}>
 
@@ -158,7 +159,7 @@ function Header(props) {
 
                <div style={header}>
 
-                  <Link to="/"><img src="/assets/logo.png" alt="Logo" onClick={onLogoClick} style={{height: 50}}/></Link>
+                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick} /></Link>
 
                   <div style={textHeader}>
 

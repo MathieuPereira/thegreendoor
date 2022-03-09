@@ -1,0 +1,50 @@
+
+@media screen and (max-width: 768px)
+{
+
+    .logo{
+        height : 25px;
+    }
+
+    .monCompte {
+        display : none
+    }
+        
+}
+
+
+@media screen and (max-width: 992px)
+{
+
+    .logo{
+        height : 25px;
+    }
+
+    .monCompte {
+        display : none
+    }
+        
+}
+
+@media screen and (max-width: 1200px)
+{
+
+    .logo{
+        height : 25px;
+    }
+
+    .monCompte {
+        display : none
+    }
+        
+}
+
+@media screen and (min-width: 1200px)
+{
+
+    .logo{
+        height: 50px;
+    }
+        
+}
+
