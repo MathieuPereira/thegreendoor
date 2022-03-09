@@ -14,6 +14,7 @@ import token from './reducers/token.reducer';
 import navigation from './reducers/navigation.reducer';
 import basket from './reducers/basket.reducer';
 import deliveryPrice from './reducers/delivery.reducer';
+import PastOrders from './components/pastOrders';
 
 // CombineReducers token & navigation
 const store = createStore(combineReducers({token, navigation, basket, deliveryPrice}));
@@ -32,6 +33,7 @@ function App() {
                   <Route component={ProductPage} path="/sale/:brand/:product"/>
                   <Route component={BasketPage} path="/basket"/>
                   <Route component={ValidationPage} path="/order-validated"/>
+                  <Route component={PastOrders} path="/my-orders"/>
 
                </Switch>
             </Router>

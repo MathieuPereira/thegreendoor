@@ -112,7 +112,7 @@ function Validation(props) {
                 </div>
 
                 <div style={{display : 'flex', justifyContent : 'space-between'}}>
-                    <button style={{cursor:'pointer', fontSize : 15, backgroundColor: '#207872', borderRadius: 5, border: 0, paddingLeft : 15, paddingRight : 15, height : 40, marginTop : 10, color : 'white'}} > <Link style={{color : 'white'}} to="/"> Voir vos commandes passées 📦 </Link> </button>
+                    <button style={{cursor:'pointer', fontSize : 15, backgroundColor: '#207872', borderRadius: 5, border: 0, paddingLeft : 15, paddingRight : 15, height : 40, marginTop : 10, color : 'white'}} > <Link style={{color : 'white'}} to="/my-orders"> Voir vos commandes passées 📦 </Link> </button>
                     <button style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: 'black', borderRadius: 5, border: 0, paddingLeft : 15, paddingRight : 15, height : 40, marginTop : 10}} > <Link style={{color : 'white'}} to="/"> Revenir à l'accueil 🏠 </Link> </button>
                 </div>
 

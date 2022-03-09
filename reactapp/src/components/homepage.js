@@ -173,7 +173,7 @@ function Home(props) {
 
             <Header/>
             <Label/>
-            <Row style={{width: '100%', marginTop: 10, justifyContent: 'center'}}>
+            <Row span={{xs: 24}} style={{width: '100%', marginTop: 10, justifyContent: 'center'}}>
                 <Link to={`/home/${category}`}><h4 style={saleOngoingColor}>LES VENTES DU MOMENT</h4></Link>
                 <span style={{
                     width: "1px",
