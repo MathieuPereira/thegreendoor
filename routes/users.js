@@ -44,17 +44,16 @@ router.post('/sign-up', async function (req, res) {
                         res.status(409).json({comment: "Cet email à déjà été enregistré"});
                     }
                 } else {
-                    if (password.length <= 8) {
+                    if (password.length <= 8)
                         res.status(449).json({comment: "Le mot de passe doit faire au moins 8 caractères"});
-                    } else if (!/[!@#$%^&*()\/]/.test(password)){
+                    else if (!/[!@#$%^&*()\/]/.test(password))
                         res.status(449).json({comment: "Le mot de passe doit contenir au moins un caractère spécial"});
-                    } else if (!/[a-z]/.test(password)){
+                    else if (!/[a-z]/.test(password))
                         res.status(449).json({comment: "Le mot de passe doit contenir au moins un caractère en minuscule"});
-                    } else if (!/[A-Z]/.test(password)){
+                    else if (!/[A-Z]/.test(password))
                         res.status(449).json({comment: "Le mot de passe doit contenir au moins un caractère en majuscule"});
-                    } else if (!/\d/.test(password)){
+                    else if (!/\d/.test(password))
                         res.status(449).json({comment: "Le mot de passe doit contenir au moins un caractère numérique"});
-                    }
                 }
             } else {
                 res.status(449).json({comment: "L'email rentré n'est pas valide"});
@@ -91,7 +90,7 @@ router.post('/sign-in', async function (req, res, next) {
 router.post('/add-address', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
 
-    const session = await stripe.checkout.sessions.retrieve(req.body.stripeSession)
+    const session = await stripe.checkout.sessions.retrieve(req.body.stripeSession);
 
     if (!user)
         res.status(404).json({comment: 'User not found'});
@@ -99,7 +98,7 @@ router.post('/add-address', async function (req, res, next) {
     user.addresses.push({
         country: 'France',
         city: session.shipping.address.city,
-        zipCode: session.shipping.address.city,
+        zipCode: session.shipping.address.postal_code,
         address: session.shipping.address.line1,
     });
 
@@ -111,9 +110,6 @@ router.post('/add-address', async function (req, res, next) {
         res.status(409).json({comment: 'There was an error during the transfer please repeat'});
 });
 
-/*
-NOT FINISHED YET
- */
 router.post('/add-order', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
     let deliveryService = parseInt(req.body.deliveryService);
@@ -122,15 +118,16 @@ router.post('/add-order', async function (req, res, next) {
         res.status(404).json({comment: 'User not found'});
 
     let articles = [];
+    let price = 0;
     for (let e of JSON.parse(req.body.articles)) {
-        let brand = await saleModel.findOne({brandName: e.brand})
+        let brand = await saleModel.findOne({brandName: e.brand});
         for (let i of brand.articles) {
             if (i.name === e.name) {
-                articles.push({price: e.reducedPrice, quantity: e.quantity, size: e.size, product:  i._id});
+                articles.push({price: e.reducedPrice, quantity: e.quantity, size: e.size, product: i._id});
+                price += i.reducedPrice;
             }
         }
     }
-
 
     let deliveryPrice = deliveryService == 1 ? 3.9 : 5.4;
     deliveryService = deliveryService == 1 ? 'Standard' : 'Repack';
@@ -140,7 +137,7 @@ router.post('/add-order', async function (req, res, next) {
         deliveryPrice: deliveryPrice,
         deliveryService: deliveryService,
         articles: articles,
-    }
+    };
 
     user.orders.push(newOrder);
 
@@ -161,5 +158,17 @@ router.post('/last-order', async function (req, res, next) {
         res.status(200).json({order: userOrder});
     else
         res.status(409).json({comment: 'No order found'});
+});
+
+router.post('/last-order', async function (req, res, next) {
+    let user = await userModel.findOne({token: req.body.token}).populate();
+    let lastorder = user.orders[user.orders.length - 1];
+    res.json(lastorder);
+});
+
+
+router.post('/past-orders', async function (req, res, next) {
+    let user = await userModel.findOne({token: req.body.token}).populate();
+    res.json(user.orders);
 });
 module.exports = router;

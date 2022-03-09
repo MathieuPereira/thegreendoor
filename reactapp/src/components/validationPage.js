@@ -18,32 +18,38 @@ function Validation(props) {
     let totalDiscount = 0;
     let data;
 
+     for (let e of props.basket) {
+     totalCmd += e.reducedPrice * e.quantity;
+     normalPrice += e.normalPrice * e.quantity;
+     }
+     totalDiscount = normalPrice - totalCmd;
+
     useEffect(() => {
         async function loadData() {
             await props.refreshBasket();
             await props.refreshToken();
             await props.refreshDelivery();
 
-            for (let e of props.basket) {
-                totalCmd += e.reducedPrice * e.quantity;
-                normalPrice += e.normalPrice * e.quantity;
-            }
-            totalDiscount = normalPrice - totalCmd;
-
             let rawData = await fetch('/users/add-order', {
                 method: 'POST',
                 headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `token=${props.token}&articles=${JSON.stringify(props.basket)}&deliveryService=${props.deliveryService}&price=${totalCmd}`,
+                body: `token=${localStorage.getItem('token')}&articles=${localStorage.getItem('basket')}&deliveryService=${localStorage.getItem('deliveryService')}`,
             });
             data = await rawData.json();
             if (data.comment == 'Order saved in db') {
                 rawData = await fetch('/users/add-address', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-                    body: `token=${props.token}&stripeSession=${session}`,
+                    body: `token=${localStorage.getItem('token')}&stripeSession=${session}`,
                 });
                 data = await rawData.json();
                 if (data.comment == 'Adress saved in db') {
+                    rawData = await fetch('/users/add-address', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                        body: `token=${localStorage.getItem('token')}&stripeSession=${session}`,
+                    });
+                    data = await rawData.json();
                     setLoader(true);
                 }
             }
@@ -56,7 +62,6 @@ function Validation(props) {
         return (
             <div style={{backgroundColor: "#FCF5EE", height: '100vh', fontFamily: 'Montserrat'}}>
                 <Header/>
-
                 <Spin size="large" style={{position: "absolute", left: '50%', top: '50%'}}/>
             </div>
         );
