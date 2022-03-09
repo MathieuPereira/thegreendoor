@@ -14,6 +14,7 @@ function Header(props) {
     useEffect(() => {
         props.refreshBasket();
         props.refreshToken();
+        props.refreshDelivery();
         if (props.token != null) {
             setIsLogged(true);
         } else {
@@ -25,6 +26,7 @@ function Header(props) {
         props.removeToken();
         props.removeBasket();
         localStorage.removeItem('basket');
+        localStorage.removeItem('deliveryService')
         setIsLogged(false);
     };
 
@@ -242,6 +244,10 @@ function mapDispatchToProps(dispatch) {
             dispatch({
                 type: 'removeBasket',
             });
+        }, refreshDelivery: function () {
+            dispatch({
+                type: 'refreshDelivery'
+            })
         }
     };
 }

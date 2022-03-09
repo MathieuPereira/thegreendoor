@@ -13,10 +13,10 @@ import {createStore, combineReducers} from 'redux';
 import token from './reducers/token.reducer';
 import navigation from './reducers/navigation.reducer';
 import basket from './reducers/basket.reducer';
-import deliveryPrice from './reducers/delivery.reducer';
+import deliveryService from './reducers/delivery.reducer';
 
 // CombineReducers token & navigation
-const store = createStore(combineReducers({token, navigation, basket, deliveryPrice}));
+const store = createStore(combineReducers({token, navigation, basket, deliveryService}));
 
 function App() {
 
@@ -31,7 +31,7 @@ function App() {
                   <Route component={SalePage} path="/sale/:brand" exact />
                   <Route component={ProductPage} path="/sale/:brand/:product"/>
                   <Route component={BasketPage} path="/basket"/>
-                  <Route component={ValidationPage} path="/order-validated"/>
+                  <Route component={ValidationPage} path="/order-validated/:session"/>
 
                </Switch>
             </Router>

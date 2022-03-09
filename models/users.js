@@ -17,6 +17,7 @@ var articleSchema = mongoose.Schema({
 var orderSchema = mongoose.Schema({
     price: Number,
     deliveryService: String,
+    deliveryPrice: Number,
     orderDate: {type: Date, default: Date.now},
     articles: [articleSchema],
 });

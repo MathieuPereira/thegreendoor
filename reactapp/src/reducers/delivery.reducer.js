@@ -1,8 +1,11 @@
-export default function(deliveryPrice = 0, action){
-    if(action.type == 'changeDeliveryPrice'){
-        console.log(action.price)
-        return action.price
+export default function(deliveryService = 1, action){
+    if(action.type == 'changeDeliveryService'){
+        localStorage.setItem('deliveryService', action.delivery)
+        console.log(action.delivery)
+        return action.delivery
+    } else if (action.type == 'refreshDelivery'){
+        return localStorage.getItem('deliveryService') != null ? localStorage.getItem('deliveryService') : deliveryService;
     } else {
-        return deliveryPrice
+        return deliveryService
     }
 }

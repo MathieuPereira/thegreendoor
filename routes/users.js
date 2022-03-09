@@ -6,6 +6,9 @@ const bcrypt = require("bcrypt");
 var userModel = require('../models/users');
 var saleModel = require('../models/sales');
 
+const Stripe = require('stripe');
+const stripe = Stripe('sk_test_51KHnRjFcTa07fhQCsT77a7dMNM1tmeXihc8agkLpki93jx18R4BzhRP16vhZCdEQvGceLtreRQnLTbu7UqkWe4sH00KMMJTEfq');
+
 router.post('/sign-up', async function (req, res) {
     let firstName = req.body.firstName.toLowerCase();
     let lastName = req.body.lastName.toLowerCase();
@@ -85,23 +88,25 @@ router.post('/sign-in', async function (req, res, next) {
     }
 });
 
-router.post('/add-adress', async function (req, res, next) {
+router.post('/add-address', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
+
+    const session = await stripe.checkout.sessions.retrieve(req.body.stripeSession)
 
     if (!user)
         res.status(404).json({comment: 'User not found'});
 
     user.addresses.push({
-        country: req.body.country,
-        city: req.body.city,
-        zipCode: req.body.zipCode,
-        address: req.body.address,
+        country: 'France',
+        city: session.shipping.address.city,
+        zipCode: session.shipping.address.city,
+        address: session.shipping.address.line1,
     });
 
     let savedUser = await user.save();
 
     if (savedUser._id)
-        res.status(200).json({user: user});
+        res.status(200).json({comment: 'Adress saved in db'});
     else
         res.status(409).json({comment: 'There was an error during the transfer please repeat'});
 });
@@ -111,12 +116,12 @@ NOT FINISHED YET
  */
 router.post('/add-order', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token});
+    let deliveryService = parseInt(req.body.deliveryService);
 
     if (!user)
         res.status(404).json({comment: 'User not found'});
 
     let articles = [];
-    let orders
     for (let e of JSON.parse(req.body.articles)) {
         let brand = await saleModel.findOne({brandName: e.brand})
         for (let i of brand.articles) {
@@ -126,18 +131,35 @@ router.post('/add-order', async function (req, res, next) {
         }
     }
 
-    user.orders.push({
+
+    let deliveryPrice = deliveryService == 1 ? 3.9 : 5.4;
+    deliveryService = deliveryService == 1 ? 'Standard' : 'Repack';
+
+    let newOrder = {
         price: req.body.price,
-        deliveryService: req.body.deliveryService,
+        deliveryPrice: deliveryPrice,
+        deliveryService: deliveryService,
         articles: articles,
-    });
+    }
+
+    user.orders.push(newOrder);
 
     let savedUser = await user.save();
 
     if (savedUser._id)
-        res.status(200).json({user: user});
+        res.status(200).json({comment: 'Order saved in db'});
     else
         res.status(409).json({comment: 'There was an error during the transfer please repeat'});
 });
 
+router.post('/last-order', async function (req, res, next) {
+    let user = await userModel.findOne({token: req.body.token}).populate('orders.articles');
+    console.log(user);
+    let userOrder = user.orders[user.orders.length - 1];
+
+    if (userOrder)
+        res.status(200).json({order: userOrder});
+    else
+        res.status(409).json({comment: 'No order found'});
+});
 module.exports = router;

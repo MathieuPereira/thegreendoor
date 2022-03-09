@@ -8,11 +8,7 @@ export default function (token = '', action) {
             localStorage.removeItem('token');
             return '';
         case 'refreshToken' :
-            console.log(localStorage.getItem('token'));
-            if (localStorage.getItem('token') != 'null') {
-                return localStorage.getItem('token')
-            }
-            return token;
+            return localStorage.getItem('token') != null ? localStorage.getItem('token') : token;
         default :
             return token;
     }

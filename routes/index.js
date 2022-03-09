@@ -137,7 +137,7 @@ router.post('/create-checkout-session', async (req, res) => {
         shipping_address_collection: {allowed_countries: ['FR']},
         line_items: stripeItems,
         mode: 'payment',
-        success_url: 'http://localhost:3001/order-validated',
+        success_url: 'http://localhost:3001/order-validated/{CHECKOUT_SESSION_ID}',
         cancel_url: 'http://localhost:3001/basket',
     });
 
