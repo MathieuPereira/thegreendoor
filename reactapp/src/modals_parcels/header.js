@@ -20,12 +20,7 @@ function Header(props) {
         props.refreshBasket();
         props.refreshToken();
         props.refreshDelivery();
-        if (props.token != null) {
-            setIsLogged(true);
-        } else {
-            setIsLogged(false);
-        }
-    }, [props.token]);
+    }, []);
 
     var disconnect = () => {
         props.removeToken();
@@ -90,7 +85,7 @@ function Header(props) {
     };
 
     // Gestion de l'affichage du Header en fonction de la connexion ou non de l'utilisateur
-    if (!isLogged) {
+    if (localStorage.getItem('token') == null) {
 
         return (
 
