@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import {connect} from 'react-redux'
 import {Link} from "react-router-dom";
 
 // Import de NOS composants
@@ -43,7 +42,7 @@ export default function PastOrders() {
     
                 <div style={{display: 'flex', alignItems : 'center', height : 120}}>
                                         
-                    <img style={{width: 60, height: 80, marginLeft : '5%'}} src={`/assets/Produits/${article.img}.jpeg`}/>
+                    <img style={{width: 60, height: 80, marginLeft : '5%'}} src={`/assets/Produits/${article.img}.jpeg`} alt="produit"/>
     
                     <div
                         style={{display: "flex", alignItems : 'flex-start', justifyContent: 'space-between', width: '80%'}}>
@@ -103,9 +102,6 @@ export default function PastOrders() {
         )
     }) 
 
-    let totalCmd = 0;
-    let normalPrice = 0;
-
     return (
 
         <div style={{backgroundColor:"#FCF5EE", fontFamily : 'Montserrat'}}>
@@ -131,9 +127,3 @@ export default function PastOrders() {
         </div>
     )
 }
-
-const linkButton = {
-    color: 'white',
-    fontFamily: 'Montserrat',
-    cursor: 'pointer',
- };

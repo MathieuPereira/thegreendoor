@@ -34,7 +34,6 @@ function App() {
                   <Route component={BasketPage} path="/basket"/>
                   <Route component={PastOrders} path="/my-orders"/>
                   <Route component={ValidationPage} path="/order-validated/:session"/>
-
                </Switch>
             </Router>
        
