@@ -64,3 +64,6 @@ typings/
 .idea/
 .vscode/
 .sw
+
+# Variables d'environnement
+.env
