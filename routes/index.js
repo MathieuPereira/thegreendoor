@@ -140,8 +140,8 @@ router.post('/create-checkout-session', async (req, res) => {
         shipping_address_collection: {allowed_countries: ['FR']},
         line_items: stripeItems,
         mode: 'payment',
-        success_url: 'https://thegreendoor.herokuapp.com',
-        cancel_url: 'https://thegreendoor.herokuapp.com',
+        success_url: 'https://thegreendoor.herokuapp.com/order-validated/{CHECKOUT_SESSION_ID}',
+        cancel_url: 'https://thegreendoor.herokuapp.co/basket',
     });
 
     res.redirect(303, session.url);
