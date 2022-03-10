@@ -46,7 +46,7 @@ function Home(props) {
 
         var labelList = [];
         for (var i = 0; i < sale.brandLabels.length; i++) {
-            labelList.push(<img src={`/assets/icones/${sale.brandLabels[i]}.png`} style={{
+            labelList.push(<img src={`/assets/Icones/${sale.brandLabels[i]}.png`} style={{
                 height: 30,
                 marginBottom: 5,
                 border: '2px solid white',

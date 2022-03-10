@@ -49,7 +49,7 @@ function ProductPage(props) {
 
     var labelList = [];
     for (var i = 0; i < saleLabels.length; i++) {
-       labelList.push(<img src={`/assets/icones/${saleLabels[i]}.png`} style={label}/>);
+       labelList.push(<img src={`/assets/Icones/${saleLabels[i]}.png`} style={label}/>);
     }
  
    function handleChange(value) {
