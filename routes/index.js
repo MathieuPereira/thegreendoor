@@ -1,11 +1,14 @@
 var express = require('express');
+require('dotenv').config();
 var router = express.Router();
 var saleModel = require('../models/sales');
 var userModel = require('../models/users');
 var request = require('sync-request');
 
+var api = process.env.STRIPE_API
+
 const Stripe = require('stripe');
-const stripe = Stripe('sk_test_51KHnRjFcTa07fhQCsT77a7dMNM1tmeXihc8agkLpki93jx18R4BzhRP16vhZCdEQvGceLtreRQnLTbu7UqkWe4sH00KMMJTEfq');
+const stripe = Stripe(api);
 
 /*
  GET home page.

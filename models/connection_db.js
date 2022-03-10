@@ -1,4 +1,5 @@
 var mongoose = require('mongoose')
+require('dotenv').config();
 
 var options = {
    connectTimeoutMS: 5000,
@@ -6,7 +7,11 @@ var options = {
    useNewUrlParser: true,
 }
 
-mongoose.connect('mongodb+srv://green_dev:greendoor@website.e1u76.mongodb.net/thegreendoor?retryWrites=true&w=majority',
+var user = process.env.BDD_LOGIN
+var password = process.env.BDD_PASSWORD
+var db = process.env.BDD_NAMEDEPOT
+
+mongoose.connect(`mongodb+srv://${user}:${password}@website.e1u76.mongodb.net/${db}?retryWrites=true&w=majority`,
    options,
    function(err) {
       if (err) {
