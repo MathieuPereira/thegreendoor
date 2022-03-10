@@ -119,7 +119,6 @@ function Home(props) {
 
     // Sign Modal
     const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
-    const [goToSell, setGoToSell] = useState("");
 
     var handleModalChangeVisibility = (currentState) => {
         if (date != 'to-be-started') {
@@ -130,10 +129,7 @@ function Home(props) {
     // Gestion de l'affichage du texte du bouton de la brandModal
     var buttonBrandModal;
     if (date != 'to-be-started') {
-        buttonBrandModal = 'Se connecter pour accéder à la vente';
-        if (props.token != null) {
-            buttonBrandModal = 'Accéder à la vente';
-        }
+        buttonBrandModal = localStorage.getItem('token') ? 'Accéder à la vente' : 'Se connecter pour accéder à la vente';
     } else {
         buttonBrandModal = 'Vente pas encore commencée';
     }
