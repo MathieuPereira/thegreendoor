@@ -151,10 +151,10 @@ function SalePage(props) {
                {breadCrumb}
                <div className="displayProducts">
                   <div style={{height: "100%"}} className="rightInfosProductPage">
-                     <div style={{width: 250, height: 250, position: 'relative'}}>
-                        <img style={{width: "100%", height: "250px", marginBottom: 10}} src={`/assets/Resized/${saleImg}_sale.jpeg`}
+                     <div className='imageBrandRightInfos' style={{}}>
+                        <img className="imageRightInfos" src={`/assets/Resized/${saleImg}_sale.jpeg`}
                              alt="picture"/>
-                        <div style={{position: 'absolute', top: 10, right: 10, display: "flex", flexDirection: "column"}}>
+                        <div className="infosBrandLabels">
                            {labelList}
                         </div>
                      </div>
@@ -222,7 +222,7 @@ function SalePage(props) {
                      </div>
                   </div>
                   <div style={{marginLeft: 25}}>
-                     <div style={{display : 'flex'}}>
+                     <div className="endingDateDiv">
                         <p style={{fontSize: 18, color: '#207872', marginBottom: 0}}>
                            ⏰ Fin le {saleEnding.toLocaleDateString('fr-FR')}      
                         <span><Tag color="black" style={{marginLeft : 10, height : 30, borderRadius : 40, textAlign : 'center'}}> <Countdown  value={deadline} format ={format} valueStyle={{color : 'white', fontSize : 16, fontFamily : 'Montserrat'}}/> </Tag></span>
