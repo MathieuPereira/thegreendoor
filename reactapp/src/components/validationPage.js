@@ -215,7 +215,7 @@ function Validation(props) {
                             height: 40,
                             marginTop: 10,
                             color: 'white',
-                        }}><Link style={{color: 'white'}} to="/"> Voir vos commandes passées 📦 </Link></button>
+                        }}><Link style={{color: 'white'}} to="/my-orders"> Voir vos commandes passées 📦 </Link></button>
                         <button style={{
                             cursor: 'pointer',
                             color: 'white',

@@ -95,7 +95,7 @@ router.post('/add-address', async function (req, res, next) {
     if (!user)
         res.status(404).json({comment: 'User not found'});
     let addressAlreadyExists = user.addresses.filter((e) => e.address == session.shipping.address.line1)
-    if (addressAlreadyExists.length >= 1) {
+    if (addressAlreadyExists.length < 1) {
         user.addresses.push({
             country: 'France',
             city: session.shipping.address.city,
@@ -161,7 +161,6 @@ router.post('/add-order', async function (req, res, next) {
 
 router.post('/last-order', async function (req, res, next) {
     let user = await userModel.findOne({token: req.body.token}).populate('orders.articles');
-    console.log(user);
     let userOrder = user.orders[user.orders.length - 1];
 
     if (userOrder)
@@ -170,10 +169,11 @@ router.post('/last-order', async function (req, res, next) {
         res.status(409).json({comment: 'No order found'});
 });
 
-
 router.post('/past-orders', async function (req, res, next) {
+    
     let user = await userModel.findOne({token: req.body.token});
 
     res.json(user.orders);
 });
+
 module.exports = router;
