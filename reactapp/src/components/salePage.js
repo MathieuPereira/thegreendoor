@@ -47,7 +47,6 @@ function SalePage(props) {
    const [modalNormalPrice, setModalNormalPrice] = useState('');
    const [modalReducedPrice, setModalReducedPrice] = useState('');
 
-
    function onButtonClick(name, img, normalPrice, reducedPrice) {
        setModalName(name)
        setModalImg(img)
@@ -84,7 +83,7 @@ function SalePage(props) {
 
    var productsCards = productsList.map((product, i) => {
 
-      var reduction = (product.reducedPrice - product.normalPrice) / product.reducedPrice * 100;
+      var reduction = (product.reducedPrice - product.normalPrice) / product.normalPrice * 100;
 
       return (
          <div key={i} className="productCard" style={productCard}>
@@ -260,7 +259,7 @@ function SalePage(props) {
                         <Button key="Continue" onClick={handleCancel}>Continuer mes achats</Button>
 
                     <Link to="/basket"><Button key="submit" style={{backgroundColor: '#207872', borderRadius: 40, border: 0}}
-                                type="primary" onClick={() => console.log("Kikou")}>
+                                type="primary">
                             Voir mon panier
                         </Button></Link>
                     </div>

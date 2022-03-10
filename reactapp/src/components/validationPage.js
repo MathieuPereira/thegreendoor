@@ -1,13 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
-import {Link, Redirect, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 
 // Import de NOS composants
 import Header from '../modals_parcels/header';
 import Footer from '../modals_parcels/footer';
 
 import {Divider, Spin} from 'antd';
-import deliveryService from "../reducers/delivery.reducer";
 
 function Validation(props) {
     const [loader, setLoader] = useState(false);
@@ -17,7 +16,6 @@ function Validation(props) {
     let totalCmd = 0;
     let normalPrice = 0;
     let totalDiscount = 0;
-
 
     useEffect(() => {
         let data;
@@ -53,8 +51,6 @@ function Validation(props) {
 
         loadData();
     }, []);
-
-    console.log(orderInfos);
 
     if (!loader) {
         return (
@@ -277,7 +273,6 @@ function mapDispatchToProps(dispatch) {
         },
     };
 }
-
 
 export default connect(
     mapStateToProps,

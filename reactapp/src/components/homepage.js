@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Link, Redirect, useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {connect} from 'react-redux';
 
 // Import de NOS composants
@@ -8,7 +8,7 @@ import Label from '../modals_parcels/labelBar';
 import SignModal from '../modals_parcels/signModal';
 import Footer from '../modals_parcels/footer';
 
-// Import composant antd
+// Import composant antd & CSS
 import {Card, Col, Row, Modal, Button} from 'antd';
 import '../stylesheets/homepage.css';
 
@@ -34,15 +34,12 @@ function Home(props) {
                 var rawResponse = await fetch(`/home?categories=${category}`);
             }
             var response = await rawResponse.json();
-            console.log(response.sales);
             setSalesList(response.sales);
         }
 
         loadData();
 
     }, [category, date]);
-
-    console.log(salesList);
 
     // Map qui gère l'affichage des cards par rapport aux informations en DB
     var cardsFromDB = salesList.map((sale, i) => {
@@ -114,18 +111,15 @@ function Home(props) {
         if (date != 'to-be-started')
             setDesc(desc);
         setIsModalVisible(true);
-        console.log('Clic on card detected');
     }
 
     const handleCancel = () => {
         setIsModalVisible(false);
-        console.log('clic supp détecté');
     };
 
     // Sign Modal
     const [isModalSignVisible, setIsModalSignVisible] = useState("hidden");
     const [goToSell, setGoToSell] = useState("");
-    console.log(isModalSignVisible);
 
     var handleModalChangeVisibility = (currentState) => {
         if (date != 'to-be-started') {

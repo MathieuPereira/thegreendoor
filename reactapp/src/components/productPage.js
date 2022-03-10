@@ -7,7 +7,6 @@ import Label from '../modals_parcels/labelBar';
 import Footer from '../modals_parcels/footer';
 
 import {Select, Breadcrumb, Divider, Modal, Button} from "antd";
-import {ArrowLeftOutlined} from "@ant-design/icons";
 import {connect} from "react-redux";
 
 const {Option} = Select;
@@ -29,8 +28,6 @@ function ProductPage(props) {
        setIsModalVisible(false);
     };
 
-
-
    const [productConsulted, setProductConsulted] = useState([]);
    const [saleLabels, setSaleLabels] = useState([]);
    const [saleImg, setSaleImg] = useState('');
@@ -40,7 +37,6 @@ function ProductPage(props) {
       async function loadData() {
          var rawResponse = await fetch(`/show-sale?brandName=${brand}&productName=${product}`);
          var response = await rawResponse.json();
-         // console.log(response)
          setProductConsulted(response.products);
          setSaleLabels(response.saleLabels);
          setSaleImg(response.saleImg);
@@ -49,7 +45,7 @@ function ProductPage(props) {
       loadData();
    }, []);
 
-   var reduction = (productConsulted.reducedPrice - productConsulted.normalPrice) / productConsulted.reducedPrice * 100;
+   var reduction = (productConsulted.reducedPrice - productConsulted.normalPrice) / productConsulted.normalPrice * 100;
 
     var labelList = [];
     for (var i = 0; i < saleLabels.length; i++) {
@@ -421,8 +417,4 @@ const filter = {
    textTransform: "uppercase",
    marginTop: 10,
    marginBottom : 10
-}
-
-const iconDiv = {
-  
 }

@@ -144,13 +144,4 @@ router.post('/create-checkout-session', async (req, res) => {
     res.redirect(303, session.url);
 });
 
-router.get('/success', function (req, res, next) {
-
-    res.json('confirm');
-});
-
-router.get('/cancel', function (req, res, next) {
-    res.json('cancel');
-});
-
 module.exports = router;

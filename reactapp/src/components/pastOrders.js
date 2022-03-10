@@ -6,12 +6,9 @@ import {Link} from "react-router-dom";
 import Header from '../modals_parcels/header';
 import Footer from '../modals_parcels/footer';
 
-import {Divider} from 'antd';
-import {
-   DownloadOutlined
-  } from '@ant-design/icons';
+import {DownloadOutlined} from '@ant-design/icons';
 
-function PastOrders(props) {
+export default function PastOrders() {
 
     const [orders, setOrders] = useState([])
 
@@ -134,19 +131,6 @@ function PastOrders(props) {
         </div>
     )
 }
-
-function mapStateToProps(state) {
-    return {
-        token: state.token,
-        basket: state.basket,
-        fdp : state.deliveryPrice
-    };
-}
-
-export default connect(
-    mapStateToProps,
-    null,
-)(PastOrders);
 
 const linkButton = {
     color: 'white',
