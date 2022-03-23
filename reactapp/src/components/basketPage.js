@@ -15,7 +15,7 @@ const {Option} = Select;
 function BasketPage(props) {
     const [delivery, setDelivery] = useState(1);
     const [totalDiscount, setTotalDiscount] = useState(0);
-    const [totalPrice, setTotalPrice] = useState(0)
+    const [totalPrice, setTotalPrice] = useState(0);
 
     let basketArticles;
 
@@ -32,7 +32,7 @@ function BasketPage(props) {
     }, [props.basket]);
 
     useEffect(() => {
-        props.changeDeliveryService(delivery)
+        props.changeDeliveryService(delivery);
     }, [delivery]);
 
     basketArticles = props.basket.map((product, i) => {
@@ -46,7 +46,7 @@ function BasketPage(props) {
                      padding: 5,
                      backgroundColor: '#FFFFFF',
                      marginBottom: 15,
-                     borderRadius : 15
+                     borderRadius: 15,
                  }}>
                 <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start'}}>
                     <img style={{width: 150, height: 200}} src={`/assets/Produits/${product.img}.jpeg`}
@@ -70,7 +70,8 @@ function BasketPage(props) {
                         </div>
                         <div style={{marginTop: 35}}>
                             <p style={{fontSize: 18}}>Quantité :</p>
-                            <Input style={{width: 80, height: 40}} type="number" placeholder={`${product.quantity}`} value={product.quantity}
+                            <Input style={{width: 80, height: 40}} type="number" placeholder={`${product.quantity}`}
+                                   value={product.quantity}
                                    onChange={(e) => props.modifyArticleQuantity(`${product.name}`, `${e.target.value}`)}/>
                         </div>
                         <div style={{marginTop: 35, marginRight: 10}}>
@@ -85,7 +86,7 @@ function BasketPage(props) {
                             }}>{product.normalPrice * product.quantity},00 €</p>
                             <Row style={{marginTop: 60, display: "flex", alignItems: "center", cursor: "pointer"}}
                                  onClick={() => props.deleteArticle(i)}>
-                                <DeleteOutlined style={{marginRight : 5}}/>
+                                <DeleteOutlined style={{marginRight: 5}}/>
                                 <p style={{marginBottom: 0, fontSize: 14}}> Supprimer</p>
                             </Row>
                         </div>
@@ -99,8 +100,7 @@ function BasketPage(props) {
         basketArticles = <p>Votre panier est vide</p>;
     }
 
-    let deliveryPrice = delivery === 1 ? 3.90 : 5.40
-
+    let deliveryPrice = delivery === 1 ? 3.90 : 5.40;
 
     if (props.token == null) {
         return <Redirect to="/"/>;
@@ -124,8 +124,8 @@ function BasketPage(props) {
                             fontSize: 16,
                             fontWeight: 550,
                             padding: 25,
-                            borderRadius : 15,
-                            backgroundColor: 'rgba(0, 0, 0, 0.2)'
+                            borderRadius: 15,
+                            backgroundColor: 'rgba(0, 0, 0, 0.2)',
                         }}>
                             <div style={{display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                                 <p>AJOUTER UN CODE PROMO</p>
@@ -145,7 +145,8 @@ function BasketPage(props) {
                             <div>
                                 <p>CHOISIR UNE LIVRAISON</p>
                                 <Radio.Group style={{marginLeft: 10}} defaultValue={1} onChange={(e) => {
-                                    setDelivery(e.target.value)}} >
+                                    setDelivery(e.target.value);
+                                }}>
                                     <Space direction="vertical">
                                         <Radio value={1}>Standard France (3 à 5 jours)</Radio>
                                         <Radio value={2}>Repack France, l'emballage réutilisable</Radio>
@@ -165,7 +166,7 @@ function BasketPage(props) {
                             }}/>
                             <div style={{display: 'flex', justifyContent: 'space-between', flexDirection: 'row'}}>
                                 <p style={{fontWeight: 450, marginBottom: 0}}>FRAIS DE PORT</p>
-                                <p style={{fontSize: 14, marginBottom: 0}} >{deliveryPrice}€</p>
+                                <p style={{fontSize: 14, marginBottom: 0}}>{deliveryPrice}€</p>
                             </div>
                             <span style={{
                                 marginTop: 10,
@@ -188,10 +189,23 @@ function BasketPage(props) {
                             </div>
                             <div style={{display: 'flex', justifyContent: 'center'}}>
                                 <form action="/create-checkout-session" method="POST">
-                                    <input name="basket" type='hidden' value={JSON.stringify(props.basket)}/>
-                                    <input name="delivery" type='hidden' value={deliveryPrice}/>
-                                    <input name="token" type='hidden' value={props.token}/>
-                                    <button onClick={() => {props.changeDeliveryPrice(deliveryPrice)}} style={{cursor:'pointer', color : 'white', fontSize : 15, backgroundColor: '#207872', borderRadius: 40, border: 0, width : 200, height : 30, marginTop : 10}} type='submit' >Passer au paiement 💳 </button>
+                                    <input name="basket" type="hidden" value={JSON.stringify(props.basket)}/>
+                                    <input name="delivery" type="hidden" value={deliveryPrice}/>
+                                    <input name="token" type="hidden" value={props.token}/>
+                                    <button onClick={() => {
+                                        props.changeDeliveryPrice(deliveryPrice);
+                                    }} style={{
+                                        cursor: 'pointer',
+                                        color: 'white',
+                                        fontSize: 15,
+                                        backgroundColor: '#207872',
+                                        borderRadius: 40,
+                                        border: 0,
+                                        width: 200,
+                                        height: 30,
+                                        marginTop: 10,
+                                    }} type="submit">Passer au paiement 💳
+                                    </button>
                                 </form>
                             </div>
                         </Col>
@@ -232,12 +246,12 @@ function mapDispatchToProps(dispatch) {
                 size: value,
             });
         },
-        changeDeliveryService : function (value){
+        changeDeliveryService: function (value) {
             dispatch({
-                type : 'changeDeliveryService',
-                delivery : value
-            })
-        }
+                type: 'changeDeliveryService',
+                delivery: value,
+            });
+        },
     };
 }
 

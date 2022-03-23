@@ -26,7 +26,7 @@ function Header(props) {
         props.removeToken();
         props.removeBasket();
         localStorage.removeItem('basket');
-        localStorage.removeItem('deliveryService')
+        localStorage.removeItem('deliveryService');
         setIsLogged(false);
     };
 
@@ -47,10 +47,10 @@ function Header(props) {
         </>
     );
 
-   // Carousel
-   var imgMontagne = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
-   var imgNature = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg';
-   var imgMer = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_500,w_1700/v1646652566/thegreendoor/background/surf_ieqxyt.jpg'
+    // Carousel
+    var imgMontagne = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1150,w_10000/v1645811634/thegreendoor/background/moutain-night_wymtkz.jpg';
+    var imgNature = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_1500,w_10000/v1645712418/thegreendoor/background/home_hj8f3r.jpg';
+    var imgMer = 'https://res.cloudinary.com/dknmaiec0/image/upload/c_fill,g_auto,h_500,w_1700/v1646652566/thegreendoor/background/surf_ieqxyt.jpg';
 
     function onChange(a, b, c) {
         console.log(a, b, c);
@@ -65,18 +65,18 @@ function Header(props) {
         autoplaySpeed: 8000,
     };
 
-   // Sous-menu "Mon compte"
-   const content = (
-      <>
-        <div style={{height: 130}}>
-            <p><Link className='menuHeader' to="/my-orders">Mes commandes passées 📦 </Link></p>
-            <Divider style={divider}/>
-            <p><Link className='menuHeader' to="/">Mes informations personnelles 📬 </Link></p>
-            <Divider style={divider}/>
-            <p className='menuHeader' onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
-        </div>
-      </>
-   );
+    // Sous-menu "Mon compte"
+    const content = (
+        <>
+            <div style={{height: 130}}>
+                <p><Link className="menuHeader" to="/my-orders">Mes commandes passées 📦 </Link></p>
+                <Divider style={divider}/>
+                <p><Link className="menuHeader" to="/">Mes informations personnelles 📬 </Link></p>
+                <Divider style={divider}/>
+                <p className="menuHeader" onClick={() => disconnect()}><Link to="/">Déconnexion 👋</Link></p>
+            </div>
+        </>
+    );
 
     // Redirection au clic sur Logo
     const onLogoClick = () => {
@@ -91,131 +91,132 @@ function Header(props) {
 
             <div span={{xs: 24}} style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
 
-               <div style={header}>
+                <div style={header}>
 
-                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick}/></Link>
+                    <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick}/></Link>
 
-                  <div style={textHeader}>
+                    <div style={textHeader}>
 
-                     <p className="headerText" >Qui sommes-nous ?</p>
-                     <p className="headerText" onClick={() => handleModalChangeVisibility("visible")} >Se connecter</p>
+                        <p className="headerText">Qui sommes-nous ?</p>
+                        <p className="headerText" onClick={() => handleModalChangeVisibility("visible")}>Se
+                            connecter</p>
 
-                     <div style={{marginLeft: 50, marginRight: 30}}>
-                        <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
-                           <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
-                        </Badge>
-                     </div>
-                  </div>
+                        <div style={{marginLeft: 50, marginRight: 30}}>
+                            <Badge style={{backgroundColor: '#207872'}} count={basketCount} showZero>
+                                <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
+                            </Badge>
+                        </div>
+                    </div>
 
-               </div>
+                </div>
 
-               <Carousel {...settings} className='carousel'>
+                <Carousel {...settings} className="carousel">
 
-                  <div>
-                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
-                  </div>
-                  <div>
-                     <img src={imgNature} alt="Outdoor background" className="imgCarousel" />
-                  </div>
-                  <div>
-                     <img src={imgMer} alt="Outdoor background" className="imgCarousel" />
-                  </div>
+                    <div>
+                        <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
+                    <div>
+                        <img src={imgNature} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
+                    <div>
+                        <img src={imgMer} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
 
-               </Carousel>
+                </Carousel>
 
-               <p className="baseline" >
-                  Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables
-               </p>
+                <p className="baseline">
+                    Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables
+                </p>
 
-               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
+                <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
 
-                  <Menu.Item className="catMenu">
-                     <Link to="/home/Mer">Mer</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Mer">Mer</Link>
+                    </Menu.Item>
 
-                  <Menu.Item className="catMenu">
-                     <Link to="/home/Montagne">Montagne</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Montagne">Montagne</Link>
+                    </Menu.Item>
 
-                  <Menu.Item className="catMenu">
-                     <Link to="/home/Nature">Nature</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Nature">Nature</Link>
+                    </Menu.Item>
 
-               </Menu>
+                </Menu>
 
-               <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
+                <SignModal state={isModalSignVisible} changeParentState={handleModalChangeVisibility}/>
             </div>
 
-         );
+        );
 
-      } else {
+    } else {
 
-         return (
+        return (
 
             <div span={{xs: 24}} style={{backgroundColor: "#FCF5EE", fontFamily: 'Montserrat'}}>
 
-               <div style={header}>
+                <div style={header}>
 
-                  <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick} /></Link>
+                    <Link to="/"><img className="logo" src="/assets/logo.png" alt="Logo" onClick={onLogoClick}/></Link>
 
-                  <div style={textHeader}>
+                    <div style={textHeader}>
 
-                     <p className="headerText">Qui sommes-nous ?</p>
+                        <p className="headerText">Qui sommes-nous ?</p>
 
-                     <Popover placement="bottom" content={content} trigger="click">
-                        <p className="headerText">
-                           Mon compte
-                        </p>
-                     </Popover>
+                        <Popover placement="bottom" content={content} trigger="click">
+                            <p className="headerText">
+                                Mon compte
+                            </p>
+                        </Popover>
 
-                     <Popover placement="bottom" content={contentBasket} trigger="click">
-                        <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
-                           <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
-                              <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
-                           </Badge>
-                        </div>
-                     </Popover>
-                  </div>
+                        <Popover placement="bottom" content={contentBasket} trigger="click">
+                            <div style={{marginLeft: 50, marginRight: 30, cursor: 'pointer'}}>
+                                <Badge style={{backgroundColor: '#207872'}} count={props.basket.length} showZero>
+                                    <img src="/assets/backpack.png" alt="Basket" className="backpack"/>
+                                </Badge>
+                            </div>
+                        </Popover>
+                    </div>
 
-               </div>
+                </div>
 
-               <Carousel {...settings} className='carousel'>
+                <Carousel {...settings} className="carousel">
 
-                  <div>
-                     <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
-                  </div>
-                  <div>
-                     <img src={imgNature} alt="Outdoor background" className="imgCarousel"/>
-                  </div>
-                  <div>
-                     <img src={imgMer} alt="Outdoor background" className="imgCarousel"/>
-                  </div>
+                    <div>
+                        <img src={imgMontagne} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
+                    <div>
+                        <img src={imgNature} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
+                    <div>
+                        <img src={imgMer} alt="Outdoor background" className="imgCarousel"/>
+                    </div>
 
-               </Carousel>
+                </Carousel>
 
-               <p className="baseline">
-                  Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
+                <p className="baseline">
+                    Ventes <span style={{color: '#207872'}}>Outdoor</span> éco-responsables</p>
 
-               <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
+                <Menu span={{xs: 24}} className="menuNavBar" mode="horizontal">
 
-                  <Menu.Item  className="catMenu">
-                     <Link to="/home/Mer">Mer</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Mer">Mer</Link>
+                    </Menu.Item>
 
-                  <Menu.Item className="catMenu">
-                     <Link to="/home/Montagne">Montagne</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Montagne">Montagne</Link>
+                    </Menu.Item>
 
-                  <Menu.Item className="catMenu">
-                     <Link to="/home/Nature">Nature</Link>
-                  </Menu.Item>
+                    <Menu.Item className="catMenu">
+                        <Link to="/home/Nature">Nature</Link>
+                    </Menu.Item>
 
-               </Menu>
+                </Menu>
 
             </div>
 
-         );
-      }
+        );
+    }
 }
 
 function mapStateToProps(state) {
@@ -248,9 +249,9 @@ function mapDispatchToProps(dispatch) {
             });
         }, refreshDelivery: function () {
             dispatch({
-                type: 'refreshDelivery'
-            })
-        }
+                type: 'refreshDelivery',
+            });
+        },
     };
 }
 
@@ -260,34 +261,34 @@ export default connect(
 )(Header);
 
 const header = {
-   display: 'flex',
-   flexDirection: 'row',
-   padding: 5,
-   marginLeft: 50,
-   alignItems: 'center',
-   justifyContent: 'space-between',
+    display: 'flex',
+    flexDirection: 'row',
+    padding: 5,
+    marginLeft: 50,
+    alignItems: 'center',
+    justifyContent: 'space-between',
 };
 
 const textHeader = {
-   display: 'flex',
-   flexDirection: 'row',
-   marginRight: 30,
-   alignContent: 'center',
-   alignItems: "center",
-   fontSize: 15,
+    display: 'flex',
+    flexDirection: 'row',
+    marginRight: 30,
+    alignContent: 'center',
+    alignItems: "center",
+    fontSize: 15,
 };
 
 const menuHeader = {
-   color: 'black',
-   fontFamily: 'Montserrat',
-   cursor: 'pointer',
+    color: 'black',
+    fontFamily: 'Montserrat',
+    cursor: 'pointer',
 };
 
 const divider = {
-   marginLeft: 2,
-   marginTop: 3,
-   marginBottom: 15,
-   width: '50%',
-   alignSelf: "start",
-   border: "0.5px #AEA9A9 solid"
-}
+    marginLeft: 2,
+    marginTop: 3,
+    marginBottom: 15,
+    width: '50%',
+    alignSelf: "start",
+    border: "0.5px #AEA9A9 solid",
+};

@@ -21,7 +21,7 @@ router.post('/sign-up', async function (req, res) {
         if (!/0-9]\s/.test(lastName) && lastName !== "undefined") {
             lastName = lastName.charAt(0).toUpperCase() + lastName.slice(1);
             if (regexPattern.test(email)) {
-                regexPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\/]).{8,}$/;
+                regexPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*()\/]).{7,}$/;
                 if (regexPattern.test(password)) {
                     let checkEmailUser = await userModel.findOne({email: req.body.email});
                     if (!checkEmailUser) {
@@ -173,7 +173,7 @@ router.post('/past-orders', async function (req, res, next) {
     
     let user = await userModel.findOne({token: req.body.token});
 
-    res.json(user.orders);
+    res.status(200).json(user.orders);
 });
 
 module.exports = router;
