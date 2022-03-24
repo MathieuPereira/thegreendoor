@@ -1,3 +1,7 @@
+/*
+localstoage is removed when reducer is called then localstorage get fill
+when reducer finished changing the values of the storage
+ */
 export default function (basket = [], action) {
    let basketCopy = [...basket];
    switch (action.type) {

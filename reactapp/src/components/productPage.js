@@ -19,6 +19,11 @@ function ProductPage(props) {
    const [isModalVisible, setIsModalVisible] = useState(false);
    const [size, setSize] = useState('')
 
+    // Affichage du produit
+    const [productConsulted, setProductConsulted] = useState([]);
+    const [saleLabels, setSaleLabels] = useState([]);
+    const [saleImg, setSaleImg] = useState('');
+
    function onButtonClick() {
        props.addArticle(productConsulted.name, brand, productConsulted.img, size, productConsulted.normalPrice, productConsulted.reducedPrice)
        setIsModalVisible(true);
@@ -27,10 +32,6 @@ function ProductPage(props) {
     const handleCancel = () => {
        setIsModalVisible(false);
     };
-
-   const [productConsulted, setProductConsulted] = useState([]);
-   const [saleLabels, setSaleLabels] = useState([]);
-   const [saleImg, setSaleImg] = useState('');
 
    useEffect(() => {
        window.scrollTo(0, 290);

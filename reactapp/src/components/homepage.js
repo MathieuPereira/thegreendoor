@@ -154,8 +154,8 @@ function Home(props) {
         color: "#C4C4C4",
     };
     if (date === 'to-be-started') {
-        saleOngoingColor.color ="#C4C4C4";
-        saleUpcomingColor.color ="#207872";
+        saleOngoingColor.color = "#C4C4C4";
+        saleUpcomingColor.color = "#207872";
     }
 
     return (
@@ -174,7 +174,8 @@ function Home(props) {
                     marginRight: "15px",
                     alignSelf: "start",
                 }}/>
-                <Link to={`/home/${category}/to-be-started`}><h4 style={saleUpcomingColor}>LES VENTES A VENIR</h4></Link>
+                <Link to={`/home/${category}/to-be-started`}><h4 style={saleUpcomingColor}>LES VENTES A VENIR</h4>
+                </Link>
             </Row>
 
             <Modal
@@ -214,6 +215,8 @@ function Home(props) {
         </div>
     );
 }
+
+// addBrand & addCategory refers to navigation reducer for breadcrumb
 
 function mapDispatchToProps(dispatch) {
     return {

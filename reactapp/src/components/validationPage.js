@@ -19,6 +19,7 @@ function Validation(props) {
 
     useEffect(() => {
         let data;
+
         async function loadData() {
 
             let rawData = await fetch('/users/add-order', {
@@ -41,7 +42,7 @@ function Validation(props) {
                         body: `token=${localStorage.getItem('token')}`,
                     });
                     data = await rawData.json();
-                    setOrderInfos(data.order)
+                    setOrderInfos(data.order);
                     props.removeBasket();
                     localStorage.removeItem('basket');
                     setLoader(true);
@@ -211,7 +212,8 @@ function Validation(props) {
                             height: 40,
                             marginTop: 10,
                             color: 'white',
-                        }}><Link style={{color: 'white'}} to="/my-orders"> Voir vos commandes passées 📦 </Link></button>
+                        }}><Link style={{color: 'white'}} to="/my-orders"> Voir vos commandes passées 📦 </Link>
+                        </button>
                         <button style={{
                             cursor: 'pointer',
                             color: 'white',
@@ -243,24 +245,8 @@ function mapStateToProps(state) {
     };
 }
 
-
 function mapDispatchToProps(dispatch) {
     return {
-        refreshBasket: function () {
-            dispatch({
-                type: 'refreshBasket',
-            });
-        },
-        refreshToken: function () {
-            dispatch({
-                type: 'refreshToken',
-            });
-        },
-        removeToken: function () {
-            dispatch({
-                type: 'removeToken',
-            });
-        },
         removeBasket: function () {
             dispatch({
                 type: 'removeBasket',
@@ -268,8 +254,8 @@ function mapDispatchToProps(dispatch) {
         },
         refreshDelivery: function () {
             dispatch({
-                type: 'refreshDelivery'
-            })
+                type: 'refreshDelivery',
+            });
         },
     };
 }
