@@ -41,7 +41,7 @@ router.post('/sign-up', async function (req, res) {
                             res.status(409).json({comment: "Une erreur s'est produite dans la base de données"});
                         }
                     } else {
-                        res.status(409).json({comment: "Cet email à déjà été enregistré"});
+                        res.status(409).json({comment: "Cet email a déjà été enregistré"});
                     }
                 } else {
                     if (password.length <= 8)
